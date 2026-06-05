@@ -1488,7 +1488,7 @@ function billCell(bill, attachments) {
 function renderSalesTable(data){
   const tb=document.getElementById('salesTableBody');
   if(!data.length){tb.innerHTML='<tr><td colspan="8" class="no-data">No sales entries for this period.</td></tr>';return;}
-  tb.innerHTML=data.map(r=>{
+  tb.innerHTML=[...data].sort((a,b)=>new Date(a.date)-new Date(b.date)).map(r=>{
     if(editingType==='sale'&&editingId===r.id)return salesEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
@@ -1537,7 +1537,7 @@ function salesEditRow(r){
 function renderPurchasesTable(data){
   const tb=document.getElementById('purchasesTableBody');
   if(!data.length){tb.innerHTML='<tr><td colspan="7" class="no-data">No expense entries for this period.</td></tr>';return;}
-  tb.innerHTML=data.map(r=>{
+  tb.innerHTML=[...data].sort((a,b)=>new Date(a.date)-new Date(b.date)).map(r=>{
     if(editingType==='purchase'&&editingId===r.id)return purchaseEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
