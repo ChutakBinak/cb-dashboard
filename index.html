@@ -227,7 +227,7 @@
     /* MISC */
     .ro-notice{background:#EAF0F8;border:1px solid #C4D4E8;border-radius:3px;padding:9px 13px;font-size:.75rem;color:var(--navy);margin-bottom:13px;display:flex;align-items:center;gap:7px;border-left:3px solid var(--navy-mid)}
 
-    /* ââ VOUCHER ââ */
+    /* Ã¢ÂÂÃ¢ÂÂ VOUCHER Ã¢ÂÂÃ¢ÂÂ */
     .voucher-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px 28px;max-width:700px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,.07)}
     .v-header{text-align:center;border-bottom:2.5px solid var(--indigo);padding-bottom:12px;margin-bottom:12px}
     .v-name{font-size:1.15rem;font-weight:900;color:var(--indigo-dark);letter-spacing:.5px}
@@ -265,22 +265,22 @@
 if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','https://script.google.com/macros/s/AKfycbxjW4bqU5MqRHfuLm9mslXfxlXyYfEb8TvL2doqvswWjUclQSIPy2hkTPmOvx4Egg7NxA/exec');
 </script>
 
-<!-- âââ LOGIN âââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ LOGIN Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
-      <div class="icon">ð­</div>
+      <div class="icon">Ã°ÂÂÂ­</div>
       <h1>Chutak Binak</h1>
-      <p>Muktakash Natya Sansthan Â· FY 2026-27</p>
+      <p>Muktakash Natya Sansthan ÃÂ· FY 2026-27</p>
     </div>
     <div class="login-roles">
       <div class="role-btn selected" id="roleOwner" onclick="selectRole('owner')">
-        <div class="role-icon">ð¤</div>
+        <div class="role-icon">Ã°ÂÂÂ¤</div>
         <div class="role-name">Bhavya</div>
         <div class="role-title">Owner</div>
       </div>
       <div class="role-btn" id="roleCA" onclick="selectRole('ca')">
-        <div class="role-icon">ð</div>
+        <div class="role-icon">Ã°ÂÂÂ</div>
         <div class="role-name">Manoj Jain</div>
       </div>
     </div>
@@ -289,17 +289,17 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <input class="form-input" type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
-    <button class="login-submit" onclick="doLogin()">Login â</button>
+    <button class="login-submit" onclick="doLogin()">Login Ã¢ÂÂ</button>
     <div class="login-footer">Sole Proprietorship Financial Dashboard</div>
   </div>
 </div>
 
-<!-- âââ APP âââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ APP Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div id="appScreen" style="display:none">
 
   <header>
     <div class="brand">
-      <h1>ð­ Chutak Binak Â· Muktakash Natya Sansthan</h1>
+      <h1>Ã°ÂÂÂ­ Chutak Binak ÃÂ· Muktakash Natya Sansthan</h1>
       <p>Income &amp; Expense Tracker</p>
     </div>
     <div class="header-right">
@@ -330,21 +330,21 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div class="urole" id="userRole">Owner</div>
         </div>
       </div>
-      <button class="btn-settings" onclick="openSettings()" title="Settings">â</button>
-      <button id="hideAmtBtn" onclick="toggleAmounts()" title="Show/hide amounts" style="background:transparent;border:1px solid #555;color:#ccc;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:14px;transition:all .2s;">ð</button>
+      <button class="btn-settings" onclick="openSettings()" title="Settings">Ã¢ÂÂ</button>
+      <button id="hideAmtBtn" onclick="toggleAmounts()" title="Show/hide amounts" style="background:transparent;border:1px solid #555;color:#ccc;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:14px;transition:all .2s;">Ã°ÂÂÂ</button>
       <button class="btn-logout" onclick="logout()">Logout</button>
     </div>
   </header>
 
   <main>
-    <div class="ro-notice" id="roNotice" style="display:none">ð CA view â read-only. You can filter and export but cannot make changes.</div>
+    <div class="ro-notice" id="roNotice" style="display:none">Ã°ÂÂÂ CA view Ã¢ÂÂ read-only. You can filter and export but cannot make changes.</div>
 
     <!-- KPI -->
     <div class="kpi-grid">
-      <div class="kpi-card income"><div class="kpi-label">Total Sales Revenue</div><div class="kpi-value" id="kpiSales">â¹0</div><div class="kpi-sub" id="kpiSalesCount">0 invoices</div></div>
-      <div class="kpi-card expense"><div class="kpi-label">Total Expenses</div><div class="kpi-value" id="kpiExpenses">â¹0</div><div class="kpi-sub" id="kpiExpensesCount">0 entries</div></div>
-      <div class="kpi-card profit"><div class="kpi-label">Net Profit / Loss</div><div class="kpi-value" id="kpiProfit">â¹0</div><div class="kpi-sub" id="kpiProfitNote">Before tax</div></div>
-      <div class="kpi-card gst"><div class="kpi-label">GST Collected</div><div class="kpi-value" id="kpiGst">â¹0</div><div class="kpi-sub">Payable to Govt</div></div>
+      <div class="kpi-card income"><div class="kpi-label">Total Sales Revenue</div><div class="kpi-value" id="kpiSales">Ã¢ÂÂ¹0</div><div class="kpi-sub" id="kpiSalesCount">0 invoices</div></div>
+      <div class="kpi-card expense"><div class="kpi-label">Total Expenses</div><div class="kpi-value" id="kpiExpenses">Ã¢ÂÂ¹0</div><div class="kpi-sub" id="kpiExpensesCount">0 entries</div></div>
+      <div class="kpi-card profit"><div class="kpi-label">Net Profit / Loss</div><div class="kpi-value" id="kpiProfit">Ã¢ÂÂ¹0</div><div class="kpi-sub" id="kpiProfitNote">Before tax</div></div>
+      <div class="kpi-card gst"><div class="kpi-label">GST Collected</div><div class="kpi-value" id="kpiGst">Ã¢ÂÂ¹0</div><div class="kpi-sub">Payable to Govt</div></div>
     </div>
 
     <!-- CHARTS -->
@@ -356,14 +356,14 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
     <!-- TABS -->
     <div class="tabs-wrap">
       <div class="tab-header">
-        <button class="tab-btn active" onclick="switchTab('overview',this)">ð Overview</button>
-        <button class="tab-btn" onclick="switchTab('sales',this)">ð° Sales</button>
-        <button class="tab-btn" onclick="switchTab('purchases',this)">ð§¾ Purchases</button>
-        <button class="tab-btn" onclick="switchTab('fixed',this)">ð Fixed Costs</button>
-        <button class="tab-btn" onclick="switchTab('voucher',this)">ð Voucher</button>
-        <button class="tab-btn" onclick="switchTab('shiprocket',this)">ð Shiprocket</button>
-        <button class="tab-btn" onclick="switchTab('reports',this)">ð Reports</button>
-        <button class="tab-btn" onclick="switchTab('mns-voucher',this)">ð MNS Voucher</button>
+        <button class="tab-btn active" onclick="switchTab('overview',this)">Ã°ÂÂÂ Overview</button>
+        <button class="tab-btn" onclick="switchTab('sales',this)">Ã°ÂÂÂ° Sales</button>
+        <button class="tab-btn" onclick="switchTab('purchases',this)">Ã°ÂÂ§Â¾ Purchases</button>
+        <button class="tab-btn" onclick="switchTab('fixed',this)">Ã°ÂÂÂ Fixed Costs</button>
+        <button class="tab-btn" onclick="switchTab('voucher',this)">Ã°ÂÂÂ Voucher</button>
+        <button class="tab-btn" onclick="switchTab('shiprocket',this)">Ã°ÂÂÂ Shiprocket</button>
+        <button class="tab-btn" onclick="switchTab('reports',this)">Ã°ÂÂÂ Reports</button>
+        <button class="tab-btn" onclick="switchTab('mns-voucher',this)">Ã°ÂÂÂ MNS Voucher</button>
       </div>
 
       <div id="tab-overview" class="tab-content active">
@@ -374,7 +374,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="section-gap">
           <div class="table-toolbar">
             <span class="section-title">P&amp;L Summary</span>
-            <button class="btn btn-export" onclick="exportSummary()">â¬ Export for CA</button>
+            <button class="btn btn-export" onclick="exportSummary()">Ã¢Â¬Â Export for CA</button>
           </div>
           <div id="plSummary"></div>
         </div>
@@ -400,12 +400,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </div>
           <div id="s_custom_range" style="display:none;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             <input class="filter-input" type="date" id="sf_from" style="width:130px" onchange="applyTableFilters('s')">
-            <span>â</span>
+            <span>Ã¢ÂÂ</span>
             <input class="filter-input" type="date" id="sf_to"   style="width:130px" onchange="applyTableFilters('s')">
           </div>
           <div class="filter-bar-sep"></div>
           <!-- Other filters -->
-          <input class="filter-input" id="sf_search" placeholder="ð Invoice / keyword" oninput="applyTableFilters('s')">
+          <input class="filter-input" id="sf_search" placeholder="Ã°ÂÂÂ Invoice / keyword" oninput="applyTableFilters('s')">
           <select class="filter-sel" id="sf_platform" onchange="applyTableFilters('s')">
             <option value="">All Platforms</option>
             <option>Website (Shopify)</option><option>Offline Store</option>
@@ -417,11 +417,11 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option>Bank (Amazon)</option><option>Debit Card</option>
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
-            â¹<input class="filter-input" id="sf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
-            â
+            Ã¢ÂÂ¹<input class="filter-input" id="sf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
+            Ã¢ÂÂ
             <input class="filter-input" id="sf_max" placeholder="Max" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
           </div>
-          <button class="filter-clear" onclick="clearTableFilters('s')">â Clear</button>
+          <button class="filter-clear" onclick="clearTableFilters('s')">Ã¢ÂÂ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Date</th><th>Invoice No.</th><th>Amount</th><th>GST</th><th>Platform</th><th>Paid Via</th><th>Bill / File</th><th class="owner-only"></th></tr></thead>
@@ -449,12 +449,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </div>
           <div id="p_custom_range" style="display:none;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             <input class="filter-input" type="date" id="pf_from" style="width:130px" onchange="applyTableFilters('p')">
-            <span>â</span>
+            <span>Ã¢ÂÂ</span>
             <input class="filter-input" type="date" id="pf_to"   style="width:130px" onchange="applyTableFilters('p')">
           </div>
           <div class="filter-bar-sep"></div>
           <!-- Other filters -->
-          <input class="filter-input" id="pf_search" placeholder="ð Particulars / keyword" oninput="applyTableFilters('p')">
+          <input class="filter-input" id="pf_search" placeholder="Ã°ÂÂÂ Particulars / keyword" oninput="applyTableFilters('p')">
           <select class="filter-sel" id="pf_category" onchange="applyTableFilters('p')">
             <option value="">All Categories</option>
             <option>Raw Material</option><option>Marketing</option><option>Platform Fees</option>
@@ -467,11 +467,11 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option>Debit Card</option><option>Credit Card</option>
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
-            â¹<input class="filter-input" id="pf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
-            â
+            Ã¢ÂÂ¹<input class="filter-input" id="pf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
+            Ã¢ÂÂ
             <input class="filter-input" id="pf_max" placeholder="Max" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
           </div>
-          <button class="filter-clear" onclick="clearTableFilters('p')">â Clear</button>
+          <button class="filter-clear" onclick="clearTableFilters('p')">Ã¢ÂÂ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Date</th><th>Particulars</th><th>Category</th><th>Amount</th><th>Payment</th><th>Bill / File</th><th class="owner-only"></th></tr></thead>
@@ -483,7 +483,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="table-toolbar">
           <span class="section-title">Fixed / Recurring Expenses</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost owner-only" onclick="scanGmailInvoices()" id="gmailScanBtn">ð§ Scan Gmail for Invoices</button>
+            <button class="btn btn-ghost owner-only" onclick="scanGmailInvoices()" id="gmailScanBtn">Ã°ÂÂÂ§ Scan Gmail for Invoices</button>
             <button class="btn btn-primary owner-only" onclick="openModal('fixed')">+ Add Fixed Cost</button>
           </div>
         </div>
@@ -491,14 +491,14 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <p style="margin-top:11px;font-size:.73rem;color:var(--muted)">* Record actual payments in the Purchases tab.</p>
       </div>
 
-      <!-- âââ VOUCHER TAB âââ -->
+      <!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ VOUCHER TAB Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
       <div id="tab-voucher" class="tab-content">
         <div class="table-toolbar">
           <span class="section-title">Expense Voucher</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost" onclick="clearVoucher()">ð Clear</button>
-            <button class="btn btn-ghost" onclick="printVoucher()">ð¨ Print (2 copies)</button>
-            <button class="btn btn-primary owner-only" onclick="saveVoucherAsEntry()">ð¾ Save as Purchase Entry</button>
+            <button class="btn btn-ghost" onclick="clearVoucher()">Ã°ÂÂÂ Clear</button>
+            <button class="btn btn-ghost" onclick="printVoucher()">Ã°ÂÂÂ¨ Print (2 copies)</button>
+            <button class="btn btn-primary owner-only" onclick="saveVoucherAsEntry()">Ã°ÂÂÂ¾ Save as Purchase Entry</button>
           </div>
         </div>
 
@@ -534,7 +534,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <!-- Amount in Words -->
           <div class="v-field-grp v-field-full">
             <span class="v-lbl">Amount (in words):</span>
-            <input class="v-inp v-inp-wide v-words" id="v_amtWords" placeholder="Auto-filled from totalâ¦" readonly>
+            <input class="v-inp v-inp-wide v-words" id="v_amtWords" placeholder="Auto-filled from totalÃ¢ÂÂ¦" readonly>
           </div>
 
           <!-- Line items -->
@@ -543,7 +543,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
               <tr>
                 <th style="width:52px;text-align:center">Sr No</th>
                 <th>Particulars</th>
-                <th style="width:130px;text-align:right">Amount (â¹)</th>
+                <th style="width:130px;text-align:right">Amount (Ã¢ÂÂ¹)</th>
                 <th class="v-no-print" style="width:34px"></th>
               </tr>
             </thead>
@@ -551,7 +551,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <tfoot>
               <tr class="v-total-row">
                 <td colspan="2" style="text-align:right;font-weight:700">Total Amount</td>
-                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="v_total">â¹ 0.00</td>
+                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="v_total">Ã¢ÂÂ¹ 0.00</td>
                 <td class="v-no-print"></td>
               </tr>
             </tfoot>
@@ -586,9 +586,9 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="table-toolbar">
           <span class="section-title">Expense Voucher</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost" onclick="mnsClearVoucher()">ð Clear</button>
-            <button class="btn btn-ghost" onclick="mnsPrintVoucher()">ð¨ Print (2 copies)</button>
-            <button class="btn btn-primary owner-only" onclick="mnsSaveVoucherAsEntry()">ð¾ Save as Purchase Entry</button>
+            <button class="btn btn-ghost" onclick="mnsClearVoucher()">Ã°ÂÂÂ Clear</button>
+            <button class="btn btn-ghost" onclick="mnsPrintVoucher()">Ã°ÂÂÂ¨ Print (2 copies)</button>
+            <button class="btn btn-primary owner-only" onclick="mnsSaveVoucherAsEntry()">Ã°ÂÂÂ¾ Save as Purchase Entry</button>
           </div>
         </div>
 
@@ -620,7 +620,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <!-- Amount in Words -->
           <div class="v-field-grp v-field-full">
             <span class="v-lbl">Amount (in words):</span>
-            <input class="v-inp v-inp-wide v-words" id="mv_amtWords" placeholder="Auto-filled from totalâ¦" readonly>
+            <input class="v-inp v-inp-wide v-words" id="mv_amtWords" placeholder="Auto-filled from totalÃ¢ÂÂ¦" readonly>
           </div>
 
           <!-- Line items -->
@@ -629,7 +629,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
               <tr>
                 <th style="width:52px;text-align:center">Sr No</th>
                 <th>Particulars</th>
-                <th style="width:130px;text-align:right">Amount (â¹)</th>
+                <th style="width:130px;text-align:right">Amount (Ã¢ÂÂ¹)</th>
                 <th class="v-no-print" style="width:34px"></th>
               </tr>
             </thead>
@@ -637,7 +637,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <tfoot>
               <tr class="v-total-row">
                 <td colspan="2" style="text-align:right;font-weight:700">Total Amount</td>
-                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="mv_total">â¹ 0.00</td>
+                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="mv_total">Ã¢ÂÂ¹ 0.00</td>
                 <td class="v-no-print"></td>
               </tr>
             </tfoot>
@@ -668,18 +668,18 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div><!-- /voucher-card -->
       </div><!-- /tab-mns-voucher -->
 
-      <!-- âââ SHIPROCKET TAB âââ -->
+      <!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ SHIPROCKET TAB Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
       <div id="tab-shiprocket" class="tab-content">
 
         <div class="table-toolbar">
-          <span class="section-title">ð Shiprocket Passbook</span>
+          <span class="section-title">Ã°ÂÂÂ Shiprocket Passbook</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
             <select id="srMonthSel" class="form-input" style="width:auto;padding:5px 10px;font-size:.78rem" onchange="srFilterMonth()">
               <option value="all">All Reports</option>
             </select>
-            <button class="btn btn-ghost" onclick="srCheckGmail()" title="Scan muktakash1964@gmail.com for new Shiprocket passbook emails">ð§ Check Gmail</button>
-            <button class="btn btn-ghost" onclick="srCopyTable()" title="Copy table to clipboard">ð Copy</button>
-            <button class="btn btn-primary" onclick="srDownloadCSV()" title="Download current view as CSV">â¬ Download CSV</button>
+            <button class="btn btn-ghost" onclick="srCheckGmail()" title="Scan muktakash1964@gmail.com for new Shiprocket passbook emails">Ã°ÂÂÂ§ Check Gmail</button>
+            <button class="btn btn-ghost" onclick="srCopyTable()" title="Copy table to clipboard">Ã°ÂÂÂ Copy</button>
+            <button class="btn btn-primary" onclick="srDownloadCSV()" title="Download current view as CSV">Ã¢Â¬Â Download CSV</button>
           </div>
         </div>
 
@@ -690,12 +690,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <div style="font-size:.7rem;color:var(--muted)">Drag &amp; drop or browse the CSV file Shiprocket emailed you</div>
           </div>
           <label style="cursor:pointer;background:var(--indigo);color:#fff;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:700;white-space:nowrap">
-            ð Upload CSV
+            Ã°ÂÂÂ Upload CSV
             <input type="file" accept=".csv,text/csv" style="display:none" onchange="srLoadFile(event)">
           </label>
           <div id="srGmailLinkBox" style="display:none;flex:1">
             <div style="font-size:.72rem;color:var(--muted);margin-bottom:3px">Latest Shiprocket email link:</div>
-            <a id="srGmailLink" href="#" target="_blank" style="font-size:.75rem;color:var(--indigo);font-weight:600;word-break:break-all">â</a>
+            <a id="srGmailLink" href="#" target="_blank" style="font-size:.75rem;color:var(--indigo);font-weight:600;word-break:break-all">Ã¢ÂÂ</a>
           </div>
           <div id="srStatus" style="font-size:.72rem;color:var(--muted)"></div>
         </div>
@@ -718,7 +718,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
 
       </div><!-- /tab-shiprocket -->
 
-      <!-- âââ REPORTS TAB âââ -->
+      <!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORTS TAB Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
       <div id="tab-reports" class="tab-content">
         <div class="table-toolbar">
           <span class="section-title">Platform Reports</span>
@@ -739,7 +739,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option value="2026-12">December 2026</option><option value="2027-01">January 2027</option>
             <option value="2027-02">February 2027</option><option value="2027-03">March 2027</option>
           </select>
-          <button class="filter-clear" onclick="document.getElementById('rf_platform').value='';document.getElementById('rf_month').value='';renderReports();">â Clear</button>
+          <button class="filter-clear" onclick="document.getElementById('rf_platform').value='';document.getElementById('rf_month').value='';renderReports();">Ã¢ÂÂ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Month</th><th>Platform</th><th>Report Name</th><th>Drive Link</th><th class="owner-only"></th></tr></thead>
@@ -751,12 +751,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
   </main>
 </div>
 
-<!-- âââ ADD / EDIT MODAL âââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ ADD / EDIT MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-header">
       <h2 id="modalTitle">Add Entry</h2>
-      <button class="modal-close" onclick="closeModal()">â</button>
+      <button class="modal-close" onclick="closeModal()">Ã¢ÂÂ</button>
     </div>
     <div class="modal-body">
 
@@ -765,19 +765,19 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="form-group" style="margin-bottom:0">
           <label>Currency</label>
           <select class="form-input" id="m_currency" onchange="onCurrencyChange()">
-            <option value="INR">â¹ INR â Indian Rupee</option>
-            <option value="USD">$ USD â US Dollar</option>
-            <option value="EUR">â¬ EUR â Euro</option>
-            <option value="GBP">Â£ GBP â British Pound</option>
-            <option value="AED">Ø¯.Ø¥ AED â UAE Dirham</option>
-            <option value="JPY">Â¥ JPY â Japanese Yen</option>
-            <option value="CAD">C$ CAD â Canadian Dollar</option>
-            <option value="AUD">A$ AUD â Australian Dollar</option>
-            <option value="SGD">S$ SGD â Singapore Dollar</option>
+            <option value="INR">Ã¢ÂÂ¹ INR Ã¢ÂÂ Indian Rupee</option>
+            <option value="USD">$ USD Ã¢ÂÂ US Dollar</option>
+            <option value="EUR">Ã¢ÂÂ¬ EUR Ã¢ÂÂ Euro</option>
+            <option value="GBP">ÃÂ£ GBP Ã¢ÂÂ British Pound</option>
+            <option value="AED">ÃÂ¯.ÃÂ¥ AED Ã¢ÂÂ UAE Dirham</option>
+            <option value="JPY">ÃÂ¥ JPY Ã¢ÂÂ Japanese Yen</option>
+            <option value="CAD">C$ CAD Ã¢ÂÂ Canadian Dollar</option>
+            <option value="AUD">A$ AUD Ã¢ÂÂ Australian Dollar</option>
+            <option value="SGD">S$ SGD Ã¢ÂÂ Singapore Dollar</option>
           </select>
         </div>
         <div class="form-group" style="margin-bottom:0;display:flex;align-items:flex-end">
-          <span id="currencyBadge" style="font-size:1.3rem;font-weight:700;color:var(--indigo);padding-bottom:6px;">â¹</span>
+          <span id="currencyBadge" style="font-size:1.3rem;font-weight:700;color:var(--indigo);padding-bottom:6px;">Ã¢ÂÂ¹</span>
         </div>
       </div>
 
@@ -788,15 +788,15 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div class="form-group"><label>Invoice No. *</label><input class="form-input" type="text" id="s_invoice" placeholder="CB07/2026-27"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Amount (â¹) *</label><input class="form-input" type="number" id="s_amount" placeholder="0.00" step="0.01"></div>
-          <div class="form-group"><label>GST Amount (â¹)</label><input class="form-input" type="number" id="s_gst" placeholder="0.00" step="0.01"></div>
+          <div class="form-group"><label>Amount (Ã¢ÂÂ¹) *</label><input class="form-input" type="number" id="s_amount" placeholder="0.00" step="0.01"></div>
+          <div class="form-group"><label>GST Amount (Ã¢ÂÂ¹)</label><input class="form-input" type="number" id="s_gst" placeholder="0.00" step="0.01"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Platform *</label>
             <select class="form-input" id="s_platform"><option>Website (Shopify)</option><option>Offline Store</option><option>Amazon</option><option>Etsy</option><option>B2B</option><option>Other</option></select>
           </div>
           <div class="form-group"><label>Paid Via</label>
-            <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Debit Card</option><option value="">â</option></select>
+            <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Debit Card</option><option value="">Ã¢ÂÂ</option></select>
           </div>
         </div>
       </div>
@@ -811,7 +811,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
         <div class="form-group"><label>Particulars *</label><input class="form-input" type="text" id="p_particulars" placeholder="e.g. Shiprocket Courier"></div>
         <div class="form-row">
-          <div class="form-group"><label>Amount (â¹) *</label><input class="form-input" type="number" id="p_amount" placeholder="0.00" step="0.01"></div>
+          <div class="form-group"><label>Amount (Ã¢ÂÂ¹) *</label><input class="form-input" type="number" id="p_amount" placeholder="0.00" step="0.01"></div>
           <div class="form-group"><label>Payment Method</label>
             <select class="form-input" id="p_payment"><option>UPI</option><option>Bank</option><option>Cash</option><option>Debit Card</option><option>Credit Card</option></select>
           </div>
@@ -822,7 +822,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <div id="fixedForm" style="display:none">
         <div class="form-group"><label>Expense Name *</label><input class="form-input" type="text" id="f_name" placeholder="e.g. Google Workspace"></div>
         <div class="form-row">
-          <div class="form-group"><label>Amount (â¹) *</label><input class="form-input" type="number" id="f_amount"></div>
+          <div class="form-group"><label>Amount (Ã¢ÂÂ¹) *</label><input class="form-input" type="number" id="f_amount"></div>
           <div class="form-group"><label>Frequency</label><select class="form-input" id="f_basis"><option>Monthly</option><option>Annual</option><option>Quarterly</option></select></div>
         </div>
       </div>
@@ -831,12 +831,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <!-- SHARED FILE UPLOAD (shown for sale + purchase + fixed) -->
       <div id="uploadSection" class="upload-section" style="display:none">
         <div class="form-group">
-          <label>ð Attach Bills / Receipts</label>
+          <label>Ã°ÂÂÂ Attach Bills / Receipts</label>
           <div class="upload-zone" id="dropZone" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
             <div class="upload-placeholder" id="uploadPlaceholder">
-              <span class="up-icon">ð</span>
+              <span class="up-icon">Ã°ÂÂÂ</span>
               <div class="up-text">Drag &amp; drop files here</div>
-              <div class="up-hint">PDF, JPG, PNG, HEIC â max 8 MB each Â· multiple files allowed</div>
+              <div class="up-hint">PDF, JPG, PNG, HEIC Ã¢ÂÂ max 8 MB each ÃÂ· multiple files allowed</div>
               <label class="browse-btn" title="Select files from your computer">
                 + Add Files
                 <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple onchange="onFileSelect(event)">
@@ -846,10 +846,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div class="file-list" id="fileList"></div>
           <div class="upload-progress" id="uploadProgress">
             <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
-            <div class="progress-label" id="progressLabel">Uploadingâ¦</div>
+            <div class="progress-label" id="progressLabel">UploadingÃ¢ÂÂ¦</div>
           </div>
-          <div class="link-hint" id="syncHint">ð Files will be uploaded to Google Drive when you save. <a href="#" onclick="openSettings();return false" style="color:var(--indigo);font-weight:600">Connect Google â</a></div>
-          <div class="link-hint" id="syncHintConnected" style="display:none;color:var(--green)">â Google Drive connected â files will upload automatically on Save.</div>
+          <div class="link-hint" id="syncHint">Ã°ÂÂÂ Files will be uploaded to Google Drive when you save. <a href="#" onclick="openSettings();return false" style="color:var(--indigo);font-weight:600">Connect Google Ã¢ÂÂ</a></div>
+          <div class="link-hint" id="syncHintConnected" style="display:none;color:var(--green)">Ã¢ÂÂ Google Drive connected Ã¢ÂÂ files will upload automatically on Save.</div>
         </div>
       </div>
 
@@ -861,37 +861,37 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
   </div>
 </div>
 
-<!-- âââ SETTINGS MODAL âââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ SETTINGS MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div class="modal-overlay" id="settingsModal">
   <div class="modal">
     <div class="modal-header">
-      <h2>â Settings &amp; Google Connection</h2>
-      <button class="modal-close" onclick="closeSettings()">â</button>
+      <h2>Ã¢ÂÂ Settings &amp; Google Connection</h2>
+      <button class="modal-close" onclick="closeSettings()">Ã¢ÂÂ</button>
     </div>
     <div class="modal-body">
       <div class="settings-section">
-        <h3>ð Google Sheets + Drive Sync</h3>
+        <h3>Ã°ÂÂÂ Google Sheets + Drive Sync</h3>
         <p style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.5">
           Paste your Apps Script Web App URL below. New entries will be written to your Google Sheet
           and uploaded files will go to Google Drive automatically.
-          <br><a href="#" onclick="openSetupGuide();return false" style="color:var(--indigo);font-weight:600">How to get this URL? â</a>
+          <br><a href="#" onclick="openSetupGuide();return false" style="color:var(--indigo);font-weight:600">How to get this URL? Ã¢ÂÂ</a>
         </p>
         <div class="conn-row">
           <div class="form-group">
             <label>Apps Script Web App URL</label>
-            <input class="form-input" type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/â¦/exec">
+            <input class="form-input" type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/Ã¢ÂÂ¦/exec">
           </div>
           <button class="btn btn-ghost" style="margin-bottom:0;flex-shrink:0" onclick="testConnection()">Test</button>
         </div>
         <div class="conn-status" id="connStatus"></div>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-primary" onclick="saveScriptUrl()">Save &amp; Connect</button>
-          <button class="btn btn-success" id="syncFromSheetsBtn" onclick="syncFromSheets()" style="display:none">â Sync from Sheets</button>
+          <button class="btn btn-success" id="syncFromSheetsBtn" onclick="syncFromSheets()" style="display:none">Ã¢ÂÂ Sync from Sheets</button>
           <button class="btn btn-ghost" onclick="disconnectGoogle()" id="disconnectBtn" style="display:none">Disconnect</button>
         </div>
       </div>
       <div class="settings-section">
-        <h3>ð Change Passwords</h3>
+        <h3>Ã°ÂÂÂ Change Passwords</h3>
         <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px">Open <code style="background:#F1F5F9;padding:2px 5px;border-radius:4px">CB_Dashboard.html</code> in a text editor, find the <code style="background:#F1F5F9;padding:2px 5px;border-radius:4px">USERS</code> object, and update the <code>password</code> fields.</p>
         <div style="background:#F8FAFC;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:.74rem;color:var(--text)">
           owner: { password: '<strong>admin123</strong>' }<br>
@@ -899,15 +899,15 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
       </div>
       <div class="settings-section">
-        <h3>â Sync All to Google</h3>
+        <h3>Ã¢ÂÂ Sync All to Google</h3>
         <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px">Push every sale and purchase entry from this dashboard to Google Sheets in one go. This replaces the sheet contents with your current data.</p>
-        <button class="btn btn-primary" id="syncAllBtn" onclick="syncAllToGoogle()">â¬ Sync All Entries â Google Sheets</button>
+        <button class="btn btn-primary" id="syncAllBtn" onclick="syncAllToGoogle()">Ã¢Â¬Â Sync All Entries Ã¢ÂÂ Google Sheets</button>
         <div id="syncAllStatus" style="font-size:.72rem;margin-top:8px;display:none"></div>
       </div>
       <div class="settings-section">
-        <h3>ð Data Management</h3>
+        <h3>Ã°ÂÂÂ Data Management</h3>
         <button class="btn btn-danger" onclick="resetData()">Reset to original data (from spreadsheet)</button>
-        <p style="font-size:.68rem;color:var(--muted);margin-top:6px">This will delete all locally added entries and restore the original AprilâMay 2026 data.</p>
+        <p style="font-size:.68rem;color:var(--muted);margin-top:6px">This will delete all locally added entries and restore the original AprilÃ¢ÂÂMay 2026 data.</p>
       </div>
     </div>
     <div class="modal-footer">
@@ -916,12 +916,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
   </div>
 </div>
 
-<!-- âââ GMAIL SCAN MODAL âââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ GMAIL SCAN MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div class="modal-overlay" id="gmailModal">
   <div class="modal" style="max-width:600px">
     <div class="modal-header">
-      <h2>ð§ Gmail Invoice Scanner</h2>
-      <button class="modal-close" onclick="closeGmailModal()">â</button>
+      <h2>Ã°ÂÂÂ§ Gmail Invoice Scanner</h2>
+      <button class="modal-close" onclick="closeGmailModal()">Ã¢ÂÂ</button>
     </div>
     <div class="modal-body">
       <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.5">
@@ -931,8 +931,8 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       </p>
       <div id="gmailScanResults">
         <div style="text-align:center;padding:32px;color:var(--muted)">
-          <div style="font-size:1.8rem;margin-bottom:8px">ð¬</div>
-          <div style="font-size:.8rem">Scanning inboxâ¦</div>
+          <div style="font-size:1.8rem;margin-bottom:8px">Ã°ÂÂÂ¬</div>
+          <div style="font-size:.8rem">Scanning inboxÃ¢ÂÂ¦</div>
         </div>
       </div>
     </div>
@@ -946,9 +946,9 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  USERS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const USERS = {
   owner: { name:'Bhavya Kaushik', role:'Owner', initial:'B', password:'admin123' },
   ca:    { name:'Manoj Jain',     role:'CA',    initial:'M', password:'mj' }
@@ -986,7 +986,7 @@ function toggleAmounts(){
   amtsHidden=!amtsHidden;
   document.body.classList.toggle('hide-amt',amtsHidden);
   var btn=document.getElementById('hideAmtBtn');
-  btn.textContent=amtsHidden?'ð':'ð';
+  btn.textContent=amtsHidden?'Ã°ÂÂÂ':'Ã°ÂÂÂ';
   btn.title=amtsHidden?'Show amounts':'Hide amounts';
   btn.style.borderColor=amtsHidden?'#f87171':'#555';
   btn.style.color=amtsHidden?'#f87171':'#ccc';
@@ -996,13 +996,13 @@ function toggleAmounts(){
 function tagAmounts(){
   // KPI values
   document.querySelectorAll('.kpi-value,.kpi-sub').forEach(function(el){el.classList.add('amt-mask');});
-  // table cells containing â¹ symbol
+  // table cells containing Ã¢ÂÂ¹ symbol
   document.querySelectorAll('td,th').forEach(function(el){
-    if(el.textContent.trim().startsWith('â¹')) el.classList.add('amt-mask');
+    if(el.textContent.trim().startsWith('Ã¢ÂÂ¹')) el.classList.add('amt-mask');
   });
   // summary cards / stat numbers that contain rupee
   document.querySelectorAll('.stat-val,.summary-val,[class*="amount"],[class*="total"],[class*="value"]').forEach(function(el){
-    if(/â¹|Rs\./.test(el.textContent)) el.classList.add('amt-mask');
+    if(/Ã¢ÂÂ¹|Rs\./.test(el.textContent)) el.classList.add('amt-mask');
   });
 }
 function showApp() {
@@ -1020,9 +1020,9 @@ function showApp() {
 }
 const isOwner=()=>currentUser?.key==='owner';
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  SEED DATA
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const SEED_P=[
   {id:'p1', date:'2026-04-01',particulars:'Facebook Ads',               category:'Marketing',    amount:2563.74,paymentMethod:'UPI',       bill:'Facebook ads Spend'},
   {id:'p2', date:'2026-04-16',particulars:'Shopify Subscription',        category:'Platform Fees',amount:1994,   paymentMethod:'Bank',      bill:'Shopify Subscription invoice_516148102_3.pdf'},
@@ -1061,21 +1061,21 @@ const SEED_F=[
   {id:'f4',name:'Etsy Ads', amount:21000,basis:'Monthly'},
 ];
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  STATE
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let purchases=[],sales=[],fixedCosts=[];
 let filterMonth='all',currentModal=null,dataLoaded=false;
 let editingId=null,editingType=null;
 let barChart=null,pieChart=null;
-let attachedFile=null; // legacy â kept for compat; use attachedFiles[] below
+let attachedFile=null; // legacy Ã¢ÂÂ kept for compat; use attachedFiles[] below
 
 async function initData() {
   // Try Google Sheets first; fall back to localStorage cache, then seed data
   const url = getScriptUrl();
   if (url) {
     try {
-      showToast('Loading data from Google Sheetsâ¦','info');
+      showToast('Loading data from Google SheetsÃ¢ÂÂ¦','info');
       const result = await callScript({action:'getData'});
       if (result.ok) {
         const p = result.purchases  || [];
@@ -1087,13 +1087,13 @@ async function initData() {
           sales      = JSON.parse(localStorage.getItem('cb_sales')||'null')     || JSON.parse(JSON.stringify(SEED_S));
           fixedCosts = JSON.parse(localStorage.getItem('cb_fixed')||'null')     || JSON.parse(JSON.stringify(SEED_F));
           saveAll(); dataLoaded = true; render();
-          showToast('Sheet is empty â syncing all entries to Google Sheetsâ¦','info');
+          showToast('Sheet is empty Ã¢ÂÂ syncing all entries to Google SheetsÃ¢ÂÂ¦','info');
           // Auto-sync seed data up to Sheets
           try {
             const cleanS = sales.map(r=>({...r}));
             const cleanP = purchases.map(r=>({...r,attachments:[]}));
             await callScript({action:'syncAll', sales:cleanS, purchases:cleanP});
-            showToast('â All entries synced to Google Sheets','success');
+            showToast('Ã¢ÂÂ All entries synced to Google Sheets','success');
           } catch(e) { showToast('Could not auto-sync to Sheets: '+e.message,'warning'); }
           return;
         }
@@ -1102,13 +1102,13 @@ async function initData() {
         fixedCosts = f;
         saveAll();
         dataLoaded = true;
-        showToast('â Data loaded from Google Sheets','success');
+        showToast('Ã¢ÂÂ Data loaded from Google Sheets','success');
         render();
         return;
       }
     } catch(err) {
       console.warn('Sheet load failed, using local cache:', err);
-      showToast('Could not reach Google Sheets â using local cache','warning');
+      showToast('Could not reach Google Sheets Ã¢ÂÂ using local cache','warning');
     }
   }
   purchases  = JSON.parse(localStorage.getItem('cb_purchases')||'null') || JSON.parse(JSON.stringify(SEED_P));
@@ -1125,7 +1125,7 @@ function saveAll() {
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
 
-// ââ Period pill state ââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Period pill state Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 var sPeriod='all', pPeriod='all';
 
 function setPeriod(tab, period, btn){
@@ -1163,7 +1163,7 @@ function getDateRange(period, fromId, toId){
   return {from, to:today};
 }
 
-// ââ Table-level filters ââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Table-level filters Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function applyTableFilters(tab){
   if(tab==='s'){
     const q=(document.getElementById('sf_search').value||'').toLowerCase();
@@ -1226,9 +1226,9 @@ function clearTableFilters(tab){
   }
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  GOOGLE SYNC
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function getScriptUrl(){return localStorage.getItem('cb_script_url')||'';}
 
 function updateSyncUI() {
@@ -1257,7 +1257,7 @@ function updateSyncUI() {
 
 async function syncFromSheets(){
   const btn=document.getElementById('syncFromSheetsBtn');
-  if(btn){btn.disabled=true;btn.textContent='Syncingâ¦';}
+  if(btn){btn.disabled=true;btn.textContent='SyncingÃ¢ÂÂ¦';}
   try{
     const result=await callScript({action:'getData'});
     if(result.ok){
@@ -1265,14 +1265,14 @@ async function syncFromSheets(){
       sales      = result.sales      || [];
       fixedCosts = result.fixedCosts || [];
       saveAll();render();
-      showToast('â Data refreshed from Google Sheets','success');
+      showToast('Ã¢ÂÂ Data refreshed from Google Sheets','success');
     } else {
       showToast('Sync failed: '+(result.error||'Unknown error'),'error');
     }
   } catch(err){
     showToast('Sync failed: '+err.message,'error');
   } finally {
-    if(btn){btn.disabled=false;btn.textContent='â Sync from Sheets';}
+    if(btn){btn.disabled=false;btn.textContent='Ã¢ÂÂ Sync from Sheets';}
   }
 }
 
@@ -1292,13 +1292,13 @@ async function testConnection() {
   const url=document.getElementById('scriptUrlInput').value.trim();
   const status=document.getElementById('connStatus');
   if(!url){status.className='conn-status err';status.textContent='Please enter a URL first.';return;}
-  status.className='conn-status ok';status.textContent='Testingâ¦';
+  status.className='conn-status ok';status.textContent='TestingÃ¢ÂÂ¦';
   try {
     const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'ping'})});
     const d=await r.json();
-    status.className='conn-status ok';status.textContent='â '+d.message;
+    status.className='conn-status ok';status.textContent='Ã¢ÂÂ '+d.message;
   } catch(e){
-    status.className='conn-status err';status.textContent='â Could not connect. Check the URL and make sure the script is deployed as "Anyone" access.';
+    status.className='conn-status err';status.textContent='Ã¢ÂÂ Could not connect. Check the URL and make sure the script is deployed as "Anyone" access.';
   }
 }
 
@@ -1308,7 +1308,7 @@ async function saveScriptUrl() {
   localStorage.setItem('cb_script_url',url);
   updateSyncUI();
   closeSettings();
-  showToast('Google connected â loading data from Sheetâ¦','info');
+  showToast('Google connected Ã¢ÂÂ loading data from SheetÃ¢ÂÂ¦','info');
   try{
     const result=await callScript({action:'getData'});
     if(result.ok){
@@ -1316,7 +1316,7 @@ async function saveScriptUrl() {
       sales      = result.sales      || [];
       fixedCosts = result.fixedCosts || [];
       saveAll();render();
-      showToast('â Connected! Data loaded from Google Sheets.','success');
+      showToast('Ã¢ÂÂ Connected! Data loaded from Google Sheets.','success');
     }
   } catch(err){
     showToast('Connected but could not load data: '+err.message,'warning');
@@ -1328,31 +1328,31 @@ async function syncAllToGoogle(){
   if(!getScriptUrl()){showToast('Connect Google first in Settings','error');return;}
   const btn=document.getElementById('syncAllBtn');
   const status=document.getElementById('syncAllStatus');
-  btn.disabled=true;btn.textContent='Syncingâ¦';
-  status.style.display='block';status.style.color='var(--muted)';status.textContent='Sending all entries to Google Sheetsâ¦';
+  btn.disabled=true;btn.textContent='SyncingÃ¢ÂÂ¦';
+  status.style.display='block';status.style.color='var(--muted)';status.textContent='Sending all entries to Google SheetsÃ¢ÂÂ¦';
   try{
-    // Strip large base64 data before sending to keep payload small â Drive URL already stored
+    // Strip large base64 data before sending to keep payload small Ã¢ÂÂ Drive URL already stored
     const cleanSales=sales.map(r=>({...r,attachments:(r.attachments||[]).map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}))}));
     const cleanPurchases=purchases.map(r=>({...r,attachments:(r.attachments||[]).map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}))}));
     const result=await callScript({action:'syncAll',sales:cleanSales,purchases:cleanPurchases});
     if(result.ok){
       status.style.color='var(--green)';
-      status.textContent='â Synced '+result.salesCount+' sales + '+result.purchasesCount+' purchases to Google Sheets.';
-      showToast('â All entries synced to Google Sheets!','success');
+      status.textContent='Ã¢ÂÂ Synced '+result.salesCount+' sales + '+result.purchasesCount+' purchases to Google Sheets.';
+      showToast('Ã¢ÂÂ All entries synced to Google Sheets!','success');
     } else {
       throw new Error(result.error||'Unknown error');
     }
   }catch(err){
     status.style.color='var(--red)';
-    status.textContent='â Sync failed: '+err.message;
+    status.textContent='Ã¢ÂÂ Sync failed: '+err.message;
     showToast('Sync failed: '+err.message,'error');
   }
-  btn.disabled=false;btn.textContent='â¬ Sync All Entries â Google Sheets';
+  btn.disabled=false;btn.textContent='Ã¢Â¬Â Sync All Entries Ã¢ÂÂ Google Sheets';
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  FILE UPLOAD
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 var attachedFiles=[]; // array of {name, mimeType, data (base64), size, objectUrl?}
 
 function onDragOver(e){e.preventDefault();document.getElementById('dropZone').classList.add('dragging');}
@@ -1391,14 +1391,14 @@ function renderFileList(){
   if(!list)return;
   if(!attachedFiles.length){list.innerHTML='';return;}
   list.innerHTML=attachedFiles.map((f,i)=>{
-    const icon=f.mimeType==='application/pdf'?'ð':(f.mimeType.startsWith('image/')?'ð¼':'ð');
+    const icon=f.mimeType==='application/pdf'?'Ã°ÂÂÂ':(f.mimeType.startsWith('image/')?'Ã°ÂÂÂ¼':'Ã°ÂÂÂ');
     return`<div class="file-item">
       <span class="file-item-icon">${icon}</span>
       <div class="file-item-meta">
         <div class="file-item-name" title="${f.name}">${f.name}</div>
         <div class="file-item-size">${formatBytes(f.size)}</div>
       </div>
-      <button class="file-item-rm" onclick="removeAttachedFile(${i})">â</button>
+      <button class="file-item-rm" onclick="removeAttachedFile(${i})">Ã¢ÂÂ</button>
     </div>`;
   }).join('');
 }
@@ -1426,9 +1426,9 @@ function showProgress(pct,label) {
 function hideProgress(){document.getElementById('uploadProgress').classList.remove('show');}
 function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toFixed(1)+'KB';return(b/(1024*1024)).toFixed(1)+'MB';}
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  RENDER
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function render() {
   const fS=filtered(sales),fP=filtered(purchases);
   const tS=fS.reduce((s,r)=>s+(+r.amount||0),0);
@@ -1461,7 +1461,7 @@ function renderBarChart() {
     {label:'Expenses',data:pD,backgroundColor:'rgba(239,68,68,.65)',borderRadius:4}
   ]},options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{position:'top',labels:{font:{size:10}}}},
-    scales:{y:{ticks:{callback:v=>'â¹'+(v>=1000?(v/1000).toFixed(0)+'k':v),font:{size:9}},grid:{color:'#F1F5F9'}},
+    scales:{y:{ticks:{callback:v=>'Ã¢ÂÂ¹'+(v>=1000?(v/1000).toFixed(0)+'k':v),font:{size:9}},grid:{color:'#F1F5F9'}},
             x:{ticks:{font:{size:9}},grid:{display:false}}}}});
 }
 
@@ -1475,10 +1475,10 @@ function renderPieChart(fS) {
   pieChart=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors.slice(0,labels.length),borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}},
-               tooltip:{callbacks:{label:c=>` â¹${c.parsed.toLocaleString('en-IN')}`}}}}});
+               tooltip:{callbacks:{label:c=>` Ã¢ÂÂ¹${c.parsed.toLocaleString('en-IN')}`}}}}});
 }
 
-// Base folder for local file links â update if files are stored elsewhere
+// Base folder for local file links Ã¢ÂÂ update if files are stored elsewhere
 const BILLS_FOLDER = '/Users/bhavyakaushik/Documents/Claude/Projects/Chutak Binak : MNS Firm Bills/';
 
 function billCell(bill, attachments) {
@@ -1488,11 +1488,11 @@ function billCell(bill, attachments) {
   if(attachments&&attachments.length){
     attachments.forEach(function(a){
       if(a.driveUrl){
-        chips.push(`<a class="bill-link" href="${a.driveUrl}" target="_blank" rel="noopener" title="${a.name}">â ${a.name.length>18?a.name.slice(0,16)+'â¦':a.name}</a>`);
+        chips.push(`<a class="bill-link" href="${a.driveUrl}" target="_blank" rel="noopener" title="${a.name}">Ã¢ÂÂ ${a.name.length>18?a.name.slice(0,16)+'Ã¢ÂÂ¦':a.name}</a>`);
       } else if(a.data){
-        // embedded base64 â create data URL link
+        // embedded base64 Ã¢ÂÂ create data URL link
         const dataUrl='data:'+a.mimeType+';base64,'+a.data;
-        chips.push(`<a class="bill-link file-link" href="${dataUrl}" download="${a.name}" target="_blank" title="${a.name}">ð ${a.name.length>18?a.name.slice(0,16)+'â¦':a.name}</a>`);
+        chips.push(`<a class="bill-link file-link" href="${dataUrl}" download="${a.name}" target="_blank" title="${a.name}">Ã°ÂÂÂ ${a.name.length>18?a.name.slice(0,16)+'Ã¢ÂÂ¦':a.name}</a>`);
       }
     });
   }
@@ -1502,16 +1502,16 @@ function billCell(bill, attachments) {
     const b=bill.trim();
     if(b.startsWith('http://')||b.startsWith('https://')||b.startsWith('www.')||b.includes('drive.google.com')||b.includes('docs.google.com')){
       const url=(b.startsWith('http://')||b.startsWith('https://'))?b:'https://'+b;
-      const name=url.includes('drive.google.com')||url.includes('docs.google.com')?'â Drive':'ð Open';
+      const name=url.includes('drive.google.com')||url.includes('docs.google.com')?'Ã¢ÂÂ Drive':'Ã°ÂÂÂ Open';
       chips.push(`<a class="bill-link" href="${url}" target="_blank" rel="noopener">${name}</a>`);
     } else {
-      // Plain filename â no Drive link yet; show as a muted label (click â to add Drive link)
-      const short=b.length>22?b.slice(0,20)+'â¦':b;
-      chips.push(`<span title="${b} â click â to add Google Drive link" style="font-size:.71rem;color:var(--muted);background:#F1F5F9;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px;cursor:default;">ð ${short}</span>`);
+      // Plain filename Ã¢ÂÂ no Drive link yet; show as a muted label (click Ã¢ÂÂ to add Drive link)
+      const short=b.length>22?b.slice(0,20)+'Ã¢ÂÂ¦':b;
+      chips.push(`<span title="${b} Ã¢ÂÂ click Ã¢ÂÂ to add Google Drive link" style="font-size:.71rem;color:var(--muted);background:#F1F5F9;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px;cursor:default;">Ã°ÂÂÂ ${short}</span>`);
     }
   }
 
-  if(!chips.length)return'<span style="color:var(--muted);font-size:.72rem">â</span>';
+  if(!chips.length)return'<span style="color:var(--muted);font-size:.72rem">Ã¢ÂÂ</span>';
   return`<div class="att-chips">${chips.join('')}</div>`;
 }
 
@@ -1522,16 +1522,16 @@ function renderSalesTable(data){
     if(editingType==='sale'&&editingId===r.id)return salesEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
-      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'â'}</td>
+      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'Ã¢ÂÂ'}</td>
       <td class="amount-income">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#EEF2FF;color:var(--indigo);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}</td>
-      <td>${r.gst?fmtCur(r.gst,r.currency):'â'}</td>
+      <td>${r.gst?fmtCur(r.gst,r.currency):'Ã¢ÂÂ'}</td>
       <td><span class="pill ${platCls(r.platform)}">${r.platform}</span></td>
-      <td><span class="pill ${pmCls(r.paidVia)}">${r.paidVia||'â'}</span></td>
+      <td><span class="pill ${pmCls(r.paidVia)}">${r.paidVia||'Ã¢ÂÂ'}</span></td>
       <td>${billCell(r.bill,r.attachments)}</td>
       <td class="owner-only" style="${isOwner()?'':'display:none'}">
         <div class="actions-cell">
-          <button class="btn btn-ghost btn-icon" onclick="startEdit('sale','${r.id}')">â</button>
-          <button class="btn btn-danger btn-icon" onclick="delEntry('sale','${r.id}')">â</button>
+          <button class="btn btn-ghost btn-icon" onclick="startEdit('sale','${r.id}')">Ã¢ÂÂ</button>
+          <button class="btn btn-danger btn-icon" onclick="delEntry('sale','${r.id}')">Ã¢ÂÂ</button>
         </div>
       </td>
     </tr>`;
@@ -1548,18 +1548,18 @@ function salesEditRow(r){
       ${['Website (Shopify)','Offline Store','Amazon','Etsy','B2B','Other'].map(p=>`<option${r.platform===p?' selected':''}>${p}</option>`).join('')}
     </select></td>
     <td><select class="edit-select" id="e_paidvia" style="min-width:110px">
-      ${['UPI','Bank','Cash','Bank (Amazon)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'â'}</option>`).join('')}
+      ${['UPI','Bank','Cash','Bank (Amazon)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'Ã¢ÂÂ'}</option>`).join('')}
     </select></td>
     <td style="min-width:200px">
-      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive linkâ¦" style="width:100%;margin-bottom:4px;font-size:.72rem">
-      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">ð${a.name.length>16?a.name.slice(0,14)+'â¦':a.name}<button onclick="removeEditAttachment('sale','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">â</button></span>`).join(''):''}
+      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive linkÃ¢ÂÂ¦" style="width:100%;margin-bottom:4px;font-size:.72rem">
+      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">Ã°ÂÂÂ${a.name.length>16?a.name.slice(0,14)+'Ã¢ÂÂ¦':a.name}<button onclick="removeEditAttachment('sale','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">Ã¢ÂÂ</button></span>`).join(''):''}
       <label style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;border:1px dashed #86efac;border-radius:5px;padding:2px 7px;font-size:.7rem;color:#15803d;cursor:pointer;font-weight:600;">
         + Add File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple style="display:none" onchange="addEditFile(event,'sale','${r.id}')">
       </label>
     </td>
     <td><div class="actions-cell">
-      <button class="btn btn-success btn-sm" onclick="saveEdit('sale','${r.id}')">â</button>
-      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">â</button>
+      <button class="btn btn-success btn-sm" onclick="saveEdit('sale','${r.id}')">Ã¢ÂÂ</button>
+      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Ã¢ÂÂ</button>
     </div></td>
   </tr>`;
 }
@@ -1572,14 +1572,14 @@ function renderPurchasesTable(data){
     return`<tr>
       <td>${fmtDate(r.date)}</td>
       <td>${r.particulars}</td>
-      <td><span class="pill" style="background:#F1F5F9;color:var(--muted)">${r.category||'â'}</span></td>
+      <td><span class="pill" style="background:#F1F5F9;color:var(--muted)">${r.category||'Ã¢ÂÂ'}</span></td>
       <td class="amount-expense">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#FEF2F2;color:var(--red);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}</td>
-      <td><span class="pill ${pmCls(r.paymentMethod)}">${r.paymentMethod||'â'}</span></td>
+      <td><span class="pill ${pmCls(r.paymentMethod)}">${r.paymentMethod||'Ã¢ÂÂ'}</span></td>
       <td>${billCell(r.bill,r.attachments)}</td>
       <td class="owner-only" style="${isOwner()?'':'display:none'}">
         <div class="actions-cell">
-          <button class="btn btn-ghost btn-icon" onclick="startEdit('purchase','${r.id}')">â</button>
-          <button class="btn btn-danger btn-icon" onclick="delEntry('purchase','${r.id}')">â</button>
+          <button class="btn btn-ghost btn-icon" onclick="startEdit('purchase','${r.id}')">Ã¢ÂÂ</button>
+          <button class="btn btn-danger btn-icon" onclick="delEntry('purchase','${r.id}')">Ã¢ÂÂ</button>
         </div>
       </td>
     </tr>`;
@@ -1600,15 +1600,15 @@ function purchaseEditRow(r){
       ${pms.map(p=>`<option${r.paymentMethod===p?' selected':''}>${p}</option>`).join('')}
     </select></td>
     <td style="min-width:200px">
-      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive linkâ¦" style="width:100%;margin-bottom:4px;font-size:.72rem">
-      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">ð${a.name.length>16?a.name.slice(0,14)+'â¦':a.name}<button onclick="removeEditAttachment('purchase','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">â</button></span>`).join(''):''}
+      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive linkÃ¢ÂÂ¦" style="width:100%;margin-bottom:4px;font-size:.72rem">
+      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">Ã°ÂÂÂ${a.name.length>16?a.name.slice(0,14)+'Ã¢ÂÂ¦':a.name}<button onclick="removeEditAttachment('purchase','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">Ã¢ÂÂ</button></span>`).join(''):''}
       <label style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;border:1px dashed #86efac;border-radius:5px;padding:2px 7px;font-size:.7rem;color:#15803d;cursor:pointer;font-weight:600;">
         + Add File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple style="display:none" onchange="addEditFile(event,'purchase','${r.id}')">
       </label>
     </td>
     <td><div class="actions-cell">
-      <button class="btn btn-success btn-sm" onclick="saveEdit('purchase','${r.id}')">â</button>
-      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">â</button>
+      <button class="btn btn-success btn-sm" onclick="saveEdit('purchase','${r.id}')">Ã¢ÂÂ</button>
+      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Ã¢ÂÂ</button>
     </div></td>
   </tr>`;
 }
@@ -1647,9 +1647,9 @@ async function saveEdit(type,id){
     try{
       const action=type==='sale'?'editSale':'editPurchase';
       await callScript({action,entry:r});
-      showToast('â Edit synced to Google Sheets','success');
+      showToast('Ã¢ÂÂ Edit synced to Google Sheets','success');
     }catch(err){
-      showToast('â  Saved locally. Sync failed: '+err.message,'warning');
+      showToast('Ã¢ÂÂ  Saved locally. Sync failed: '+err.message,'warning');
     }
   }
 }
@@ -1692,7 +1692,7 @@ function renderFixedGrid(){
           <div class="fixed-basis">${f.basis}</div>
           ${(f.attachments&&f.attachments.length)?`<div style="margin-top:6px">${billCell('',f.attachments)}</div>`:''}
         </div>
-        ${isOwner()?`<button class="btn btn-danger btn-icon owner-only" onclick="delEntry('fixed','${f.id}')">â</button>`:''}
+        ${isOwner()?`<button class="btn btn-danger btn-icon owner-only" onclick="delEntry('fixed','${f.id}')">Ã¢ÂÂ</button>`:''}
       </div>
     </div>`).join('');
 }
@@ -1727,9 +1727,9 @@ function renderOverview(fS,fP,tS,tE,tG,net){
     </div>`;
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  MODAL
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function openModal(type){
   if(!isOwner())return;
   currentModal=type;
@@ -1737,14 +1737,14 @@ function openModal(type){
   document.getElementById('purchaseForm').style.display=type==='purchase'?'block':'none';
   document.getElementById('fixedForm').style.display   =type==='fixed'   ?'block':'none';
   document.getElementById('uploadSection').style.display='block';
-  document.getElementById('modalTitle').textContent={sale:'ð° Add Sale / Income',purchase:'ð§¾ Add Purchase / Expense',fixed:'ð Add Fixed Cost'}[type];
+  document.getElementById('modalTitle').textContent={sale:'Ã°ÂÂÂ° Add Sale / Income',purchase:'Ã°ÂÂ§Â¾ Add Purchase / Expense',fixed:'Ã°ÂÂÂ Add Fixed Cost'}[type];
   clearFile();
   const today=new Date().toISOString().split('T')[0];
   if(type==='sale')    {document.getElementById('s_date').value=today;['s_invoice','s_amount','s_gst','s_bill'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';})}
   if(type==='purchase'){document.getElementById('p_date').value=today;['p_particulars','p_amount','p_bill'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';})}
   if(type==='fixed')   {['f_name','f_amount'].forEach(id=>document.getElementById(id).value='');}
   document.getElementById('m_currency').value='INR';
-  document.getElementById('currencyBadge').textContent='â¹';
+  document.getElementById('currencyBadge').textContent='Ã¢ÂÂ¹';
   document.getElementById('modal').classList.add('open');
   // Show correct sync hint
   const hasGoogle=!!getScriptUrl();
@@ -1796,19 +1796,19 @@ async function saveEntry(){
 
   // Disable save button while working
   const btn=document.getElementById('saveBtn');
-  btn.disabled=true;btn.textContent='Savingâ¦';
+  btn.disabled=true;btn.textContent='SavingÃ¢ÂÂ¦';
 
   const scriptUrl=getScriptUrl();
 
   if(scriptUrl&&entry&&attachedFiles.length){
     try{
-      showProgress(15,'Connecting to Googleâ¦');
+      showProgress(15,'Connecting to GoogleÃ¢ÂÂ¦');
       const action=currentModal==='sale'?'addSale':'addPurchase';
       // Upload files one by one, collect Drive URLs
       const driveUrls=[];
       for(let i=0;i<attachedFiles.length;i++){
         const f=attachedFiles[i];
-        showProgress(Math.round(15+60*(i/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')â¦');
+        showProgress(Math.round(15+60*(i/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')Ã¢ÂÂ¦');
         const result=await callScript({action,entry,file:f});
         if(result.ok&&result.driveUrl) driveUrls.push(result.driveUrl);
       }
@@ -1816,29 +1816,29 @@ async function saveEntry(){
         entry.bill=driveUrls[0]; // keep legacy field for backward compat
         // update attachment records with drive URLs
         driveUrls.forEach((url,i)=>{if(entry.attachments[i])entry.attachments[i].driveUrl=url;});
-        showToast('â Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
+        showToast('Ã¢ÂÂ Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
       } else {
-        showToast('â Entry saved. Files may not have uploaded â check Drive.','warning');
+        showToast('Ã¢ÂÂ Entry saved. Files may not have uploaded Ã¢ÂÂ check Drive.','warning');
       }
       showProgress(100,'Done!');
       setTimeout(hideProgress,900);
     }catch(err){
       hideProgress();
       console.error('Google sync error:',err);
-      showToast('â  Saved locally. Google sync failed: '+err.message,'warning');
+      showToast('Ã¢ÂÂ  Saved locally. Google sync failed: '+err.message,'warning');
     }
   } else if(scriptUrl&&entry){
     try{
       const action=currentModal==='sale'?'addSale':'addPurchase';
-      showProgress(40,'Writing entry to Google Sheetâ¦');
+      showProgress(40,'Writing entry to Google SheetÃ¢ÂÂ¦');
       const result=await callScript({action,entry,file:null});
       showProgress(100,'Done!');
       setTimeout(hideProgress,900);
-      if(result.ok) showToast('â Entry saved to Google Sheet.','success');
+      if(result.ok) showToast('Ã¢ÂÂ Entry saved to Google Sheet.','success');
       else throw new Error(result.error||'Unknown error');
-    }catch(err){hideProgress();showToast('â  Saved locally. Google sync failed: '+err.message,'warning');}
+    }catch(err){hideProgress();showToast('Ã¢ÂÂ  Saved locally. Google sync failed: '+err.message,'warning');}
   } else if(entry){
-    showToast('Saved locally. Open Settings (â) to connect Google.','info');
+    showToast('Saved locally. Open Settings (Ã¢ÂÂ) to connect Google.','info');
   }
 
   saveAll();render();
@@ -1856,7 +1856,7 @@ async function delEntry(type,id){
   saveAll();render();
   if(getScriptUrl()&&entry&&(type==='sale'||type==='purchase')){
     try{await callScript({action:'deleteEntry',type,entry});}
-    catch(e){/* silent â local already deleted */}
+    catch(e){/* silent Ã¢ÂÂ local already deleted */}
   }
 }
 
@@ -1871,7 +1871,7 @@ async function resetData(){
   localStorage.removeItem('cb_fixed');
   closeSettings();
   if(url){
-    showToast('Reloading from Google Sheetsâ¦','info');
+    showToast('Reloading from Google SheetsÃ¢ÂÂ¦','info');
     try{
       const result=await callScript({action:'getData'});
       if(result.ok){
@@ -1879,7 +1879,7 @@ async function resetData(){
         sales      = result.sales      || [];
         fixedCosts = result.fixedCosts || [];
         saveAll();render();
-        showToast('â Reloaded from Google Sheets','success');
+        showToast('Ã¢ÂÂ Reloaded from Google Sheets','success');
         return;
       }
     } catch(err){showToast('Could not reach Sheets: '+err.message,'warning');}
@@ -1888,9 +1888,9 @@ async function resetData(){
   showToast('Data reset.','info');
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  SETTINGS MODAL
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function openSettings(){
   document.getElementById('connStatus').className='conn-status';
   document.getElementById('connStatus').textContent='';
@@ -1899,9 +1899,9 @@ function openSettings(){
 function closeSettings(){document.getElementById('settingsModal').classList.remove('open');}
 function openSetupGuide(){window.open('CB_Setup_Guide.html','_blank');}
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  TABS + EXPORT
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 let _voucherInited=false;
 function switchTab(name,btn){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
@@ -1919,12 +1919,12 @@ function exportSummary(){
   const tE=fP.reduce((s,r)=>s+(+r.amount||0),0);
   const tG=fS.reduce((s,r)=>s+(+r.gst||0),0);
   const period=filterMonth==='all'?'FY_2026-27':new Date(filterMonth+'-01').toLocaleString('default',{month:'long',year:'numeric'}).replace(/ /g,'_');
-  const lines=['MUKTAKASH NATYA SANSTHAN (CHUTAK BINAK)','Income & Expense Summary â '+period.replace(/_/g,' '),
+  const lines=['MUKTAKASH NATYA SANSTHAN (CHUTAK BINAK)','Income & Expense Summary Ã¢ÂÂ '+period.replace(/_/g,' '),
     'Generated: '+new Date().toLocaleString('en-IN'),'='.repeat(60),'',
-    'ââ SALES / INCOME ââ','Date\tInvoice No.\tAmount (INR)\tGST (INR)\tPlatform\tPaid Via\tBill / Link',
+    'Ã¢ÂÂÃ¢ÂÂ SALES / INCOME Ã¢ÂÂÃ¢ÂÂ','Date\tInvoice No.\tAmount (INR)\tGST (INR)\tPlatform\tPaid Via\tBill / Link',
     ...fS.map(r=>[r.date,r.invoiceNo,r.amount,r.gst||0,r.platform,r.paidVia,r.bill].join('\t')),
     '','TOTAL SALES: INR '+tS.toFixed(2),'GST COLLECTED: INR '+tG.toFixed(2),'NET SALES (excl GST): INR '+(tS-tG).toFixed(2),
-    '','ââ PURCHASES / EXPENSES ââ','Date\tParticulars\tCategory\tAmount (INR)\tPayment\tBill / Link',
+    '','Ã¢ÂÂÃ¢ÂÂ PURCHASES / EXPENSES Ã¢ÂÂÃ¢ÂÂ','Date\tParticulars\tCategory\tAmount (INR)\tPayment\tBill / Link',
     ...fP.map(r=>[r.date,r.particulars,r.category,r.amount,r.paymentMethod,r.bill].join('\t')),
     '','TOTAL EXPENSES: INR '+tE.toFixed(2),'','='.repeat(60),
     'NET PROFIT / LOSS: INR '+(tS-tE).toFixed(2),'='.repeat(60),'',
@@ -1934,34 +1934,34 @@ function exportSummary(){
   a.download='CB_Summary_'+period+'.txt';a.click();
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  TOAST
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function showToast(msg,type='info'){
   const wrap=document.getElementById('toastWrap');
   const div=document.createElement('div');
   div.className='toast '+(type||'info');
-  div.innerHTML=`<span style="flex:1">${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:1rem;opacity:.7;flex-shrink:0">â</button>`;
+  div.innerHTML=`<span style="flex:1">${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:1rem;opacity:.7;flex-shrink:0">Ã¢ÂÂ</button>`;
   wrap.appendChild(div);
   setTimeout(()=>div.style.animation='slideIn .25s ease reverse',3500);
   setTimeout(()=>div.remove(),3750);
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  HELPERS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const CURRENCIES=[
-  {code:'INR',sym:'â¹',locale:'en-IN'},
+  {code:'INR',sym:'Ã¢ÂÂ¹',locale:'en-IN'},
   {code:'USD',sym:'$',locale:'en-US'},
-  {code:'EUR',sym:'â¬',locale:'de-DE'},
-  {code:'GBP',sym:'Â£',locale:'en-GB'},
-  {code:'AED',sym:'Ø¯.Ø¥',locale:'ar-AE'},
-  {code:'JPY',sym:'Â¥',locale:'ja-JP'},
+  {code:'EUR',sym:'Ã¢ÂÂ¬',locale:'de-DE'},
+  {code:'GBP',sym:'ÃÂ£',locale:'en-GB'},
+  {code:'AED',sym:'ÃÂ¯.ÃÂ¥',locale:'ar-AE'},
+  {code:'JPY',sym:'ÃÂ¥',locale:'ja-JP'},
   {code:'CAD',sym:'C$',locale:'en-CA'},
   {code:'AUD',sym:'A$',locale:'en-AU'},
   {code:'SGD',sym:'S$',locale:'en-SG'},
 ];
-function getCurSym(code){const c=CURRENCIES.find(x=>x.code===(code||'INR'));return c?c.sym:'â¹';}
+function getCurSym(code){const c=CURRENCIES.find(x=>x.code===(code||'INR'));return c?c.sym:'Ã¢ÂÂ¹';}
 function fmtCur(n,code){
   const c=CURRENCIES.find(x=>x.code===(code||'INR'))||CURRENCIES[0];
   const num=(+(n||0)).toLocaleString(c.locale,{minimumFractionDigits:0,maximumFractionDigits:2});
@@ -1972,14 +1972,14 @@ function onCurrencyChange(){
   const sym=getCurSym(code);
   document.getElementById('currencyBadge').textContent=sym;
 }
-function fmt(n){return'â¹'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
-function fmtDate(s){if(!s)return'â';return new Date(s).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
+function fmt(n){return'Ã¢ÂÂ¹'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
+function fmtDate(s){if(!s)return'Ã¢ÂÂ';return new Date(s).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
 function pmCls(m){m=(m||'').toLowerCase();if(m.includes('upi'))return'pill-upi';if(m.includes('bank'))return'pill-bank';if(m.includes('cash'))return'pill-cash';if(m.includes('card'))return'pill-card';return'';}
 function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-amazon';if(p.includes('etsy'))return'pill-etsy';if(p.includes('b2b'))return'pill-b2b';if(p.includes('offline'))return'pill-offline';return'pill-shopify';}
 
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  VOUCHER
-// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 let _vRowCount = 0;
 
@@ -1999,7 +1999,7 @@ function addVoucherRow() {
     <td><input type="text" placeholder="Description of expense" oninput="updateVoucherTotal()" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;font-family:inherit;padding:2px 0"></td>
     <td><input type="number" placeholder="0.00" step="0.01" oninput="updateVoucherTotal()" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;text-align:right;font-family:inherit;padding:2px 0"></td>
     <td class="v-no-print" style="text-align:center;padding:4px">
-      <button class="v-del-btn" onclick="removeVoucherRow(this)">â</button>
+      <button class="v-del-btn" onclick="removeVoucherRow(this)">Ã¢ÂÂ</button>
     </td>`;
   document.getElementById('voucherRows').appendChild(tr);
 }
@@ -2015,7 +2015,7 @@ function removeVoucherRow(btn) {
 function updateVoucherTotal() {
   const total = Array.from(document.querySelectorAll('#voucherRows td:nth-child(3) input'))
     .reduce((s,i) => s + (parseFloat(i.value)||0), 0);
-  document.getElementById('v_total').textContent = 'â¹ ' + total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('v_total').textContent = 'Ã¢ÂÂ¹ ' + total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
   document.getElementById('v_amtWords').value = total > 0 ? amountToWords(total) : '';
 }
 
@@ -2078,7 +2078,7 @@ function saveVoucherAsEntry() {
   if(v.total<=0){showToast('Please enter at least one amount','error');return;}
 
   const firstPart = v.rows.find(r=>r.particulars)?.particulars||'';
-  const particulars = v.paidTo + (firstPart ? ' â '+firstPart : '');
+  const particulars = v.paidTo + (firstPart ? ' Ã¢ÂÂ '+firstPart : '');
   const entry={
     id:'p_'+Date.now(),
     date: v.date,
@@ -2091,7 +2091,7 @@ function saveVoucherAsEntry() {
 
   purchases.unshift(entry);
   saveAll(); render();
-  showToast('â Saved as Purchase Entry â â¹'+v.total.toLocaleString('en-IN'),'success');
+  showToast('Ã¢ÂÂ Saved as Purchase Entry Ã¢ÂÂ Ã¢ÂÂ¹'+v.total.toLocaleString('en-IN'),'success');
 
   // Sync to Google Sheet
   const url=localStorage.getItem('cb_script_url')||'';
@@ -2103,7 +2103,7 @@ function saveVoucherAsEntry() {
         paymentMethod:entry.paymentMethod, bill:entry.bill
       }})
     }).then(r=>r.json()).then(d=>{
-      if(d.ok) showToast('â Also synced to Google Sheet','success');
+      if(d.ok) showToast('Ã¢ÂÂ Also synced to Google Sheet','success');
     }).catch(()=>{});
   }
 }
@@ -2120,10 +2120,10 @@ function printVoucher() {
     <tr>
       <td style="text-align:center;border:1px solid #ccc;padding:6px 10px;width:50px">${i+1}</td>
       <td style="border:1px solid #ccc;padding:6px 10px">${r.particulars||'&nbsp;'}</td>
-      <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;width:120px">${r.amount?'â¹'+r.amount.toLocaleString('en-IN',{minimumFractionDigits:2}):'&nbsp;'}</td>
+      <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;width:120px">${r.amount?'Ã¢ÂÂ¹'+r.amount.toLocaleString('en-IN',{minimumFractionDigits:2}):'&nbsp;'}</td>
     </tr>`).join('');
 
-  const fmtTotal='â¹'+v.total.toLocaleString('en-IN',{minimumFractionDigits:2});
+  const fmtTotal='Ã¢ÂÂ¹'+v.total.toLocaleString('en-IN',{minimumFractionDigits:2});
   const pmOptions=['Cash','UPI','Bank','Cheque'].map(p=>`<span style="${p===v.paymentMode?'font-weight:900;text-decoration:underline':''}">${p}</span>`).join(' / ');
 
   const copyHTML=`
@@ -2143,7 +2143,7 @@ function printVoucher() {
       <thead><tr style="background:#EEF2FF">
         <th style="border:1px solid #ccc;padding:7px 10px;width:50px;text-align:center">Sr No</th>
         <th style="border:1px solid #ccc;padding:7px 10px;text-align:left">Particulars</th>
-        <th style="border:1px solid #ccc;padding:7px 10px;width:120px;text-align:right">Amount (â¹)</th>
+        <th style="border:1px solid #ccc;padding:7px 10px;width:120px;text-align:right">Amount (Ã¢ÂÂ¹)</th>
       </tr></thead>
       <tbody>${lineItems}</tbody>
       <tfoot><tr style="background:#EEF2FF">
@@ -2170,7 +2170,7 @@ function printVoucher() {
     </style>
   </head><body>
     ${copyHTML}
-    <div class="cut"><span>â&nbsp;&nbsp;Cut here â Office Copy</span></div>
+    <div class="cut"><span>Ã¢ÂÂ&nbsp;&nbsp;Cut here Ã¢ÂÂ Office Copy</span></div>
     ${copyHTML}
     <script>setTimeout(function(){window.print();},400);<\/script>
   </body></html>`);
@@ -2181,7 +2181,7 @@ document.getElementById('modal').addEventListener('click',e=>{if(e.target===docu
 document.getElementById('settingsModal').addEventListener('click',e=>{if(e.target===document.getElementById('settingsModal'))closeSettings();});
 document.getElementById('gmailModal').addEventListener('click',e=>{if(e.target===document.getElementById('gmailModal'))closeGmailModal();});
 
-// ââ GMAIL INVOICE SCANNER ââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ GMAIL INVOICE SCANNER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 function closeGmailModal(){
   document.getElementById('gmailModal').classList.remove('open');
@@ -2190,20 +2190,20 @@ function closeGmailModal(){
 function scanGmailInvoices(){
   const url=localStorage.getItem('cb_script_url')||'';
   if(!url){
-    showToast('Connect Google Sheets first (â Settings â Save & Connect)','error');
+    showToast('Connect Google Sheets first (Ã¢ÂÂ Settings Ã¢ÂÂ Save & Connect)','error');
     return;
   }
   // Open modal and show loading state
   document.getElementById('gmailModal').classList.add('open');
   document.getElementById('gmailScanResults').innerHTML=`
     <div style="text-align:center;padding:32px;color:var(--muted)">
-      <div style="font-size:1.8rem;margin-bottom:8px">ð¬</div>
-      <div style="font-size:.8rem">Scanning inboxâ¦</div>
+      <div style="font-size:1.8rem;margin-bottom:8px">Ã°ÂÂÂ¬</div>
+      <div style="font-size:.8rem">Scanning inboxÃ¢ÂÂ¦</div>
     </div>`;
 
   const btn=document.getElementById('gmailScanBtn');
   btn.disabled=true;
-  btn.textContent='ð§ Scanningâ¦';
+  btn.textContent='Ã°ÂÂÂ§ ScanningÃ¢ÂÂ¦';
 
   fetch(url, {
     method:'POST',
@@ -2213,13 +2213,13 @@ function scanGmailInvoices(){
   .then(r=>r.json())
   .then(data=>{
     btn.disabled=false;
-    btn.textContent='ð§ Scan Gmail for Invoices';
+    btn.textContent='Ã°ÂÂÂ§ Scan Gmail for Invoices';
     if(!data.ok){ renderGmailError(data.error||'Scan failed'); return; }
     renderGmailResults(data.invoices||[]);
   })
   .catch(err=>{
     btn.disabled=false;
-    btn.textContent='ð§ Scan Gmail for Invoices';
+    btn.textContent='Ã°ÂÂÂ§ Scan Gmail for Invoices';
     renderGmailError(err.toString());
   });
 }
@@ -2227,7 +2227,7 @@ function scanGmailInvoices(){
 function renderGmailError(msg){
   document.getElementById('gmailScanResults').innerHTML=`
     <div style="background:#FEF2F2;border-radius:8px;padding:16px;color:var(--red);font-size:.78rem">
-      â ï¸ ${msg}
+      Ã¢ÂÂ Ã¯Â¸Â ${msg}
     </div>`;
 }
 
@@ -2235,7 +2235,7 @@ function renderGmailResults(invoices){
   if(!invoices.length){
     document.getElementById('gmailScanResults').innerHTML=`
       <div style="text-align:center;padding:32px;color:var(--muted)">
-        <div style="font-size:1.8rem;margin-bottom:8px">â</div>
+        <div style="font-size:1.8rem;margin-bottom:8px">Ã¢ÂÂ</div>
         <div style="font-size:.8rem">No new invoice emails found in the last 90 days for the tracked vendors.</div>
       </div>`;
     return;
@@ -2256,7 +2256,7 @@ function renderGmailResults(invoices){
       html+=`<div style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid #F1F5F9;font-size:.75rem">
         <div>
           <div style="font-weight:600;color:var(--text)">${inv.subject}</div>
-          <div style="color:var(--muted);margin-top:2px">${inv.date} &nbsp;Â·&nbsp; ${inv.from}</div>
+          <div style="color:var(--muted);margin-top:2px">${inv.date} &nbsp;ÃÂ·&nbsp; ${inv.from}</div>
         </div>
         <button class="btn btn-primary" style="font-size:.7rem;padding:5px 11px;flex-shrink:0"
           onclick='prefillFromGmail(${escaped})'>Create Entry</button>
@@ -2289,13 +2289,13 @@ function prefillFromGmail(inv){
   }, 150);
 }
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  BOOT
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  MNS VOUCHER (Muktakash Natya Sansthan)
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 var _mnsVoucherInited=false;
 var _mnsVRowCount=0;
 
@@ -2313,7 +2313,7 @@ function mnsAddVoucherRow(){
   tr.innerHTML=`<td style="width:36px;text-align:center;border:1px solid #ccc;padding:4px">${_mnsVRowCount}</td>
     <td style="border:1px solid #ccc;padding:4px"><input type="text" placeholder="Description of expense" oninput="mnsUpdateVoucherTotal()" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;font-family:inherit;padding:2px 0"></td>
     <td style="width:120px;border:1px solid #ccc;padding:4px;text-align:right"><input type="number" placeholder="0.00" oninput="mnsUpdateVoucherTotal()" step="0.01" min="0" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;font-family:inherit;text-align:right;padding:2px 0"></td>
-    <td style="width:32px;text-align:center;border:1px solid #ccc;padding:4px" class="no-print"><button onclick="this.closest('tr').remove();mnsUpdateVoucherTotal()" style="background:none;border:none;cursor:pointer;color:#EF4444;font-size:.85rem">â</button></td>`;
+    <td style="width:32px;text-align:center;border:1px solid #ccc;padding:4px" class="no-print"><button onclick="this.closest('tr').remove();mnsUpdateVoucherTotal()" style="background:none;border:none;cursor:pointer;color:#EF4444;font-size:.85rem">Ã¢ÂÂ</button></td>`;
   document.getElementById('mnsVoucherRows').appendChild(tr);
 }
 
@@ -2323,7 +2323,7 @@ function mnsUpdateVoucherTotal(){
     var inp=tr.querySelector('td:nth-child(3) input');
     if(inp){total+=parseFloat(inp.value)||0;}
   });
-  document.getElementById('mv_total').textContent='â¹ '+total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('mv_total').textContent='Ã¢ÂÂ¹ '+total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
 function mnsClearVoucher(){
@@ -2362,18 +2362,21 @@ function mnsSaveVoucherAsEntry(){
   v.id=uid();
   purchases.push(v);
   saveAll();render();
-  showToast('â MNS Voucher saved as Purchase entry','success');
+  showToast('Ã¢ÂÂ MNS Voucher saved as Purchase entry','success');
 }
 
+let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
+function saveReportsData() { localStorage.setItem('cb_reports', JSON.stringify(reports)); }
+const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
 (function boot(){
   const s=sessionStorage.getItem('cb_session');
   if(s){currentUser=JSON.parse(s);showApp();}
   else{document.getElementById('loginScreen').style.display='flex';document.getElementById('appScreen').style.display='none';}
 })();
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 //  SHIPROCKET PASSBOOK
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 var srReports = JSON.parse(localStorage.getItem('cb_sr_reports')||'[]');
 // Each report: { id, label, month, fetchedOn, headers:[], rows:[[]] }
@@ -2382,7 +2385,7 @@ var srActiveReport = null; // currently displayed report id
 
 function srSaveReports(){ localStorage.setItem('cb_sr_reports', JSON.stringify(srReports)); }
 
-// ââ Load CSV file ââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Load CSV file Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srLoadFile(e){
   const file = e.target.files[0]; if(!file) return;
   const reader = new FileReader();
@@ -2393,7 +2396,7 @@ function srLoadFile(e){
   e.target.value='';
 }
 
-// ââ Parse CSV text and save ââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Parse CSV text and save Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srParseAndStore(csvText, label){
   const lines = csvText.trim().split(/\r?\n/);
   if(lines.length < 2){ srSetStatus('CSV appears empty.','error'); return; }
@@ -2423,7 +2426,7 @@ function srParseAndStore(csvText, label){
   srSaveReports();
   srRebuildMonthSel();
   srRenderReport(id);
-  srSetStatus('â Loaded '+rows.length+' rows from "'+report.label+'"','success');
+  srSetStatus('Ã¢ÂÂ Loaded '+rows.length+' rows from "'+report.label+'"','success');
 }
 
 function srParseCSVLine(line){
@@ -2438,7 +2441,7 @@ function srParseCSVLine(line){
   return result;
 }
 
-// ââ Render a report by id ââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Render a report by id Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srRenderReport(id){
   const report = srReports.find(r=>r.id===id);
   if(!report){ srClearTable(); return; }
@@ -2500,22 +2503,22 @@ function srRenderStats(report){
   const lastBal = bIdx>=0&&report.rows.length ? report.rows[report.rows.length-1][bIdx] : null;
   let html='';
   html+=`<div style="background:#fff;border-radius:8px;padding:10px 16px;border:1px solid var(--border);font-size:.78rem"><div style="color:var(--muted);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Rows</div><div style="font-weight:800;font-size:1rem;margin-top:2px">${report.rows.length}</div></div>`;
-  if(credit!==null) html+=`<div style="background:#F0FDF4;border-radius:8px;padding:10px 16px;border:1px solid #BBF7D0;font-size:.78rem"><div style="color:var(--green);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Credits</div><div style="font-weight:800;font-size:1rem;color:var(--green);margin-top:2px">â¹${credit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
-  if(debit!==null)  html+=`<div style="background:#FEF2F2;border-radius:8px;padding:10px 16px;border:1px solid #FECACA;font-size:.78rem"><div style="color:var(--red);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Debits</div><div style="font-weight:800;font-size:1rem;color:var(--red);margin-top:2px">â¹${debit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
+  if(credit!==null) html+=`<div style="background:#F0FDF4;border-radius:8px;padding:10px 16px;border:1px solid #BBF7D0;font-size:.78rem"><div style="color:var(--green);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Credits</div><div style="font-weight:800;font-size:1rem;color:var(--green);margin-top:2px">Ã¢ÂÂ¹${credit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
+  if(debit!==null)  html+=`<div style="background:#FEF2F2;border-radius:8px;padding:10px 16px;border:1px solid #FECACA;font-size:.78rem"><div style="color:var(--red);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Debits</div><div style="font-weight:800;font-size:1rem;color:var(--red);margin-top:2px">Ã¢ÂÂ¹${debit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
   if(lastBal) html+=`<div style="background:#EEF2FF;border-radius:8px;padding:10px 16px;border:1px solid #C7D2FE;font-size:.78rem"><div style="color:var(--indigo);font-size:.68rem;font-weight:700;text-transform:uppercase">Closing Balance</div><div style="font-weight:800;font-size:1rem;color:var(--indigo);margin-top:2px">${lastBal}</div></div>`;
   html+=`<div style="background:#F8FAFC;border-radius:8px;padding:10px 16px;border:1px solid var(--border);font-size:.78rem"><div style="color:var(--muted);font-size:.68rem;font-weight:700;text-transform:uppercase">Fetched On</div><div style="font-weight:600;font-size:.82rem;margin-top:2px">${report.fetchedOn}</div></div>`;
   box.innerHTML=html;
   box.style.display='flex';
 }
 
-// ââ Pills (one per saved report) âââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Pills (one per saved report) Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srRebuildPills(){
   const box = document.getElementById('srReportPills');
   if(!srReports.length){ box.innerHTML=''; return; }
   box.innerHTML = srReports.map(r=>`
     <span onclick="srRenderReport('${r.id}')" style="cursor:pointer;padding:5px 12px;border-radius:20px;font-size:.74rem;font-weight:700;border:2px solid ${r.id===srActiveReport?'var(--indigo)':'var(--border)'};background:${r.id===srActiveReport?'var(--indigo-light)':'#fff'};color:${r.id===srActiveReport?'var(--indigo)':'var(--muted)'};display:inline-flex;align-items:center;gap:6px">
-      ð ${r.label}
-      <button onclick="event.stopPropagation();srDeleteReport('${r.id}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:.75rem;padding:0;line-height:1">â</button>
+      Ã°ÂÂÂ ${r.label}
+      <button onclick="event.stopPropagation();srDeleteReport('${r.id}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:.75rem;padding:0;line-height:1">Ã¢ÂÂ</button>
     </span>`).join('');
 }
 
@@ -2538,7 +2541,7 @@ function srClearTable(){
   document.getElementById('srReportPills').innerHTML='';
 }
 
-// ââ Month filter select ââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Month filter select Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srRebuildMonthSel(){
   const sel = document.getElementById('srMonthSel');
   const months = [...new Set(srReports.map(r=>r.month))].sort().reverse();
@@ -2553,7 +2556,7 @@ function srFilterMonth(){
   if(match) srRenderReport(match.id);
 }
 
-// ââ Download CSV âââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Download CSV Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srDownloadCSV(){
   const report = srReports.find(r=>r.id===srActiveReport);
   if(!report){ showToast('No report loaded','error'); return; }
@@ -2566,18 +2569,18 @@ function srDownloadCSV(){
   a.click();
 }
 
-// ââ Copy table to clipboard ââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Copy table to clipboard Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function srCopyTable(){
   const report = srReports.find(r=>r.id===srActiveReport);
   if(!report){ showToast('No report loaded','error'); return; }
   const lines = [report.headers.join('\t'),...report.rows.map(r=>r.join('\t'))];
-  navigator.clipboard.writeText(lines.join('\n')).then(()=>showToast('â Copied '+report.rows.length+' rows to clipboard','success'));
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>showToast('Ã¢ÂÂ Copied '+report.rows.length+' rows to clipboard','success'));
 }
 
-// ââ Check Gmail for Shiprocket passbook emails âââââââââ
+// Ã¢ÂÂÃ¢ÂÂ Check Gmail for Shiprocket passbook emails Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 async function srCheckGmail(){
-  if(!getScriptUrl()){ showToast('Connect Google Apps Script first (â Settings)','error'); return; }
-  srSetStatus('Scanning Gmailâ¦','info');
+  if(!getScriptUrl()){ showToast('Connect Google Apps Script first (Ã¢ÂÂ Settings)','error'); return; }
+  srSetStatus('Scanning GmailÃ¢ÂÂ¦','info');
   try{
     const result = await callScript({action:'scanShiprocket'});
     if(result.ok && result.reports && result.reports.length){
@@ -2607,10 +2610,7 @@ function srSetStatus(msg,type){
   if(srReports.length){ srRebuildMonthSel(); srRenderReport(srReports[0].id); }
 })();
 
-// âââ REPORTS âââ
-let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
-function saveReportsData() { localStorage.setItem('cb_reports', JSON.stringify(reports)); }
-const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy'};
 function renderReports() {
   const tb = document.getElementById('reportsTableBody'); if (!tb) return;
@@ -2625,8 +2625,8 @@ function renderReports() {
     <td>${RPT_MONTHS[r.month]||r.month}</td>
     <td><span class="pill ${RPT_PILL[r.platform]||'pill-offline'}">${r.platform}</span></td>
     <td>${r.name}</td>
-    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">â¬ '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">â Drive</a>':'â'}</td>
-    <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">â</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">â</button>':''}</td>
+    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">Ã¢Â¬Â '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">Ã¢ÂÂ Drive</a>':'Ã¢ÂÂ'}</td>
+    <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">Ã¢ÂÂ</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">Ã¢ÂÂ</button>':''}</td>
   </tr>`).join('');
 }
 function openReportModal(id) {
@@ -2670,12 +2670,12 @@ function setReportUploadMode(mode) {
 function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsData(); renderReports(); showToast('Deleted.','success'); }
 </script>
 
-<!-- âââ REPORT MODAL âââ -->
+<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORT MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
 <div class="modal-overlay" id="reportModal">
   <div class="modal">
     <div class="modal-header">
       <h2 id="reportModalTitle">Add Report</h2>
-      <button class="modal-close" onclick="closeReportModal()">â</button>
+      <button class="modal-close" onclick="closeReportModal()">Ã¢ÂÂ</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="reportId">
@@ -2701,13 +2701,13 @@ function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsDat
       </div>
       <div class="form-group">
         <label>Report Name</label>
-        <input class="form-input" type="text" id="reportName" placeholder="e.g. Amazon Sales Report â April 2026">
+        <input class="form-input" type="text" id="reportName" placeholder="e.g. Amazon Sales Report Ã¢ÂÂ April 2026">
       </div>
       <div class="form-group">
         <label>Attachment</label>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <button type="button" id="rptModeFileBtn" onclick="setReportUploadMode('file')" style="padding:4px 14px;border-radius:6px;border:1px solid #6c63ff;background:#6c63ff;color:#fff;cursor:pointer;font-size:13px;">ð Upload File</button>
-          <button type="button" id="rptModeLinkBtn" onclick="setReportUploadMode('link')" style="padding:4px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:13px;">â Drive Link</button>
+          <button type="button" id="rptModeFileBtn" onclick="setReportUploadMode('file')" style="padding:4px 14px;border-radius:6px;border:1px solid #6c63ff;background:#6c63ff;color:#fff;cursor:pointer;font-size:13px;">Ã°ÂÂÂ Upload File</button>
+          <button type="button" id="rptModeLinkBtn" onclick="setReportUploadMode('link')" style="padding:4px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:13px;">Ã¢ÂÂ Drive Link</button>
         </div>
         <input class="form-input" type="file" id="reportFile" accept=".pdf,.xlsx,.xls,.csv" style="display:block;padding:6px;">
         <input class="form-input" type="url" id="reportUrl" placeholder="https://drive.google.com/..." style="display:none;">
