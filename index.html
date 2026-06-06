@@ -341,10 +341,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
 
     <!-- KPI -->
     <div class="kpi-grid">
-      <div class="kpi-card income"><div class="kpi-label">Total Sales Revenue</div><div class="kpi-value" id="kpiSales">Ã¢ÂÂ¹0</div><div class="kpi-sub" id="kpiSalesCount">0 invoices</div></div>
-      <div class="kpi-card expense"><div class="kpi-label">Total Expenses</div><div class="kpi-value" id="kpiExpenses">Ã¢ÂÂ¹0</div><div class="kpi-sub" id="kpiExpensesCount">0 entries</div></div>
-      <div class="kpi-card profit"><div class="kpi-label">Net Profit / Loss</div><div class="kpi-value" id="kpiProfit">Ã¢ÂÂ¹0</div><div class="kpi-sub" id="kpiProfitNote">Before tax</div></div>
-      <div class="kpi-card gst"><div class="kpi-label">GST Collected</div><div class="kpi-value" id="kpiGst">Ã¢ÂÂ¹0</div><div class="kpi-sub">Payable to Govt</div></div>
+      <div class="kpi-card income"><div class="kpi-label">Total Sales Revenue</div><div class="kpi-value" id="kpiSales">&#8377;0</div><div class="kpi-sub" id="kpiSalesCount">0 invoices</div></div>
+      <div class="kpi-card expense"><div class="kpi-label">Total Expenses</div><div class="kpi-value" id="kpiExpenses">&#8377;0</div><div class="kpi-sub" id="kpiExpensesCount">0 entries</div></div>
+      <div class="kpi-card profit"><div class="kpi-label">Net Profit / Loss</div><div class="kpi-value" id="kpiProfit">&#8377;0</div><div class="kpi-sub" id="kpiProfitNote">Before tax</div></div>
+      <div class="kpi-card gst"><div class="kpi-label">GST Collected</div><div class="kpi-value" id="kpiGst">&#8377;0</div><div class="kpi-sub">Payable to Govt</div></div>
     </div>
 
     <!-- CHARTS -->
@@ -417,7 +417,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option>Bank (Amazon)</option><option>Debit Card</option>
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
-            Ã¢ÂÂ¹<input class="filter-input" id="sf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
+            &#8377;<input class="filter-input" id="sf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
             Ã¢ÂÂ
             <input class="filter-input" id="sf_max" placeholder="Max" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
           </div>
@@ -467,7 +467,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option>Debit Card</option><option>Credit Card</option>
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
-            Ã¢ÂÂ¹<input class="filter-input" id="pf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
+            &#8377;<input class="filter-input" id="pf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
             Ã¢ÂÂ
             <input class="filter-input" id="pf_max" placeholder="Max" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
           </div>
@@ -543,7 +543,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
               <tr>
                 <th style="width:52px;text-align:center">Sr No</th>
                 <th>Particulars</th>
-                <th style="width:130px;text-align:right">Amount (Ã¢ÂÂ¹)</th>
+                <th style="width:130px;text-align:right">Amount (&#8377;)</th>
                 <th class="v-no-print" style="width:34px"></th>
               </tr>
             </thead>
@@ -551,7 +551,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <tfoot>
               <tr class="v-total-row">
                 <td colspan="2" style="text-align:right;font-weight:700">Total Amount</td>
-                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="v_total">Ã¢ÂÂ¹ 0.00</td>
+                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="v_total">&#8377; 0.00</td>
                 <td class="v-no-print"></td>
               </tr>
             </tfoot>
@@ -629,7 +629,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
               <tr>
                 <th style="width:52px;text-align:center">Sr No</th>
                 <th>Particulars</th>
-                <th style="width:130px;text-align:right">Amount (Ã¢ÂÂ¹)</th>
+                <th style="width:130px;text-align:right">Amount (&#8377;)</th>
                 <th class="v-no-print" style="width:34px"></th>
               </tr>
             </thead>
@@ -637,7 +637,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <tfoot>
               <tr class="v-total-row">
                 <td colspan="2" style="text-align:right;font-weight:700">Total Amount</td>
-                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="mv_total">Ã¢ÂÂ¹ 0.00</td>
+                <td style="text-align:right;font-weight:800;color:var(--indigo)" id="mv_total">&#8377; 0.00</td>
                 <td class="v-no-print"></td>
               </tr>
             </tfoot>
@@ -765,7 +765,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="form-group" style="margin-bottom:0">
           <label>Currency</label>
           <select class="form-input" id="m_currency" onchange="onCurrencyChange()">
-            <option value="INR">Ã¢ÂÂ¹ INR Ã¢ÂÂ Indian Rupee</option>
+            <option value="INR">&#8377; INR Ã¢ÂÂ Indian Rupee</option>
             <option value="USD">$ USD Ã¢ÂÂ US Dollar</option>
             <option value="EUR">Ã¢ÂÂ¬ EUR Ã¢ÂÂ Euro</option>
             <option value="GBP">ÃÂ£ GBP Ã¢ÂÂ British Pound</option>
@@ -777,7 +777,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </select>
         </div>
         <div class="form-group" style="margin-bottom:0;display:flex;align-items:flex-end">
-          <span id="currencyBadge" style="font-size:1.3rem;font-weight:700;color:var(--indigo);padding-bottom:6px;">Ã¢ÂÂ¹</span>
+          <span id="currencyBadge" style="font-size:1.3rem;font-weight:700;color:var(--indigo);padding-bottom:6px;">&#8377;</span>
         </div>
       </div>
 
@@ -788,8 +788,8 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div class="form-group"><label>Invoice No. *</label><input class="form-input" type="text" id="s_invoice" placeholder="CB07/2026-27"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label>Amount (Ã¢ÂÂ¹) *</label><input class="form-input" type="number" id="s_amount" placeholder="0.00" step="0.01"></div>
-          <div class="form-group"><label>GST Amount (Ã¢ÂÂ¹)</label><input class="form-input" type="number" id="s_gst" placeholder="0.00" step="0.01"></div>
+          <div class="form-group"><label>Amount (&#8377;) *</label><input class="form-input" type="number" id="s_amount" placeholder="0.00" step="0.01"></div>
+          <div class="form-group"><label>GST Amount (&#8377;)</label><input class="form-input" type="number" id="s_gst" placeholder="0.00" step="0.01"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label>Platform *</label>
@@ -811,7 +811,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
         <div class="form-group"><label>Particulars *</label><input class="form-input" type="text" id="p_particulars" placeholder="e.g. Shiprocket Courier"></div>
         <div class="form-row">
-          <div class="form-group"><label>Amount (Ã¢ÂÂ¹) *</label><input class="form-input" type="number" id="p_amount" placeholder="0.00" step="0.01"></div>
+          <div class="form-group"><label>Amount (&#8377;) *</label><input class="form-input" type="number" id="p_amount" placeholder="0.00" step="0.01"></div>
           <div class="form-group"><label>Payment Method</label>
             <select class="form-input" id="p_payment"><option>UPI</option><option>Bank</option><option>Cash</option><option>Debit Card</option><option>Credit Card</option></select>
           </div>
@@ -822,7 +822,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <div id="fixedForm" style="display:none">
         <div class="form-group"><label>Expense Name *</label><input class="form-input" type="text" id="f_name" placeholder="e.g. Google Workspace"></div>
         <div class="form-row">
-          <div class="form-group"><label>Amount (Ã¢ÂÂ¹) *</label><input class="form-input" type="number" id="f_amount"></div>
+          <div class="form-group"><label>Amount (&#8377;) *</label><input class="form-input" type="number" id="f_amount"></div>
           <div class="form-group"><label>Frequency</label><select class="form-input" id="f_basis"><option>Monthly</option><option>Annual</option><option>Quarterly</option></select></div>
         </div>
       </div>
@@ -996,13 +996,13 @@ function toggleAmounts(){
 function tagAmounts(){
   // KPI values
   document.querySelectorAll('.kpi-value,.kpi-sub').forEach(function(el){el.classList.add('amt-mask');});
-  // table cells containing Ã¢ÂÂ¹ symbol
+  // table cells containing &#8377; symbol
   document.querySelectorAll('td,th').forEach(function(el){
-    if(el.textContent.trim().startsWith('Ã¢ÂÂ¹')) el.classList.add('amt-mask');
+    if(el.textContent.trim().startsWith('&#8377;')) el.classList.add('amt-mask');
   });
   // summary cards / stat numbers that contain rupee
   document.querySelectorAll('.stat-val,.summary-val,[class*="amount"],[class*="total"],[class*="value"]').forEach(function(el){
-    if(/Ã¢ÂÂ¹|Rs\./.test(el.textContent)) el.classList.add('amt-mask');
+    if(/&#8377;|Rs\./.test(el.textContent)) el.classList.add('amt-mask');
   });
 }
 function showApp() {
@@ -1461,7 +1461,7 @@ function renderBarChart() {
     {label:'Expenses',data:pD,backgroundColor:'rgba(239,68,68,.65)',borderRadius:4}
   ]},options:{responsive:true,maintainAspectRatio:false,
     plugins:{legend:{position:'top',labels:{font:{size:10}}}},
-    scales:{y:{ticks:{callback:v=>'Ã¢ÂÂ¹'+(v>=1000?(v/1000).toFixed(0)+'k':v),font:{size:9}},grid:{color:'#F1F5F9'}},
+    scales:{y:{ticks:{callback:v=>'&#8377;'+(v>=1000?(v/1000).toFixed(0)+'k':v),font:{size:9}},grid:{color:'#F1F5F9'}},
             x:{ticks:{font:{size:9}},grid:{display:false}}}}});
 }
 
@@ -1475,7 +1475,7 @@ function renderPieChart(fS) {
   pieChart=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data,backgroundColor:colors.slice(0,labels.length),borderWidth:2,borderColor:'#fff'}]},
     options:{responsive:true,maintainAspectRatio:false,
       plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6}},
-               tooltip:{callbacks:{label:c=>` Ã¢ÂÂ¹${c.parsed.toLocaleString('en-IN')}`}}}}});
+               tooltip:{callbacks:{label:c=>` &#8377;${c.parsed.toLocaleString('en-IN')}`}}}}});
 }
 
 // Base folder for local file links Ã¢ÂÂ update if files are stored elsewhere
@@ -1744,7 +1744,7 @@ function openModal(type){
   if(type==='purchase'){document.getElementById('p_date').value=today;['p_particulars','p_amount','p_bill'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';})}
   if(type==='fixed')   {['f_name','f_amount'].forEach(id=>document.getElementById(id).value='');}
   document.getElementById('m_currency').value='INR';
-  document.getElementById('currencyBadge').textContent='Ã¢ÂÂ¹';
+  document.getElementById('currencyBadge').textContent='&#8377;';
   document.getElementById('modal').classList.add('open');
   // Show correct sync hint
   const hasGoogle=!!getScriptUrl();
@@ -1951,7 +1951,7 @@ function showToast(msg,type='info'){
 //  HELPERS
 // Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const CURRENCIES=[
-  {code:'INR',sym:'Ã¢ÂÂ¹',locale:'en-IN'},
+  {code:'INR',sym:'&#8377;',locale:'en-IN'},
   {code:'USD',sym:'$',locale:'en-US'},
   {code:'EUR',sym:'Ã¢ÂÂ¬',locale:'de-DE'},
   {code:'GBP',sym:'ÃÂ£',locale:'en-GB'},
@@ -1961,7 +1961,7 @@ const CURRENCIES=[
   {code:'AUD',sym:'A$',locale:'en-AU'},
   {code:'SGD',sym:'S$',locale:'en-SG'},
 ];
-function getCurSym(code){const c=CURRENCIES.find(x=>x.code===(code||'INR'));return c?c.sym:'Ã¢ÂÂ¹';}
+function getCurSym(code){const c=CURRENCIES.find(x=>x.code===(code||'INR'));return c?c.sym:'&#8377;';}
 function fmtCur(n,code){
   const c=CURRENCIES.find(x=>x.code===(code||'INR'))||CURRENCIES[0];
   const num=(+(n||0)).toLocaleString(c.locale,{minimumFractionDigits:0,maximumFractionDigits:2});
@@ -1972,7 +1972,7 @@ function onCurrencyChange(){
   const sym=getCurSym(code);
   document.getElementById('currencyBadge').textContent=sym;
 }
-function fmt(n){return'Ã¢ÂÂ¹'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
+function fmt(n){return'&#8377;'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
 function fmtDate(s){if(!s)return'Ã¢ÂÂ';return new Date(s).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
 function pmCls(m){m=(m||'').toLowerCase();if(m.includes('upi'))return'pill-upi';if(m.includes('bank'))return'pill-bank';if(m.includes('cash'))return'pill-cash';if(m.includes('card'))return'pill-card';return'';}
 function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-amazon';if(p.includes('etsy'))return'pill-etsy';if(p.includes('b2b'))return'pill-b2b';if(p.includes('offline'))return'pill-offline';return'pill-shopify';}
@@ -2015,7 +2015,7 @@ function removeVoucherRow(btn) {
 function updateVoucherTotal() {
   const total = Array.from(document.querySelectorAll('#voucherRows td:nth-child(3) input'))
     .reduce((s,i) => s + (parseFloat(i.value)||0), 0);
-  document.getElementById('v_total').textContent = 'Ã¢ÂÂ¹ ' + total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('v_total').textContent = '&#8377; ' + total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
   document.getElementById('v_amtWords').value = total > 0 ? amountToWords(total) : '';
 }
 
@@ -2091,7 +2091,7 @@ function saveVoucherAsEntry() {
 
   purchases.unshift(entry);
   saveAll(); render();
-  showToast('Ã¢ÂÂ Saved as Purchase Entry Ã¢ÂÂ Ã¢ÂÂ¹'+v.total.toLocaleString('en-IN'),'success');
+  showToast('Ã¢ÂÂ Saved as Purchase Entry Ã¢ÂÂ &#8377;'+v.total.toLocaleString('en-IN'),'success');
 
   // Sync to Google Sheet
   const url=localStorage.getItem('cb_script_url')||'';
@@ -2120,10 +2120,10 @@ function printVoucher() {
     <tr>
       <td style="text-align:center;border:1px solid #ccc;padding:6px 10px;width:50px">${i+1}</td>
       <td style="border:1px solid #ccc;padding:6px 10px">${r.particulars||'&nbsp;'}</td>
-      <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;width:120px">${r.amount?'Ã¢ÂÂ¹'+r.amount.toLocaleString('en-IN',{minimumFractionDigits:2}):'&nbsp;'}</td>
+      <td style="text-align:right;border:1px solid #ccc;padding:6px 10px;width:120px">${r.amount?'&#8377;'+r.amount.toLocaleString('en-IN',{minimumFractionDigits:2}):'&nbsp;'}</td>
     </tr>`).join('');
 
-  const fmtTotal='Ã¢ÂÂ¹'+v.total.toLocaleString('en-IN',{minimumFractionDigits:2});
+  const fmtTotal='&#8377;'+v.total.toLocaleString('en-IN',{minimumFractionDigits:2});
   const pmOptions=['Cash','UPI','Bank','Cheque'].map(p=>`<span style="${p===v.paymentMode?'font-weight:900;text-decoration:underline':''}">${p}</span>`).join(' / ');
 
   const copyHTML=`
@@ -2143,7 +2143,7 @@ function printVoucher() {
       <thead><tr style="background:#EEF2FF">
         <th style="border:1px solid #ccc;padding:7px 10px;width:50px;text-align:center">Sr No</th>
         <th style="border:1px solid #ccc;padding:7px 10px;text-align:left">Particulars</th>
-        <th style="border:1px solid #ccc;padding:7px 10px;width:120px;text-align:right">Amount (Ã¢ÂÂ¹)</th>
+        <th style="border:1px solid #ccc;padding:7px 10px;width:120px;text-align:right">Amount (&#8377;)</th>
       </tr></thead>
       <tbody>${lineItems}</tbody>
       <tfoot><tr style="background:#EEF2FF">
@@ -2323,7 +2323,7 @@ function mnsUpdateVoucherTotal(){
     var inp=tr.querySelector('td:nth-child(3) input');
     if(inp){total+=parseFloat(inp.value)||0;}
   });
-  document.getElementById('mv_total').textContent='Ã¢ÂÂ¹ '+total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('mv_total').textContent='&#8377; '+total.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 
 function mnsClearVoucher(){
@@ -2504,8 +2504,8 @@ function srRenderStats(report){
   const lastBal = bIdx>=0&&report.rows.length ? report.rows[report.rows.length-1][bIdx] : null;
   let html='';
   html+=`<div style="background:#fff;border-radius:8px;padding:10px 16px;border:1px solid var(--border);font-size:.78rem"><div style="color:var(--muted);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Rows</div><div style="font-weight:800;font-size:1rem;margin-top:2px">${report.rows.length}</div></div>`;
-  if(credit!==null) html+=`<div style="background:#F0FDF4;border-radius:8px;padding:10px 16px;border:1px solid #BBF7D0;font-size:.78rem"><div style="color:var(--green);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Credits</div><div style="font-weight:800;font-size:1rem;color:var(--green);margin-top:2px">Ã¢ÂÂ¹${credit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
-  if(debit!==null)  html+=`<div style="background:#FEF2F2;border-radius:8px;padding:10px 16px;border:1px solid #FECACA;font-size:.78rem"><div style="color:var(--red);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Debits</div><div style="font-weight:800;font-size:1rem;color:var(--red);margin-top:2px">Ã¢ÂÂ¹${debit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
+  if(credit!==null) html+=`<div style="background:#F0FDF4;border-radius:8px;padding:10px 16px;border:1px solid #BBF7D0;font-size:.78rem"><div style="color:var(--green);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Credits</div><div style="font-weight:800;font-size:1rem;color:var(--green);margin-top:2px">&#8377;${credit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
+  if(debit!==null)  html+=`<div style="background:#FEF2F2;border-radius:8px;padding:10px 16px;border:1px solid #FECACA;font-size:.78rem"><div style="color:var(--red);font-size:.68rem;font-weight:700;text-transform:uppercase">Total Debits</div><div style="font-weight:800;font-size:1rem;color:var(--red);margin-top:2px">&#8377;${debit.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>`;
   if(lastBal) html+=`<div style="background:#EEF2FF;border-radius:8px;padding:10px 16px;border:1px solid #C7D2FE;font-size:.78rem"><div style="color:var(--indigo);font-size:.68rem;font-weight:700;text-transform:uppercase">Closing Balance</div><div style="font-weight:800;font-size:1rem;color:var(--indigo);margin-top:2px">${lastBal}</div></div>`;
   html+=`<div style="background:#F8FAFC;border-radius:8px;padding:10px 16px;border:1px solid var(--border);font-size:.78rem"><div style="color:var(--muted);font-size:.68rem;font-weight:700;text-transform:uppercase">Fetched On</div><div style="font-weight:600;font-size:.82rem;margin-top:2px">${report.fetchedOn}</div></div>`;
   box.innerHTML=html;
