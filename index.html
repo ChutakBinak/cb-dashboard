@@ -2368,6 +2368,7 @@ function mnsSaveVoucherAsEntry(){
 let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
 function saveReportsData() { localStorage.setItem('cb_reports', JSON.stringify(reports)); }
 const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
+const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy'};
 (function boot(){
   const s=sessionStorage.getItem('cb_session');
   if(s){currentUser=JSON.parse(s);showApp();}
@@ -2611,7 +2612,6 @@ function srSetStatus(msg,type){
 })();
 
 // Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
-const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy'};
 function renderReports() {
   const tb = document.getElementById('reportsTableBody'); if (!tb) return;
   const pf = document.getElementById('rf_platform')?.value||'';
