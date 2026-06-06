@@ -227,7 +227,7 @@
     /* MISC */
     .ro-notice{background:#EAF0F8;border:1px solid #C4D4E8;border-radius:3px;padding:9px 13px;font-size:.75rem;color:var(--navy);margin-bottom:13px;display:flex;align-items:center;gap:7px;border-left:3px solid var(--navy-mid)}
 
-    /* Ã¢ÂÂÃ¢ÂÂ VOUCHER Ã¢ÂÂÃ¢ÂÂ */
+    /* ── VOUCHER ── */
     .voucher-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px 28px;max-width:700px;margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,.07)}
     .v-header{text-align:center;border-bottom:2.5px solid var(--indigo);padding-bottom:12px;margin-bottom:12px}
     .v-name{font-size:1.15rem;font-weight:900;color:var(--indigo-dark);letter-spacing:.5px}
@@ -265,22 +265,22 @@
 if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','https://script.google.com/macros/s/AKfycbxjW4bqU5MqRHfuLm9mslXfxlXyYfEb8TvL2doqvswWjUclQSIPy2hkTPmOvx4Egg7NxA/exec');
 </script>
 
-<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ LOGIN Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+<!-- ═══ LOGIN ═══ -->
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
-      <div class="icon">Ã°ÂÂÂ­</div>
+      <div class="icon">🎭</div>
       <h1>Chutak Binak</h1>
-      <p>Muktakash Natya Sansthan ÃÂ· FY 2026-27</p>
+      <p>Muktakash Natya Sansthan · FY 2026-27</p>
     </div>
     <div class="login-roles">
       <div class="role-btn selected" id="roleOwner" onclick="selectRole('owner')">
-        <div class="role-icon">Ã°ÂÂÂ¤</div>
+        <div class="role-icon">👤</div>
         <div class="role-name">Bhavya</div>
         <div class="role-title">Owner</div>
       </div>
       <div class="role-btn" id="roleCA" onclick="selectRole('ca')">
-        <div class="role-icon">Ã°ÂÂÂ</div>
+        <div class="role-icon">📊</div>
         <div class="role-name">Manoj Jain</div>
       </div>
     </div>
@@ -289,17 +289,17 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <input class="form-input" type="password" id="loginPass" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <div class="login-error" id="loginError">Incorrect password. Please try again.</div>
-    <button class="login-submit" onclick="doLogin()">Login Ã¢ÂÂ</button>
+    <button class="login-submit" onclick="doLogin()">Login →</button>
     <div class="login-footer">Sole Proprietorship Financial Dashboard</div>
   </div>
 </div>
 
-<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ APP Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+<!-- ═══ APP ═══ -->
 <div id="appScreen" style="display:none">
 
   <header>
     <div class="brand">
-      <h1>Ã°ÂÂÂ­ Chutak Binak ÃÂ· Muktakash Natya Sansthan</h1>
+      <h1>🎭 Chutak Binak · Muktakash Natya Sansthan</h1>
       <p>Income &amp; Expense Tracker</p>
     </div>
     <div class="header-right">
@@ -330,14 +330,14 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div class="urole" id="userRole">Owner</div>
         </div>
       </div>
-      <button class="btn-settings" onclick="openSettings()" title="Settings">Ã¢ÂÂ</button>
-      <button id="hideAmtBtn" onclick="toggleAmounts()" title="Show/hide amounts" style="background:transparent;border:1px solid #555;color:#ccc;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:14px;transition:all .2s;">Ã°ÂÂÂ</button>
+      <button class="btn-settings" onclick="openSettings()" title="Settings">⚙</button>
+      <button id="hideAmtBtn" onclick="toggleAmounts()" title="Show/hide amounts" style="background:transparent;border:1px solid #555;color:#ccc;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:14px;transition:all .2s;">👁</button>
       <button class="btn-logout" onclick="logout()">Logout</button>
     </div>
   </header>
 
   <main>
-    <div class="ro-notice" id="roNotice" style="display:none">Ã°ÂÂÂ CA view Ã¢ÂÂ read-only. You can filter and export but cannot make changes.</div>
+    <div class="ro-notice" id="roNotice" style="display:none">🔒 CA view — read-only. You can filter and export but cannot make changes.</div>
 
     <!-- KPI -->
     <div class="kpi-grid">
@@ -356,14 +356,14 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
     <!-- TABS -->
     <div class="tabs-wrap">
       <div class="tab-header">
-        <button class="tab-btn active" onclick="switchTab('overview',this)">Ã°ÂÂÂ Overview</button>
-        <button class="tab-btn" onclick="switchTab('sales',this)">Ã°ÂÂÂ° Sales</button>
-        <button class="tab-btn" onclick="switchTab('purchases',this)">Ã°ÂÂ§Â¾ Purchases</button>
-        <button class="tab-btn" onclick="switchTab('fixed',this)">Ã°ÂÂÂ Fixed Costs</button>
-        <button class="tab-btn" onclick="switchTab('voucher',this)">Ã°ÂÂÂ Voucher</button>
-        <button class="tab-btn" onclick="switchTab('shiprocket',this)">Ã°ÂÂÂ Shiprocket</button>
-        <button class="tab-btn" onclick="switchTab('reports',this)">Ã°ÂÂÂ Reports</button>
-        <button class="tab-btn" onclick="switchTab('mns-voucher',this)">Ã°ÂÂÂ MNS Voucher</button>
+        <button class="tab-btn active" onclick="switchTab('overview',this)">📊 Overview</button>
+        <button class="tab-btn" onclick="switchTab('sales',this)">💰 Sales</button>
+        <button class="tab-btn" onclick="switchTab('purchases',this)">🧾 Purchases</button>
+        <button class="tab-btn" onclick="switchTab('fixed',this)">📌 Fixed Costs</button>
+        <button class="tab-btn" onclick="switchTab('voucher',this)">📄 Voucher</button>
+        <button class="tab-btn" onclick="switchTab('shiprocket',this)">🚀 Shiprocket</button>
+        <button class="tab-btn" onclick="switchTab('reports',this)">📁 Reports</button>
+        <button class="tab-btn" onclick="switchTab('mns-voucher',this)">📄 MNS Voucher</button>
       </div>
 
       <div id="tab-overview" class="tab-content active">
@@ -374,7 +374,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="section-gap">
           <div class="table-toolbar">
             <span class="section-title">P&amp;L Summary</span>
-            <button class="btn btn-export" onclick="exportSummary()">Ã¢Â¬Â Export for CA</button>
+            <button class="btn btn-export" onclick="exportSummary()">⬇ Export for CA</button>
           </div>
           <div id="plSummary"></div>
         </div>
@@ -400,12 +400,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </div>
           <div id="s_custom_range" style="display:none;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             <input class="filter-input" type="date" id="sf_from" style="width:130px" onchange="applyTableFilters('s')">
-            <span>Ã¢ÂÂ</span>
+            <span>→</span>
             <input class="filter-input" type="date" id="sf_to"   style="width:130px" onchange="applyTableFilters('s')">
           </div>
           <div class="filter-bar-sep"></div>
           <!-- Other filters -->
-          <input class="filter-input" id="sf_search" placeholder="Ã°ÂÂÂ Invoice / keyword" oninput="applyTableFilters('s')">
+          <input class="filter-input" id="sf_search" placeholder="🔍 Invoice / keyword" oninput="applyTableFilters('s')">
           <select class="filter-sel" id="sf_platform" onchange="applyTableFilters('s')">
             <option value="">All Platforms</option>
             <option>Website (Shopify)</option><option>Offline Store</option>
@@ -418,10 +418,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             ₹<input class="filter-input" id="sf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
-            Ã¢ÂÂ
+            –
             <input class="filter-input" id="sf_max" placeholder="Max" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
           </div>
-          <button class="filter-clear" onclick="clearTableFilters('s')">Ã¢ÂÂ Clear</button>
+          <button class="filter-clear" onclick="clearTableFilters('s')">✕ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Date</th><th>Invoice No.</th><th>Amount</th><th>GST</th><th>Platform</th><th>Paid Via</th><th>Bill / File</th><th class="owner-only"></th></tr></thead>
@@ -449,12 +449,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </div>
           <div id="p_custom_range" style="display:none;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             <input class="filter-input" type="date" id="pf_from" style="width:130px" onchange="applyTableFilters('p')">
-            <span>Ã¢ÂÂ</span>
+            <span>→</span>
             <input class="filter-input" type="date" id="pf_to"   style="width:130px" onchange="applyTableFilters('p')">
           </div>
           <div class="filter-bar-sep"></div>
           <!-- Other filters -->
-          <input class="filter-input" id="pf_search" placeholder="Ã°ÂÂÂ Particulars / keyword" oninput="applyTableFilters('p')">
+          <input class="filter-input" id="pf_search" placeholder="🔍 Particulars / keyword" oninput="applyTableFilters('p')">
           <select class="filter-sel" id="pf_category" onchange="applyTableFilters('p')">
             <option value="">All Categories</option>
             <option>Raw Material</option><option>Marketing</option><option>Platform Fees</option>
@@ -468,10 +468,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             ₹<input class="filter-input" id="pf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
-            Ã¢ÂÂ
+            –
             <input class="filter-input" id="pf_max" placeholder="Max" type="number" min="0" style="width:72px" oninput="applyTableFilters('p')">
           </div>
-          <button class="filter-clear" onclick="clearTableFilters('p')">Ã¢ÂÂ Clear</button>
+          <button class="filter-clear" onclick="clearTableFilters('p')">✕ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Date</th><th>Particulars</th><th>Category</th><th>Amount</th><th>Payment</th><th>Bill / File</th><th class="owner-only"></th></tr></thead>
@@ -483,7 +483,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="table-toolbar">
           <span class="section-title">Fixed / Recurring Expenses</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost owner-only" onclick="scanGmailInvoices()" id="gmailScanBtn">Ã°ÂÂÂ§ Scan Gmail for Invoices</button>
+            <button class="btn btn-ghost owner-only" onclick="scanGmailInvoices()" id="gmailScanBtn">📧 Scan Gmail for Invoices</button>
             <button class="btn btn-primary owner-only" onclick="openModal('fixed')">+ Add Fixed Cost</button>
           </div>
         </div>
@@ -491,14 +491,14 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <p style="margin-top:11px;font-size:.73rem;color:var(--muted)">* Record actual payments in the Purchases tab.</p>
       </div>
 
-      <!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ VOUCHER TAB Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+      <!-- ═══ VOUCHER TAB ═══ -->
       <div id="tab-voucher" class="tab-content">
         <div class="table-toolbar">
           <span class="section-title">Expense Voucher</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost" onclick="clearVoucher()">Ã°ÂÂÂ Clear</button>
-            <button class="btn btn-ghost" onclick="printVoucher()">Ã°ÂÂÂ¨ Print (2 copies)</button>
-            <button class="btn btn-primary owner-only" onclick="saveVoucherAsEntry()">Ã°ÂÂÂ¾ Save as Purchase Entry</button>
+            <button class="btn btn-ghost" onclick="clearVoucher()">🗑 Clear</button>
+            <button class="btn btn-ghost" onclick="printVoucher()">🖨 Print (2 copies)</button>
+            <button class="btn btn-primary owner-only" onclick="saveVoucherAsEntry()">💾 Save as Purchase Entry</button>
           </div>
         </div>
 
@@ -534,7 +534,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <!-- Amount in Words -->
           <div class="v-field-grp v-field-full">
             <span class="v-lbl">Amount (in words):</span>
-            <input class="v-inp v-inp-wide v-words" id="v_amtWords" placeholder="Auto-filled from totalÃ¢ÂÂ¦" readonly>
+            <input class="v-inp v-inp-wide v-words" id="v_amtWords" placeholder="Auto-filled from total…" readonly>
           </div>
 
           <!-- Line items -->
@@ -586,9 +586,9 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="table-toolbar">
           <span class="section-title">Expense Voucher</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-ghost" onclick="mnsClearVoucher()">Ã°ÂÂÂ Clear</button>
-            <button class="btn btn-ghost" onclick="mnsPrintVoucher()">Ã°ÂÂÂ¨ Print (2 copies)</button>
-            <button class="btn btn-primary owner-only" onclick="mnsSaveVoucherAsEntry()">Ã°ÂÂÂ¾ Save as Purchase Entry</button>
+            <button class="btn btn-ghost" onclick="mnsClearVoucher()">🗑 Clear</button>
+            <button class="btn btn-ghost" onclick="mnsPrintVoucher()">🖨 Print (2 copies)</button>
+            <button class="btn btn-primary owner-only" onclick="mnsSaveVoucherAsEntry()">💾 Save as Purchase Entry</button>
           </div>
         </div>
 
@@ -620,7 +620,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <!-- Amount in Words -->
           <div class="v-field-grp v-field-full">
             <span class="v-lbl">Amount (in words):</span>
-            <input class="v-inp v-inp-wide v-words" id="mv_amtWords" placeholder="Auto-filled from totalÃ¢ÂÂ¦" readonly>
+            <input class="v-inp v-inp-wide v-words" id="mv_amtWords" placeholder="Auto-filled from total…" readonly>
           </div>
 
           <!-- Line items -->
@@ -668,18 +668,18 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div><!-- /voucher-card -->
       </div><!-- /tab-mns-voucher -->
 
-      <!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ SHIPROCKET TAB Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+      <!-- ═══ SHIPROCKET TAB ═══ -->
       <div id="tab-shiprocket" class="tab-content">
 
         <div class="table-toolbar">
-          <span class="section-title">Ã°ÂÂÂ Shiprocket Passbook</span>
+          <span class="section-title">🚀 Shiprocket Passbook</span>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
             <select id="srMonthSel" class="form-input" style="width:auto;padding:5px 10px;font-size:.78rem" onchange="srFilterMonth()">
               <option value="all">All Reports</option>
             </select>
-            <button class="btn btn-ghost" onclick="srCheckGmail()" title="Scan muktakash1964@gmail.com for new Shiprocket passbook emails">Ã°ÂÂÂ§ Check Gmail</button>
-            <button class="btn btn-ghost" onclick="srCopyTable()" title="Copy table to clipboard">Ã°ÂÂÂ Copy</button>
-            <button class="btn btn-primary" onclick="srDownloadCSV()" title="Download current view as CSV">Ã¢Â¬Â Download CSV</button>
+            <button class="btn btn-ghost" onclick="srCheckGmail()" title="Scan muktakash1964@gmail.com for new Shiprocket passbook emails">📧 Check Gmail</button>
+            <button class="btn btn-ghost" onclick="srCopyTable()" title="Copy table to clipboard">📋 Copy</button>
+            <button class="btn btn-primary" onclick="srDownloadCSV()" title="Download current view as CSV">⬇ Download CSV</button>
           </div>
         </div>
 
@@ -690,12 +690,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <div style="font-size:.7rem;color:var(--muted)">Drag &amp; drop or browse the CSV file Shiprocket emailed you</div>
           </div>
           <label style="cursor:pointer;background:var(--indigo);color:#fff;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:700;white-space:nowrap">
-            Ã°ÂÂÂ Upload CSV
+            📂 Upload CSV
             <input type="file" accept=".csv,text/csv" style="display:none" onchange="srLoadFile(event)">
           </label>
           <div id="srGmailLinkBox" style="display:none;flex:1">
             <div style="font-size:.72rem;color:var(--muted);margin-bottom:3px">Latest Shiprocket email link:</div>
-            <a id="srGmailLink" href="#" target="_blank" style="font-size:.75rem;color:var(--indigo);font-weight:600;word-break:break-all">Ã¢ÂÂ</a>
+            <a id="srGmailLink" href="#" target="_blank" style="font-size:.75rem;color:var(--indigo);font-weight:600;word-break:break-all">—</a>
           </div>
           <div id="srStatus" style="font-size:.72rem;color:var(--muted)"></div>
         </div>
@@ -718,7 +718,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
 
       </div><!-- /tab-shiprocket -->
 
-      <!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORTS TAB Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+      <!-- ═══ REPORTS TAB ═══ -->
       <div id="tab-reports" class="tab-content">
         <div class="table-toolbar">
           <span class="section-title">Platform Reports</span>
@@ -739,7 +739,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option value="2026-12">December 2026</option><option value="2027-01">January 2027</option>
             <option value="2027-02">February 2027</option><option value="2027-03">March 2027</option>
           </select>
-          <button class="filter-clear" onclick="document.getElementById('rf_platform').value='';document.getElementById('rf_month').value='';renderReports();">Ã¢ÂÂ Clear</button>
+          <button class="filter-clear" onclick="document.getElementById('rf_platform').value='';document.getElementById('rf_month').value='';renderReports();">✕ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Month</th><th>Platform</th><th>Report Name</th><th>Drive Link</th><th class="owner-only"></th></tr></thead>
@@ -751,12 +751,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
   </main>
 </div>
 
-<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ ADD / EDIT MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+<!-- ═══ ADD / EDIT MODAL ═══ -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div class="modal-header">
       <h2 id="modalTitle">Add Entry</h2>
-      <button class="modal-close" onclick="closeModal()">Ã¢ÂÂ</button>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
 
@@ -765,15 +765,15 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <div class="form-group" style="margin-bottom:0">
           <label>Currency</label>
           <select class="form-input" id="m_currency" onchange="onCurrencyChange()">
-            <option value="INR">₹ INR Ã¢ÂÂ Indian Rupee</option>
-            <option value="USD">$ USD Ã¢ÂÂ US Dollar</option>
-            <option value="EUR">Ã¢ÂÂ¬ EUR Ã¢ÂÂ Euro</option>
-            <option value="GBP">ÃÂ£ GBP Ã¢ÂÂ British Pound</option>
-            <option value="AED">ÃÂ¯.ÃÂ¥ AED Ã¢ÂÂ UAE Dirham</option>
-            <option value="JPY">ÃÂ¥ JPY Ã¢ÂÂ Japanese Yen</option>
-            <option value="CAD">C$ CAD Ã¢ÂÂ Canadian Dollar</option>
-            <option value="AUD">A$ AUD Ã¢ÂÂ Australian Dollar</option>
-            <option value="SGD">S$ SGD Ã¢ÂÂ Singapore Dollar</option>
+            <option value="INR">₹ INR — Indian Rupee</option>
+            <option value="USD">$ USD — US Dollar</option>
+            <option value="EUR">€ EUR — Euro</option>
+            <option value="GBP">£ GBP — British Pound</option>
+            <option value="AED">د.إ AED — UAE Dirham</option>
+            <option value="JPY">¥ JPY — Japanese Yen</option>
+            <option value="CAD">C$ CAD — Canadian Dollar</option>
+            <option value="AUD">A$ AUD — Australian Dollar</option>
+            <option value="SGD">S$ SGD — Singapore Dollar</option>
           </select>
         </div>
         <div class="form-group" style="margin-bottom:0;display:flex;align-items:flex-end">
@@ -796,7 +796,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <select class="form-input" id="s_platform"><option>Website (Shopify)</option><option>Offline Store</option><option>Amazon</option><option>Etsy</option><option>B2B</option><option>Other</option></select>
           </div>
           <div class="form-group"><label>Paid Via</label>
-            <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Debit Card</option><option value="">Ã¢ÂÂ</option></select>
+            <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Debit Card</option><option value="">—</option></select>
           </div>
         </div>
       </div>
@@ -831,12 +831,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <!-- SHARED FILE UPLOAD (shown for sale + purchase + fixed) -->
       <div id="uploadSection" class="upload-section" style="display:none">
         <div class="form-group">
-          <label>Ã°ÂÂÂ Attach Bills / Receipts</label>
+          <label>📎 Attach Bills / Receipts</label>
           <div class="upload-zone" id="dropZone" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
             <div class="upload-placeholder" id="uploadPlaceholder">
-              <span class="up-icon">Ã°ÂÂÂ</span>
+              <span class="up-icon">📂</span>
               <div class="up-text">Drag &amp; drop files here</div>
-              <div class="up-hint">PDF, JPG, PNG, HEIC Ã¢ÂÂ max 8 MB each ÃÂ· multiple files allowed</div>
+              <div class="up-hint">PDF, JPG, PNG, HEIC — max 8 MB each · multiple files allowed</div>
               <label class="browse-btn" title="Select files from your computer">
                 + Add Files
                 <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple onchange="onFileSelect(event)">
@@ -846,10 +846,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div class="file-list" id="fileList"></div>
           <div class="upload-progress" id="uploadProgress">
             <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
-            <div class="progress-label" id="progressLabel">UploadingÃ¢ÂÂ¦</div>
+            <div class="progress-label" id="progressLabel">Uploading…</div>
           </div>
-          <div class="link-hint" id="syncHint">Ã°ÂÂÂ Files will be uploaded to Google Drive when you save. <a href="#" onclick="openSettings();return false" style="color:var(--indigo);font-weight:600">Connect Google Ã¢ÂÂ</a></div>
-          <div class="link-hint" id="syncHintConnected" style="display:none;color:var(--green)">Ã¢ÂÂ Google Drive connected Ã¢ÂÂ files will upload automatically on Save.</div>
+          <div class="link-hint" id="syncHint">🔗 Files will be uploaded to Google Drive when you save. <a href="#" onclick="openSettings();return false" style="color:var(--indigo);font-weight:600">Connect Google →</a></div>
+          <div class="link-hint" id="syncHintConnected" style="display:none;color:var(--green)">✓ Google Drive connected — files will upload automatically on Save.</div>
         </div>
       </div>
 
@@ -861,37 +861,37 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
   </div>
 </div>
 
-<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ SETTINGS MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+<!-- ═══ SETTINGS MODAL ═══ -->
 <div class="modal-overlay" id="settingsModal">
   <div class="modal">
     <div class="modal-header">
-      <h2>Ã¢ÂÂ Settings &amp; Google Connection</h2>
-      <button class="modal-close" onclick="closeSettings()">Ã¢ÂÂ</button>
+      <h2>⚙ Settings &amp; Google Connection</h2>
+      <button class="modal-close" onclick="closeSettings()">✕</button>
     </div>
     <div class="modal-body">
       <div class="settings-section">
-        <h3>Ã°ÂÂÂ Google Sheets + Drive Sync</h3>
+        <h3>🔗 Google Sheets + Drive Sync</h3>
         <p style="font-size:.75rem;color:var(--muted);margin-bottom:10px;line-height:1.5">
           Paste your Apps Script Web App URL below. New entries will be written to your Google Sheet
           and uploaded files will go to Google Drive automatically.
-          <br><a href="#" onclick="openSetupGuide();return false" style="color:var(--indigo);font-weight:600">How to get this URL? Ã¢ÂÂ</a>
+          <br><a href="#" onclick="openSetupGuide();return false" style="color:var(--indigo);font-weight:600">How to get this URL? →</a>
         </p>
         <div class="conn-row">
           <div class="form-group">
             <label>Apps Script Web App URL</label>
-            <input class="form-input" type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/Ã¢ÂÂ¦/exec">
+            <input class="form-input" type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/…/exec">
           </div>
           <button class="btn btn-ghost" style="margin-bottom:0;flex-shrink:0" onclick="testConnection()">Test</button>
         </div>
         <div class="conn-status" id="connStatus"></div>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-primary" onclick="saveScriptUrl()">Save &amp; Connect</button>
-          <button class="btn btn-success" id="syncFromSheetsBtn" onclick="syncFromSheets()" style="display:none">Ã¢ÂÂ Sync from Sheets</button>
+          <button class="btn btn-success" id="syncFromSheetsBtn" onclick="syncFromSheets()" style="display:none">↓ Sync from Sheets</button>
           <button class="btn btn-ghost" onclick="disconnectGoogle()" id="disconnectBtn" style="display:none">Disconnect</button>
         </div>
       </div>
       <div class="settings-section">
-        <h3>Ã°ÂÂÂ Change Passwords</h3>
+        <h3>🔑 Change Passwords</h3>
         <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px">Open <code style="background:#F1F5F9;padding:2px 5px;border-radius:4px">CB_Dashboard.html</code> in a text editor, find the <code style="background:#F1F5F9;padding:2px 5px;border-radius:4px">USERS</code> object, and update the <code>password</code> fields.</p>
         <div style="background:#F8FAFC;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:.74rem;color:var(--text)">
           owner: { password: '<strong>admin123</strong>' }<br>
@@ -899,15 +899,15 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
       </div>
       <div class="settings-section">
-        <h3>Ã¢ÂÂ Sync All to Google</h3>
+        <h3>☁ Sync All to Google</h3>
         <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px">Push every sale and purchase entry from this dashboard to Google Sheets in one go. This replaces the sheet contents with your current data.</p>
-        <button class="btn btn-primary" id="syncAllBtn" onclick="syncAllToGoogle()">Ã¢Â¬Â Sync All Entries Ã¢ÂÂ Google Sheets</button>
+        <button class="btn btn-primary" id="syncAllBtn" onclick="syncAllToGoogle()">⬆ Sync All Entries → Google Sheets</button>
         <div id="syncAllStatus" style="font-size:.72rem;margin-top:8px;display:none"></div>
       </div>
       <div class="settings-section">
-        <h3>Ã°ÂÂÂ Data Management</h3>
+        <h3>🗑 Data Management</h3>
         <button class="btn btn-danger" onclick="resetData()">Reset to original data (from spreadsheet)</button>
-        <p style="font-size:.68rem;color:var(--muted);margin-top:6px">This will delete all locally added entries and restore the original AprilÃ¢ÂÂMay 2026 data.</p>
+        <p style="font-size:.68rem;color:var(--muted);margin-top:6px">This will delete all locally added entries and restore the original April–May 2026 data.</p>
       </div>
     </div>
     <div class="modal-footer">
@@ -916,12 +916,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
   </div>
 </div>
 
-<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ GMAIL SCAN MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+<!-- ═══ GMAIL SCAN MODAL ═══ -->
 <div class="modal-overlay" id="gmailModal">
   <div class="modal" style="max-width:600px">
     <div class="modal-header">
-      <h2>Ã°ÂÂÂ§ Gmail Invoice Scanner</h2>
-      <button class="modal-close" onclick="closeGmailModal()">Ã¢ÂÂ</button>
+      <h2>📧 Gmail Invoice Scanner</h2>
+      <button class="modal-close" onclick="closeGmailModal()">✕</button>
     </div>
     <div class="modal-body">
       <p style="font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.5">
@@ -931,8 +931,8 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       </p>
       <div id="gmailScanResults">
         <div style="text-align:center;padding:32px;color:var(--muted)">
-          <div style="font-size:1.8rem;margin-bottom:8px">Ã°ÂÂÂ¬</div>
-          <div style="font-size:.8rem">Scanning inboxÃ¢ÂÂ¦</div>
+          <div style="font-size:1.8rem;margin-bottom:8px">📬</div>
+          <div style="font-size:.8rem">Scanning inbox…</div>
         </div>
       </div>
     </div>
@@ -946,9 +946,9 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  USERS
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 const USERS = {
   owner: { name:'Bhavya Kaushik', role:'Owner', initial:'B', password:'admin123' },
   ca:    { name:'Manoj Jain',     role:'CA',    initial:'M', password:'mj' }
@@ -986,7 +986,7 @@ function toggleAmounts(){
   amtsHidden=!amtsHidden;
   document.body.classList.toggle('hide-amt',amtsHidden);
   var btn=document.getElementById('hideAmtBtn');
-  btn.textContent=amtsHidden?'Ã°ÂÂÂ':'Ã°ÂÂÂ';
+  btn.textContent=amtsHidden?'🙈':'👁';
   btn.title=amtsHidden?'Show amounts':'Hide amounts';
   btn.style.borderColor=amtsHidden?'#f87171':'#555';
   btn.style.color=amtsHidden?'#f87171':'#ccc';
@@ -1020,9 +1020,9 @@ function showApp() {
 }
 const isOwner=()=>currentUser?.key==='owner';
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  SEED DATA
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 const SEED_P=[
   {id:'p1', date:'2026-04-01',particulars:'Facebook Ads',               category:'Marketing',    amount:2563.74,paymentMethod:'UPI',       bill:'Facebook ads Spend'},
   {id:'p2', date:'2026-04-16',particulars:'Shopify Subscription',        category:'Platform Fees',amount:1994,   paymentMethod:'Bank',      bill:'Shopify Subscription invoice_516148102_3.pdf'},
@@ -1061,21 +1061,21 @@ const SEED_F=[
   {id:'f4',name:'Etsy Ads', amount:21000,basis:'Monthly'},
 ];
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  STATE
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
 let filterMonth='all',currentModal=null,dataLoaded=false;
 let editingId=null,editingType=null;
 let barChart=null,pieChart=null;
-let attachedFile=null; // legacy Ã¢ÂÂ kept for compat; use attachedFiles[] below
+let attachedFile=null; // legacy — kept for compat; use attachedFiles[] below
 
 async function initData() {
   // Try Google Sheets first; fall back to localStorage cache, then seed data
   const url = getScriptUrl();
   if (url) {
     try {
-      showToast('Loading data from Google SheetsÃ¢ÂÂ¦','info');
+      showToast('Loading data from Google Sheets…','info');
       const result = await callScript({action:'getData'});
       if (result.ok) {
         const p = result.purchases  || [];
@@ -1087,13 +1087,13 @@ async function initData() {
           sales      = JSON.parse(localStorage.getItem('cb_sales')||'null')     || JSON.parse(JSON.stringify(SEED_S));
           fixedCosts = JSON.parse(localStorage.getItem('cb_fixed')||'null')     || JSON.parse(JSON.stringify(SEED_F));
           saveAll(); dataLoaded = true; render();
-          showToast('Sheet is empty Ã¢ÂÂ syncing all entries to Google SheetsÃ¢ÂÂ¦','info');
+          showToast('Sheet is empty — syncing all entries to Google Sheets…','info');
           // Auto-sync seed data up to Sheets
           try {
             const cleanS = sales.map(r=>({...r}));
             const cleanP = purchases.map(r=>({...r,attachments:[]}));
             await callScript({action:'syncAll', sales:cleanS, purchases:cleanP});
-            showToast('Ã¢ÂÂ All entries synced to Google Sheets','success');
+            showToast('✓ All entries synced to Google Sheets','success');
           } catch(e) { showToast('Could not auto-sync to Sheets: '+e.message,'warning'); }
           return;
         }
@@ -1102,13 +1102,13 @@ async function initData() {
         fixedCosts = f;
         saveAll();
         dataLoaded = true;
-        showToast('Ã¢ÂÂ Data loaded from Google Sheets','success');
+        showToast('✓ Data loaded from Google Sheets','success');
         render();
         return;
       }
     } catch(err) {
       console.warn('Sheet load failed, using local cache:', err);
-      showToast('Could not reach Google Sheets Ã¢ÂÂ using local cache','warning');
+      showToast('Could not reach Google Sheets — using local cache','warning');
     }
   }
   purchases  = JSON.parse(localStorage.getItem('cb_purchases')||'null') || JSON.parse(JSON.stringify(SEED_P));
@@ -1125,7 +1125,7 @@ function saveAll() {
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
 
-// Ã¢ÂÂÃ¢ÂÂ Period pill state Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Period pill state ──────────────────────────────────
 var sPeriod='all', pPeriod='all';
 
 function setPeriod(tab, period, btn){
@@ -1163,7 +1163,7 @@ function getDateRange(period, fromId, toId){
   return {from, to:today};
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Table-level filters Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Table-level filters ────────────────────────────────
 function applyTableFilters(tab){
   if(tab==='s'){
     const q=(document.getElementById('sf_search').value||'').toLowerCase();
@@ -1226,9 +1226,9 @@ function clearTableFilters(tab){
   }
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  GOOGLE SYNC
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 function getScriptUrl(){return localStorage.getItem('cb_script_url')||'';}
 
 function updateSyncUI() {
@@ -1257,7 +1257,7 @@ function updateSyncUI() {
 
 async function syncFromSheets(){
   const btn=document.getElementById('syncFromSheetsBtn');
-  if(btn){btn.disabled=true;btn.textContent='SyncingÃ¢ÂÂ¦';}
+  if(btn){btn.disabled=true;btn.textContent='Syncing…';}
   try{
     const result=await callScript({action:'getData'});
     if(result.ok){
@@ -1265,14 +1265,14 @@ async function syncFromSheets(){
       sales      = result.sales      || [];
       fixedCosts = result.fixedCosts || [];
       saveAll();render();
-      showToast('Ã¢ÂÂ Data refreshed from Google Sheets','success');
+      showToast('✓ Data refreshed from Google Sheets','success');
     } else {
       showToast('Sync failed: '+(result.error||'Unknown error'),'error');
     }
   } catch(err){
     showToast('Sync failed: '+err.message,'error');
   } finally {
-    if(btn){btn.disabled=false;btn.textContent='Ã¢ÂÂ Sync from Sheets';}
+    if(btn){btn.disabled=false;btn.textContent='↓ Sync from Sheets';}
   }
 }
 
@@ -1292,13 +1292,13 @@ async function testConnection() {
   const url=document.getElementById('scriptUrlInput').value.trim();
   const status=document.getElementById('connStatus');
   if(!url){status.className='conn-status err';status.textContent='Please enter a URL first.';return;}
-  status.className='conn-status ok';status.textContent='TestingÃ¢ÂÂ¦';
+  status.className='conn-status ok';status.textContent='Testing…';
   try {
     const r=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'ping'})});
     const d=await r.json();
-    status.className='conn-status ok';status.textContent='Ã¢ÂÂ '+d.message;
+    status.className='conn-status ok';status.textContent='✓ '+d.message;
   } catch(e){
-    status.className='conn-status err';status.textContent='Ã¢ÂÂ Could not connect. Check the URL and make sure the script is deployed as "Anyone" access.';
+    status.className='conn-status err';status.textContent='✗ Could not connect. Check the URL and make sure the script is deployed as "Anyone" access.';
   }
 }
 
@@ -1308,7 +1308,7 @@ async function saveScriptUrl() {
   localStorage.setItem('cb_script_url',url);
   updateSyncUI();
   closeSettings();
-  showToast('Google connected Ã¢ÂÂ loading data from SheetÃ¢ÂÂ¦','info');
+  showToast('Google connected — loading data from Sheet…','info');
   try{
     const result=await callScript({action:'getData'});
     if(result.ok){
@@ -1316,7 +1316,7 @@ async function saveScriptUrl() {
       sales      = result.sales      || [];
       fixedCosts = result.fixedCosts || [];
       saveAll();render();
-      showToast('Ã¢ÂÂ Connected! Data loaded from Google Sheets.','success');
+      showToast('✓ Connected! Data loaded from Google Sheets.','success');
     }
   } catch(err){
     showToast('Connected but could not load data: '+err.message,'warning');
@@ -1328,31 +1328,31 @@ async function syncAllToGoogle(){
   if(!getScriptUrl()){showToast('Connect Google first in Settings','error');return;}
   const btn=document.getElementById('syncAllBtn');
   const status=document.getElementById('syncAllStatus');
-  btn.disabled=true;btn.textContent='SyncingÃ¢ÂÂ¦';
-  status.style.display='block';status.style.color='var(--muted)';status.textContent='Sending all entries to Google SheetsÃ¢ÂÂ¦';
+  btn.disabled=true;btn.textContent='Syncing…';
+  status.style.display='block';status.style.color='var(--muted)';status.textContent='Sending all entries to Google Sheets…';
   try{
-    // Strip large base64 data before sending to keep payload small Ã¢ÂÂ Drive URL already stored
+    // Strip large base64 data before sending to keep payload small — Drive URL already stored
     const cleanSales=sales.map(r=>({...r,attachments:(r.attachments||[]).map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}))}));
     const cleanPurchases=purchases.map(r=>({...r,attachments:(r.attachments||[]).map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}))}));
     const result=await callScript({action:'syncAll',sales:cleanSales,purchases:cleanPurchases});
     if(result.ok){
       status.style.color='var(--green)';
-      status.textContent='Ã¢ÂÂ Synced '+result.salesCount+' sales + '+result.purchasesCount+' purchases to Google Sheets.';
-      showToast('Ã¢ÂÂ All entries synced to Google Sheets!','success');
+      status.textContent='✓ Synced '+result.salesCount+' sales + '+result.purchasesCount+' purchases to Google Sheets.';
+      showToast('✓ All entries synced to Google Sheets!','success');
     } else {
       throw new Error(result.error||'Unknown error');
     }
   }catch(err){
     status.style.color='var(--red)';
-    status.textContent='Ã¢ÂÂ Sync failed: '+err.message;
+    status.textContent='✗ Sync failed: '+err.message;
     showToast('Sync failed: '+err.message,'error');
   }
-  btn.disabled=false;btn.textContent='Ã¢Â¬Â Sync All Entries Ã¢ÂÂ Google Sheets';
+  btn.disabled=false;btn.textContent='⬆ Sync All Entries → Google Sheets';
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  FILE UPLOAD
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 var attachedFiles=[]; // array of {name, mimeType, data (base64), size, objectUrl?}
 
 function onDragOver(e){e.preventDefault();document.getElementById('dropZone').classList.add('dragging');}
@@ -1391,14 +1391,14 @@ function renderFileList(){
   if(!list)return;
   if(!attachedFiles.length){list.innerHTML='';return;}
   list.innerHTML=attachedFiles.map((f,i)=>{
-    const icon=f.mimeType==='application/pdf'?'Ã°ÂÂÂ':(f.mimeType.startsWith('image/')?'Ã°ÂÂÂ¼':'Ã°ÂÂÂ');
+    const icon=f.mimeType==='application/pdf'?'📑':(f.mimeType.startsWith('image/')?'🖼':'📄');
     return`<div class="file-item">
       <span class="file-item-icon">${icon}</span>
       <div class="file-item-meta">
         <div class="file-item-name" title="${f.name}">${f.name}</div>
         <div class="file-item-size">${formatBytes(f.size)}</div>
       </div>
-      <button class="file-item-rm" onclick="removeAttachedFile(${i})">Ã¢ÂÂ</button>
+      <button class="file-item-rm" onclick="removeAttachedFile(${i})">✕</button>
     </div>`;
   }).join('');
 }
@@ -1426,9 +1426,9 @@ function showProgress(pct,label) {
 function hideProgress(){document.getElementById('uploadProgress').classList.remove('show');}
 function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toFixed(1)+'KB';return(b/(1024*1024)).toFixed(1)+'MB';}
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  RENDER
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 function render() {
   const fS=filtered(sales),fP=filtered(purchases);
   const tS=fS.reduce((s,r)=>s+(+r.amount||0),0);
@@ -1478,7 +1478,7 @@ function renderPieChart(fS) {
                tooltip:{callbacks:{label:c=>` ₹${c.parsed.toLocaleString('en-IN')}`}}}}});
 }
 
-// Base folder for local file links Ã¢ÂÂ update if files are stored elsewhere
+// Base folder for local file links — update if files are stored elsewhere
 const BILLS_FOLDER = '/Users/bhavyakaushik/Documents/Claude/Projects/Chutak Binak : MNS Firm Bills/';
 
 function billCell(bill, attachments) {
@@ -1488,11 +1488,11 @@ function billCell(bill, attachments) {
   if(attachments&&attachments.length){
     attachments.forEach(function(a){
       if(a.driveUrl){
-        chips.push(`<a class="bill-link" href="${a.driveUrl}" target="_blank" rel="noopener" title="${a.name}">Ã¢ÂÂ ${a.name.length>18?a.name.slice(0,16)+'Ã¢ÂÂ¦':a.name}</a>`);
+        chips.push(`<a class="bill-link" href="${a.driveUrl}" target="_blank" rel="noopener" title="${a.name}">☁ ${a.name.length>18?a.name.slice(0,16)+'…':a.name}</a>`);
       } else if(a.data){
-        // embedded base64 Ã¢ÂÂ create data URL link
+        // embedded base64 — create data URL link
         const dataUrl='data:'+a.mimeType+';base64,'+a.data;
-        chips.push(`<a class="bill-link file-link" href="${dataUrl}" download="${a.name}" target="_blank" title="${a.name}">Ã°ÂÂÂ ${a.name.length>18?a.name.slice(0,16)+'Ã¢ÂÂ¦':a.name}</a>`);
+        chips.push(`<a class="bill-link file-link" href="${dataUrl}" download="${a.name}" target="_blank" title="${a.name}">📄 ${a.name.length>18?a.name.slice(0,16)+'…':a.name}</a>`);
       }
     });
   }
@@ -1502,16 +1502,16 @@ function billCell(bill, attachments) {
     const b=bill.trim();
     if(b.startsWith('http://')||b.startsWith('https://')||b.startsWith('www.')||b.includes('drive.google.com')||b.includes('docs.google.com')){
       const url=(b.startsWith('http://')||b.startsWith('https://'))?b:'https://'+b;
-      const name=url.includes('drive.google.com')||url.includes('docs.google.com')?'Ã¢ÂÂ Drive':'Ã°ÂÂÂ Open';
+      const name=url.includes('drive.google.com')||url.includes('docs.google.com')?'☁ Drive':'🔗 Open';
       chips.push(`<a class="bill-link" href="${url}" target="_blank" rel="noopener">${name}</a>`);
     } else {
-      // Plain filename Ã¢ÂÂ no Drive link yet; show as a muted label (click Ã¢ÂÂ to add Drive link)
-      const short=b.length>22?b.slice(0,20)+'Ã¢ÂÂ¦':b;
-      chips.push(`<span title="${b} Ã¢ÂÂ click Ã¢ÂÂ to add Google Drive link" style="font-size:.71rem;color:var(--muted);background:#F1F5F9;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px;cursor:default;">Ã°ÂÂÂ ${short}</span>`);
+      // Plain filename — no Drive link yet; show as a muted label (click ✏ to add Drive link)
+      const short=b.length>22?b.slice(0,20)+'…':b;
+      chips.push(`<span title="${b} — click ✏ to add Google Drive link" style="font-size:.71rem;color:var(--muted);background:#F1F5F9;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px;cursor:default;">📄 ${short}</span>`);
     }
   }
 
-  if(!chips.length)return'<span style="color:var(--muted);font-size:.72rem">Ã¢ÂÂ</span>';
+  if(!chips.length)return'<span style="color:var(--muted);font-size:.72rem">—</span>';
   return`<div class="att-chips">${chips.join('')}</div>`;
 }
 
@@ -1522,16 +1522,16 @@ function renderSalesTable(data){
     if(editingType==='sale'&&editingId===r.id)return salesEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
-      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'Ã¢ÂÂ'}</td>
+      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'—'}</td>
       <td class="amount-income">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#EEF2FF;color:var(--indigo);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}</td>
-      <td>${r.gst?fmtCur(r.gst,r.currency):'Ã¢ÂÂ'}</td>
+      <td>${r.gst?fmtCur(r.gst,r.currency):'—'}</td>
       <td><span class="pill ${platCls(r.platform)}">${r.platform}</span></td>
-      <td><span class="pill ${pmCls(r.paidVia)}">${r.paidVia||'Ã¢ÂÂ'}</span></td>
+      <td><span class="pill ${pmCls(r.paidVia)}">${r.paidVia||'—'}</span></td>
       <td>${billCell(r.bill,r.attachments)}</td>
       <td class="owner-only" style="${isOwner()?'':'display:none'}">
         <div class="actions-cell">
-          <button class="btn btn-ghost btn-icon" onclick="startEdit('sale','${r.id}')">Ã¢ÂÂ</button>
-          <button class="btn btn-danger btn-icon" onclick="delEntry('sale','${r.id}')">Ã¢ÂÂ</button>
+          <button class="btn btn-ghost btn-icon" onclick="startEdit('sale','${r.id}')">✏</button>
+          <button class="btn btn-danger btn-icon" onclick="delEntry('sale','${r.id}')">✕</button>
         </div>
       </td>
     </tr>`;
@@ -1548,18 +1548,18 @@ function salesEditRow(r){
       ${['Website (Shopify)','Offline Store','Amazon','Etsy','B2B','Other'].map(p=>`<option${r.platform===p?' selected':''}>${p}</option>`).join('')}
     </select></td>
     <td><select class="edit-select" id="e_paidvia" style="min-width:110px">
-      ${['UPI','Bank','Cash','Bank (Amazon)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'Ã¢ÂÂ'}</option>`).join('')}
+      ${['UPI','Bank','Cash','Bank (Amazon)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'—'}</option>`).join('')}
     </select></td>
     <td style="min-width:200px">
-      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive linkÃ¢ÂÂ¦" style="width:100%;margin-bottom:4px;font-size:.72rem">
-      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">Ã°ÂÂÂ${a.name.length>16?a.name.slice(0,14)+'Ã¢ÂÂ¦':a.name}<button onclick="removeEditAttachment('sale','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">Ã¢ÂÂ</button></span>`).join(''):''}
+      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive link…" style="width:100%;margin-bottom:4px;font-size:.72rem">
+      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">📄${a.name.length>16?a.name.slice(0,14)+'…':a.name}<button onclick="removeEditAttachment('sale','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">✕</button></span>`).join(''):''}
       <label style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;border:1px dashed #86efac;border-radius:5px;padding:2px 7px;font-size:.7rem;color:#15803d;cursor:pointer;font-weight:600;">
         + Add File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple style="display:none" onchange="addEditFile(event,'sale','${r.id}')">
       </label>
     </td>
     <td><div class="actions-cell">
-      <button class="btn btn-success btn-sm" onclick="saveEdit('sale','${r.id}')">Ã¢ÂÂ</button>
-      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Ã¢ÂÂ</button>
+      <button class="btn btn-success btn-sm" onclick="saveEdit('sale','${r.id}')">✓</button>
+      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">✕</button>
     </div></td>
   </tr>`;
 }
@@ -1572,14 +1572,14 @@ function renderPurchasesTable(data){
     return`<tr>
       <td>${fmtDate(r.date)}</td>
       <td>${r.particulars}</td>
-      <td><span class="pill" style="background:#F1F5F9;color:var(--muted)">${r.category||'Ã¢ÂÂ'}</span></td>
+      <td><span class="pill" style="background:#F1F5F9;color:var(--muted)">${r.category||'—'}</span></td>
       <td class="amount-expense">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#FEF2F2;color:var(--red);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}</td>
-      <td><span class="pill ${pmCls(r.paymentMethod)}">${r.paymentMethod||'Ã¢ÂÂ'}</span></td>
+      <td><span class="pill ${pmCls(r.paymentMethod)}">${r.paymentMethod||'—'}</span></td>
       <td>${billCell(r.bill,r.attachments)}</td>
       <td class="owner-only" style="${isOwner()?'':'display:none'}">
         <div class="actions-cell">
-          <button class="btn btn-ghost btn-icon" onclick="startEdit('purchase','${r.id}')">Ã¢ÂÂ</button>
-          <button class="btn btn-danger btn-icon" onclick="delEntry('purchase','${r.id}')">Ã¢ÂÂ</button>
+          <button class="btn btn-ghost btn-icon" onclick="startEdit('purchase','${r.id}')">✏</button>
+          <button class="btn btn-danger btn-icon" onclick="delEntry('purchase','${r.id}')">✕</button>
         </div>
       </td>
     </tr>`;
@@ -1600,15 +1600,15 @@ function purchaseEditRow(r){
       ${pms.map(p=>`<option${r.paymentMethod===p?' selected':''}>${p}</option>`).join('')}
     </select></td>
     <td style="min-width:200px">
-      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive linkÃ¢ÂÂ¦" style="width:100%;margin-bottom:4px;font-size:.72rem">
-      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">Ã°ÂÂÂ${a.name.length>16?a.name.slice(0,14)+'Ã¢ÂÂ¦':a.name}<button onclick="removeEditAttachment('purchase','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">Ã¢ÂÂ</button></span>`).join(''):''}
+      <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive link…" style="width:100%;margin-bottom:4px;font-size:.72rem">
+      ${(r.attachments&&r.attachments.length)?r.attachments.map((a,i)=>`<span style="font-size:.68rem;background:#e0f2fe;color:#0369a1;padding:2px 5px;border-radius:4px;margin-right:2px;display:inline-flex;align-items:center;gap:3px">📄${a.name.length>16?a.name.slice(0,14)+'…':a.name}<button onclick="removeEditAttachment('purchase','${r.id}',${i})" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:.7rem;padding:0 1px">✕</button></span>`).join(''):''}
       <label style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;border:1px dashed #86efac;border-radius:5px;padding:2px 7px;font-size:.7rem;color:#15803d;cursor:pointer;font-weight:600;">
         + Add File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple style="display:none" onchange="addEditFile(event,'purchase','${r.id}')">
       </label>
     </td>
     <td><div class="actions-cell">
-      <button class="btn btn-success btn-sm" onclick="saveEdit('purchase','${r.id}')">Ã¢ÂÂ</button>
-      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Ã¢ÂÂ</button>
+      <button class="btn btn-success btn-sm" onclick="saveEdit('purchase','${r.id}')">✓</button>
+      <button class="btn btn-ghost btn-sm" onclick="cancelEdit()">✕</button>
     </div></td>
   </tr>`;
 }
@@ -1647,9 +1647,9 @@ async function saveEdit(type,id){
     try{
       const action=type==='sale'?'editSale':'editPurchase';
       await callScript({action,entry:r});
-      showToast('Ã¢ÂÂ Edit synced to Google Sheets','success');
+      showToast('✓ Edit synced to Google Sheets','success');
     }catch(err){
-      showToast('Ã¢ÂÂ  Saved locally. Sync failed: '+err.message,'warning');
+      showToast('⚠ Saved locally. Sync failed: '+err.message,'warning');
     }
   }
 }
@@ -1692,7 +1692,7 @@ function renderFixedGrid(){
           <div class="fixed-basis">${f.basis}</div>
           ${(f.attachments&&f.attachments.length)?`<div style="margin-top:6px">${billCell('',f.attachments)}</div>`:''}
         </div>
-        ${isOwner()?`<button class="btn btn-danger btn-icon owner-only" onclick="delEntry('fixed','${f.id}')">Ã¢ÂÂ</button>`:''}
+        ${isOwner()?`<button class="btn btn-danger btn-icon owner-only" onclick="delEntry('fixed','${f.id}')">✕</button>`:''}
       </div>
     </div>`).join('');
 }
@@ -1727,9 +1727,9 @@ function renderOverview(fS,fP,tS,tE,tG,net){
     </div>`;
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  MODAL
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 function openModal(type){
   if(!isOwner())return;
   currentModal=type;
@@ -1737,7 +1737,7 @@ function openModal(type){
   document.getElementById('purchaseForm').style.display=type==='purchase'?'block':'none';
   document.getElementById('fixedForm').style.display   =type==='fixed'   ?'block':'none';
   document.getElementById('uploadSection').style.display='block';
-  document.getElementById('modalTitle').textContent={sale:'Ã°ÂÂÂ° Add Sale / Income',purchase:'Ã°ÂÂ§Â¾ Add Purchase / Expense',fixed:'Ã°ÂÂÂ Add Fixed Cost'}[type];
+  document.getElementById('modalTitle').textContent={sale:'💰 Add Sale / Income',purchase:'🧾 Add Purchase / Expense',fixed:'📌 Add Fixed Cost'}[type];
   clearFile();
   const today=new Date().toISOString().split('T')[0];
   if(type==='sale')    {document.getElementById('s_date').value=today;['s_invoice','s_amount','s_gst','s_bill'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';})}
@@ -1796,19 +1796,19 @@ async function saveEntry(){
 
   // Disable save button while working
   const btn=document.getElementById('saveBtn');
-  btn.disabled=true;btn.textContent='SavingÃ¢ÂÂ¦';
+  btn.disabled=true;btn.textContent='Saving…';
 
   const scriptUrl=getScriptUrl();
 
   if(scriptUrl&&entry&&attachedFiles.length){
     try{
-      showProgress(15,'Connecting to GoogleÃ¢ÂÂ¦');
+      showProgress(15,'Connecting to Google…');
       const action=currentModal==='sale'?'addSale':'addPurchase';
       // Upload files one by one, collect Drive URLs
       const driveUrls=[];
       for(let i=0;i<attachedFiles.length;i++){
         const f=attachedFiles[i];
-        showProgress(Math.round(15+60*(i/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')Ã¢ÂÂ¦');
+        showProgress(Math.round(15+60*(i/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')…');
         const result=await callScript({action,entry,file:f});
         if(result.ok&&result.driveUrl) driveUrls.push(result.driveUrl);
       }
@@ -1816,29 +1816,29 @@ async function saveEntry(){
         entry.bill=driveUrls[0]; // keep legacy field for backward compat
         // update attachment records with drive URLs
         driveUrls.forEach((url,i)=>{if(entry.attachments[i])entry.attachments[i].driveUrl=url;});
-        showToast('Ã¢ÂÂ Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
+        showToast('✓ Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
       } else {
-        showToast('Ã¢ÂÂ Entry saved. Files may not have uploaded Ã¢ÂÂ check Drive.','warning');
+        showToast('✓ Entry saved. Files may not have uploaded — check Drive.','warning');
       }
       showProgress(100,'Done!');
       setTimeout(hideProgress,900);
     }catch(err){
       hideProgress();
       console.error('Google sync error:',err);
-      showToast('Ã¢ÂÂ  Saved locally. Google sync failed: '+err.message,'warning');
+      showToast('⚠ Saved locally. Google sync failed: '+err.message,'warning');
     }
   } else if(scriptUrl&&entry){
     try{
       const action=currentModal==='sale'?'addSale':'addPurchase';
-      showProgress(40,'Writing entry to Google SheetÃ¢ÂÂ¦');
+      showProgress(40,'Writing entry to Google Sheet…');
       const result=await callScript({action,entry,file:null});
       showProgress(100,'Done!');
       setTimeout(hideProgress,900);
-      if(result.ok) showToast('Ã¢ÂÂ Entry saved to Google Sheet.','success');
+      if(result.ok) showToast('✓ Entry saved to Google Sheet.','success');
       else throw new Error(result.error||'Unknown error');
-    }catch(err){hideProgress();showToast('Ã¢ÂÂ  Saved locally. Google sync failed: '+err.message,'warning');}
+    }catch(err){hideProgress();showToast('⚠ Saved locally. Google sync failed: '+err.message,'warning');}
   } else if(entry){
-    showToast('Saved locally. Open Settings (Ã¢ÂÂ) to connect Google.','info');
+    showToast('Saved locally. Open Settings (⚙) to connect Google.','info');
   }
 
   saveAll();render();
@@ -1856,7 +1856,7 @@ async function delEntry(type,id){
   saveAll();render();
   if(getScriptUrl()&&entry&&(type==='sale'||type==='purchase')){
     try{await callScript({action:'deleteEntry',type,entry});}
-    catch(e){/* silent Ã¢ÂÂ local already deleted */}
+    catch(e){/* silent — local already deleted */}
   }
 }
 
@@ -1871,7 +1871,7 @@ async function resetData(){
   localStorage.removeItem('cb_fixed');
   closeSettings();
   if(url){
-    showToast('Reloading from Google SheetsÃ¢ÂÂ¦','info');
+    showToast('Reloading from Google Sheets…','info');
     try{
       const result=await callScript({action:'getData'});
       if(result.ok){
@@ -1879,7 +1879,7 @@ async function resetData(){
         sales      = result.sales      || [];
         fixedCosts = result.fixedCosts || [];
         saveAll();render();
-        showToast('Ã¢ÂÂ Reloaded from Google Sheets','success');
+        showToast('✓ Reloaded from Google Sheets','success');
         return;
       }
     } catch(err){showToast('Could not reach Sheets: '+err.message,'warning');}
@@ -1888,9 +1888,9 @@ async function resetData(){
   showToast('Data reset.','info');
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  SETTINGS MODAL
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 function openSettings(){
   document.getElementById('connStatus').className='conn-status';
   document.getElementById('connStatus').textContent='';
@@ -1899,9 +1899,9 @@ function openSettings(){
 function closeSettings(){document.getElementById('settingsModal').classList.remove('open');}
 function openSetupGuide(){window.open('CB_Setup_Guide.html','_blank');}
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  TABS + EXPORT
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 let _voucherInited=false;
 function switchTab(name,btn){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
@@ -1919,12 +1919,12 @@ function exportSummary(){
   const tE=fP.reduce((s,r)=>s+(+r.amount||0),0);
   const tG=fS.reduce((s,r)=>s+(+r.gst||0),0);
   const period=filterMonth==='all'?'FY_2026-27':new Date(filterMonth+'-01').toLocaleString('default',{month:'long',year:'numeric'}).replace(/ /g,'_');
-  const lines=['MUKTAKASH NATYA SANSTHAN (CHUTAK BINAK)','Income & Expense Summary Ã¢ÂÂ '+period.replace(/_/g,' '),
+  const lines=['MUKTAKASH NATYA SANSTHAN (CHUTAK BINAK)','Income & Expense Summary — '+period.replace(/_/g,' '),
     'Generated: '+new Date().toLocaleString('en-IN'),'='.repeat(60),'',
-    'Ã¢ÂÂÃ¢ÂÂ SALES / INCOME Ã¢ÂÂÃ¢ÂÂ','Date\tInvoice No.\tAmount (INR)\tGST (INR)\tPlatform\tPaid Via\tBill / Link',
+    '── SALES / INCOME ──','Date\tInvoice No.\tAmount (INR)\tGST (INR)\tPlatform\tPaid Via\tBill / Link',
     ...fS.map(r=>[r.date,r.invoiceNo,r.amount,r.gst||0,r.platform,r.paidVia,r.bill].join('\t')),
     '','TOTAL SALES: INR '+tS.toFixed(2),'GST COLLECTED: INR '+tG.toFixed(2),'NET SALES (excl GST): INR '+(tS-tG).toFixed(2),
-    '','Ã¢ÂÂÃ¢ÂÂ PURCHASES / EXPENSES Ã¢ÂÂÃ¢ÂÂ','Date\tParticulars\tCategory\tAmount (INR)\tPayment\tBill / Link',
+    '','── PURCHASES / EXPENSES ──','Date\tParticulars\tCategory\tAmount (INR)\tPayment\tBill / Link',
     ...fP.map(r=>[r.date,r.particulars,r.category,r.amount,r.paymentMethod,r.bill].join('\t')),
     '','TOTAL EXPENSES: INR '+tE.toFixed(2),'','='.repeat(60),
     'NET PROFIT / LOSS: INR '+(tS-tE).toFixed(2),'='.repeat(60),'',
@@ -1934,29 +1934,29 @@ function exportSummary(){
   a.download='CB_Summary_'+period+'.txt';a.click();
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  TOAST
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 function showToast(msg,type='info'){
   const wrap=document.getElementById('toastWrap');
   const div=document.createElement('div');
   div.className='toast '+(type||'info');
-  div.innerHTML=`<span style="flex:1">${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:1rem;opacity:.7;flex-shrink:0">Ã¢ÂÂ</button>`;
+  div.innerHTML=`<span style="flex:1">${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#fff;cursor:pointer;font-size:1rem;opacity:.7;flex-shrink:0">✕</button>`;
   wrap.appendChild(div);
   setTimeout(()=>div.style.animation='slideIn .25s ease reverse',3500);
   setTimeout(()=>div.remove(),3750);
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  HELPERS
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 const CURRENCIES=[
   {code:'INR',sym:'₹',locale:'en-IN'},
   {code:'USD',sym:'$',locale:'en-US'},
-  {code:'EUR',sym:'Ã¢ÂÂ¬',locale:'de-DE'},
-  {code:'GBP',sym:'ÃÂ£',locale:'en-GB'},
-  {code:'AED',sym:'ÃÂ¯.ÃÂ¥',locale:'ar-AE'},
-  {code:'JPY',sym:'ÃÂ¥',locale:'ja-JP'},
+  {code:'EUR',sym:'€',locale:'de-DE'},
+  {code:'GBP',sym:'£',locale:'en-GB'},
+  {code:'AED',sym:'د.إ',locale:'ar-AE'},
+  {code:'JPY',sym:'¥',locale:'ja-JP'},
   {code:'CAD',sym:'C$',locale:'en-CA'},
   {code:'AUD',sym:'A$',locale:'en-AU'},
   {code:'SGD',sym:'S$',locale:'en-SG'},
@@ -1973,13 +1973,13 @@ function onCurrencyChange(){
   document.getElementById('currencyBadge').textContent=sym;
 }
 function fmt(n){return'₹'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
-function fmtDate(s){if(!s)return'Ã¢ÂÂ';return new Date(s).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
+function fmtDate(s){if(!s)return'—';return new Date(s).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
 function pmCls(m){m=(m||'').toLowerCase();if(m.includes('upi'))return'pill-upi';if(m.includes('bank'))return'pill-bank';if(m.includes('cash'))return'pill-cash';if(m.includes('card'))return'pill-card';return'';}
 function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-amazon';if(p.includes('etsy'))return'pill-etsy';if(p.includes('b2b'))return'pill-b2b';if(p.includes('offline'))return'pill-offline';return'pill-shopify';}
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ════════════════════════════════════════════════════════════
 //  VOUCHER
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ════════════════════════════════════════════════════════════
 
 let _vRowCount = 0;
 
@@ -1999,7 +1999,7 @@ function addVoucherRow() {
     <td><input type="text" placeholder="Description of expense" oninput="updateVoucherTotal()" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;font-family:inherit;padding:2px 0"></td>
     <td><input type="number" placeholder="0.00" step="0.01" oninput="updateVoucherTotal()" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;text-align:right;font-family:inherit;padding:2px 0"></td>
     <td class="v-no-print" style="text-align:center;padding:4px">
-      <button class="v-del-btn" onclick="removeVoucherRow(this)">Ã¢ÂÂ</button>
+      <button class="v-del-btn" onclick="removeVoucherRow(this)">✕</button>
     </td>`;
   document.getElementById('voucherRows').appendChild(tr);
 }
@@ -2078,7 +2078,7 @@ function saveVoucherAsEntry() {
   if(v.total<=0){showToast('Please enter at least one amount','error');return;}
 
   const firstPart = v.rows.find(r=>r.particulars)?.particulars||'';
-  const particulars = v.paidTo + (firstPart ? ' Ã¢ÂÂ '+firstPart : '');
+  const particulars = v.paidTo + (firstPart ? ' — '+firstPart : '');
   const entry={
     id:'p_'+Date.now(),
     date: v.date,
@@ -2091,7 +2091,7 @@ function saveVoucherAsEntry() {
 
   purchases.unshift(entry);
   saveAll(); render();
-  showToast('Ã¢ÂÂ Saved as Purchase Entry Ã¢ÂÂ ₹'+v.total.toLocaleString('en-IN'),'success');
+  showToast('✓ Saved as Purchase Entry — ₹'+v.total.toLocaleString('en-IN'),'success');
 
   // Sync to Google Sheet
   const url=localStorage.getItem('cb_script_url')||'';
@@ -2103,7 +2103,7 @@ function saveVoucherAsEntry() {
         paymentMethod:entry.paymentMethod, bill:entry.bill
       }})
     }).then(r=>r.json()).then(d=>{
-      if(d.ok) showToast('Ã¢ÂÂ Also synced to Google Sheet','success');
+      if(d.ok) showToast('✓ Also synced to Google Sheet','success');
     }).catch(()=>{});
   }
 }
@@ -2170,7 +2170,7 @@ function printVoucher() {
     </style>
   </head><body>
     ${copyHTML}
-    <div class="cut"><span>Ã¢ÂÂ&nbsp;&nbsp;Cut here Ã¢ÂÂ Office Copy</span></div>
+    <div class="cut"><span>✂&nbsp;&nbsp;Cut here — Office Copy</span></div>
     ${copyHTML}
     <script>setTimeout(function(){window.print();},400);<\/script>
   </body></html>`);
@@ -2181,7 +2181,7 @@ document.getElementById('modal').addEventListener('click',e=>{if(e.target===docu
 document.getElementById('settingsModal').addEventListener('click',e=>{if(e.target===document.getElementById('settingsModal'))closeSettings();});
 document.getElementById('gmailModal').addEventListener('click',e=>{if(e.target===document.getElementById('gmailModal'))closeGmailModal();});
 
-// Ã¢ÂÂÃ¢ÂÂ GMAIL INVOICE SCANNER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── GMAIL INVOICE SCANNER ────────────────────────────────────
 
 function closeGmailModal(){
   document.getElementById('gmailModal').classList.remove('open');
@@ -2190,20 +2190,20 @@ function closeGmailModal(){
 function scanGmailInvoices(){
   const url=localStorage.getItem('cb_script_url')||'';
   if(!url){
-    showToast('Connect Google Sheets first (Ã¢ÂÂ Settings Ã¢ÂÂ Save & Connect)','error');
+    showToast('Connect Google Sheets first (⚙ Settings → Save & Connect)','error');
     return;
   }
   // Open modal and show loading state
   document.getElementById('gmailModal').classList.add('open');
   document.getElementById('gmailScanResults').innerHTML=`
     <div style="text-align:center;padding:32px;color:var(--muted)">
-      <div style="font-size:1.8rem;margin-bottom:8px">Ã°ÂÂÂ¬</div>
-      <div style="font-size:.8rem">Scanning inboxÃ¢ÂÂ¦</div>
+      <div style="font-size:1.8rem;margin-bottom:8px">📬</div>
+      <div style="font-size:.8rem">Scanning inbox…</div>
     </div>`;
 
   const btn=document.getElementById('gmailScanBtn');
   btn.disabled=true;
-  btn.textContent='Ã°ÂÂÂ§ ScanningÃ¢ÂÂ¦';
+  btn.textContent='📧 Scanning…';
 
   fetch(url, {
     method:'POST',
@@ -2213,13 +2213,13 @@ function scanGmailInvoices(){
   .then(r=>r.json())
   .then(data=>{
     btn.disabled=false;
-    btn.textContent='Ã°ÂÂÂ§ Scan Gmail for Invoices';
+    btn.textContent='📧 Scan Gmail for Invoices';
     if(!data.ok){ renderGmailError(data.error||'Scan failed'); return; }
     renderGmailResults(data.invoices||[]);
   })
   .catch(err=>{
     btn.disabled=false;
-    btn.textContent='Ã°ÂÂÂ§ Scan Gmail for Invoices';
+    btn.textContent='📧 Scan Gmail for Invoices';
     renderGmailError(err.toString());
   });
 }
@@ -2227,7 +2227,7 @@ function scanGmailInvoices(){
 function renderGmailError(msg){
   document.getElementById('gmailScanResults').innerHTML=`
     <div style="background:#FEF2F2;border-radius:8px;padding:16px;color:var(--red);font-size:.78rem">
-      Ã¢ÂÂ Ã¯Â¸Â ${msg}
+      ⚠️ ${msg}
     </div>`;
 }
 
@@ -2235,7 +2235,7 @@ function renderGmailResults(invoices){
   if(!invoices.length){
     document.getElementById('gmailScanResults').innerHTML=`
       <div style="text-align:center;padding:32px;color:var(--muted)">
-        <div style="font-size:1.8rem;margin-bottom:8px">Ã¢ÂÂ</div>
+        <div style="font-size:1.8rem;margin-bottom:8px">✅</div>
         <div style="font-size:.8rem">No new invoice emails found in the last 90 days for the tracked vendors.</div>
       </div>`;
     return;
@@ -2256,7 +2256,7 @@ function renderGmailResults(invoices){
       html+=`<div style="padding:10px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid #F1F5F9;font-size:.75rem">
         <div>
           <div style="font-weight:600;color:var(--text)">${inv.subject}</div>
-          <div style="color:var(--muted);margin-top:2px">${inv.date} &nbsp;ÃÂ·&nbsp; ${inv.from}</div>
+          <div style="color:var(--muted);margin-top:2px">${inv.date} &nbsp;·&nbsp; ${inv.from}</div>
         </div>
         <button class="btn btn-primary" style="font-size:.7rem;padding:5px 11px;flex-shrink:0"
           onclick='prefillFromGmail(${escaped})'>Create Entry</button>
@@ -2289,13 +2289,13 @@ function prefillFromGmail(inv){
   }, 150);
 }
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  BOOT
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  MNS VOUCHER (Muktakash Natya Sansthan)
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 var _mnsVoucherInited=false;
 var _mnsVRowCount=0;
 
@@ -2313,7 +2313,7 @@ function mnsAddVoucherRow(){
   tr.innerHTML=`<td style="width:36px;text-align:center;border:1px solid #ccc;padding:4px">${_mnsVRowCount}</td>
     <td style="border:1px solid #ccc;padding:4px"><input type="text" placeholder="Description of expense" oninput="mnsUpdateVoucherTotal()" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;font-family:inherit;padding:2px 0"></td>
     <td style="width:120px;border:1px solid #ccc;padding:4px;text-align:right"><input type="number" placeholder="0.00" oninput="mnsUpdateVoucherTotal()" step="0.01" min="0" style="width:100%;border:none;outline:none;font-size:.82rem;background:transparent;font-family:inherit;text-align:right;padding:2px 0"></td>
-    <td style="width:32px;text-align:center;border:1px solid #ccc;padding:4px" class="no-print"><button onclick="this.closest('tr').remove();mnsUpdateVoucherTotal()" style="background:none;border:none;cursor:pointer;color:#EF4444;font-size:.85rem">Ã¢ÂÂ</button></td>`;
+    <td style="width:32px;text-align:center;border:1px solid #ccc;padding:4px" class="no-print"><button onclick="this.closest('tr').remove();mnsUpdateVoucherTotal()" style="background:none;border:none;cursor:pointer;color:#EF4444;font-size:.85rem">✕</button></td>`;
   document.getElementById('mnsVoucherRows').appendChild(tr);
 }
 
@@ -2362,7 +2362,7 @@ function mnsSaveVoucherAsEntry(){
   v.id=uid();
   purchases.push(v);
   saveAll();render();
-  showToast('Ã¢ÂÂ MNS Voucher saved as Purchase entry','success');
+  showToast('✓ MNS Voucher saved as Purchase entry','success');
 }
 
 let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
@@ -2375,9 +2375,9 @@ const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'
   else{document.getElementById('loginScreen').style.display='flex';document.getElementById('appScreen').style.display='none';}
 })();
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 //  SHIPROCKET PASSBOOK
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══════════════════════════════════════════════════════
 
 var srReports = JSON.parse(localStorage.getItem('cb_sr_reports')||'[]');
 // Each report: { id, label, month, fetchedOn, headers:[], rows:[[]] }
@@ -2386,7 +2386,7 @@ var srActiveReport = null; // currently displayed report id
 
 function srSaveReports(){ localStorage.setItem('cb_sr_reports', JSON.stringify(srReports)); }
 
-// Ã¢ÂÂÃ¢ÂÂ Load CSV file Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Load CSV file ──────────────────────────────────────
 function srLoadFile(e){
   const file = e.target.files[0]; if(!file) return;
   const reader = new FileReader();
@@ -2397,7 +2397,7 @@ function srLoadFile(e){
   e.target.value='';
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Parse CSV text and save Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Parse CSV text and save ────────────────────────────
 function srParseAndStore(csvText, label){
   const lines = csvText.trim().split(/\r?\n/);
   if(lines.length < 2){ srSetStatus('CSV appears empty.','error'); return; }
@@ -2427,7 +2427,7 @@ function srParseAndStore(csvText, label){
   srSaveReports();
   srRebuildMonthSel();
   srRenderReport(id);
-  srSetStatus('Ã¢ÂÂ Loaded '+rows.length+' rows from "'+report.label+'"','success');
+  srSetStatus('✓ Loaded '+rows.length+' rows from "'+report.label+'"','success');
 }
 
 function srParseCSVLine(line){
@@ -2442,7 +2442,7 @@ function srParseCSVLine(line){
   return result;
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Render a report by id Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Render a report by id ──────────────────────────────
 function srRenderReport(id){
   const report = srReports.find(r=>r.id===id);
   if(!report){ srClearTable(); return; }
@@ -2512,14 +2512,14 @@ function srRenderStats(report){
   box.style.display='flex';
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Pills (one per saved report) Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Pills (one per saved report) ───────────────────────
 function srRebuildPills(){
   const box = document.getElementById('srReportPills');
   if(!srReports.length){ box.innerHTML=''; return; }
   box.innerHTML = srReports.map(r=>`
     <span onclick="srRenderReport('${r.id}')" style="cursor:pointer;padding:5px 12px;border-radius:20px;font-size:.74rem;font-weight:700;border:2px solid ${r.id===srActiveReport?'var(--indigo)':'var(--border)'};background:${r.id===srActiveReport?'var(--indigo-light)':'#fff'};color:${r.id===srActiveReport?'var(--indigo)':'var(--muted)'};display:inline-flex;align-items:center;gap:6px">
-      Ã°ÂÂÂ ${r.label}
-      <button onclick="event.stopPropagation();srDeleteReport('${r.id}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:.75rem;padding:0;line-height:1">Ã¢ÂÂ</button>
+      📋 ${r.label}
+      <button onclick="event.stopPropagation();srDeleteReport('${r.id}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:.75rem;padding:0;line-height:1">✕</button>
     </span>`).join('');
 }
 
@@ -2542,7 +2542,7 @@ function srClearTable(){
   document.getElementById('srReportPills').innerHTML='';
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Month filter select Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Month filter select ────────────────────────────────
 function srRebuildMonthSel(){
   const sel = document.getElementById('srMonthSel');
   const months = [...new Set(srReports.map(r=>r.month))].sort().reverse();
@@ -2557,7 +2557,7 @@ function srFilterMonth(){
   if(match) srRenderReport(match.id);
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Download CSV Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Download CSV ───────────────────────────────────────
 function srDownloadCSV(){
   const report = srReports.find(r=>r.id===srActiveReport);
   if(!report){ showToast('No report loaded','error'); return; }
@@ -2570,18 +2570,18 @@ function srDownloadCSV(){
   a.click();
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Copy table to clipboard Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Copy table to clipboard ────────────────────────────
 function srCopyTable(){
   const report = srReports.find(r=>r.id===srActiveReport);
   if(!report){ showToast('No report loaded','error'); return; }
   const lines = [report.headers.join('\t'),...report.rows.map(r=>r.join('\t'))];
-  navigator.clipboard.writeText(lines.join('\n')).then(()=>showToast('Ã¢ÂÂ Copied '+report.rows.length+' rows to clipboard','success'));
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>showToast('✓ Copied '+report.rows.length+' rows to clipboard','success'));
 }
 
-// Ã¢ÂÂÃ¢ÂÂ Check Gmail for Shiprocket passbook emails Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ── Check Gmail for Shiprocket passbook emails ─────────
 async function srCheckGmail(){
-  if(!getScriptUrl()){ showToast('Connect Google Apps Script first (Ã¢ÂÂ Settings)','error'); return; }
-  srSetStatus('Scanning GmailÃ¢ÂÂ¦','info');
+  if(!getScriptUrl()){ showToast('Connect Google Apps Script first (⚙ Settings)','error'); return; }
+  srSetStatus('Scanning Gmail…','info');
   try{
     const result = await callScript({action:'scanShiprocket'});
     if(result.ok && result.reports && result.reports.length){
@@ -2611,7 +2611,7 @@ function srSetStatus(msg,type){
   if(srReports.length){ srRebuildMonthSel(); srRenderReport(srReports[0].id); }
 })();
 
-// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// ═══ REPORTS ═══
 function renderReports() {
   const tb = document.getElementById('reportsTableBody'); if (!tb) return;
   const pf = document.getElementById('rf_platform')?.value||'';
@@ -2625,8 +2625,8 @@ function renderReports() {
     <td>${RPT_MONTHS[r.month]||r.month}</td>
     <td><span class="pill ${RPT_PILL[r.platform]||'pill-offline'}">${r.platform}</span></td>
     <td>${r.name}</td>
-    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">Ã¢Â¬Â '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">Ã¢ÂÂ Drive</a>':'Ã¢ÂÂ'}</td>
-    <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">Ã¢ÂÂ</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">Ã¢ÂÂ</button>':''}</td>
+    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">⬇ '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">☁ Drive</a>':'—'}</td>
+    <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">✏</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">✕</button>':''}</td>
   </tr>`).join('');
 }
 function openReportModal(id) {
@@ -2670,12 +2670,12 @@ function setReportUploadMode(mode) {
 function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsData(); renderReports(); showToast('Deleted.','success'); }
 </script>
 
-<!-- Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ REPORT MODAL Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ -->
+<!-- ═══ REPORT MODAL ═══ -->
 <div class="modal-overlay" id="reportModal">
   <div class="modal">
     <div class="modal-header">
       <h2 id="reportModalTitle">Add Report</h2>
-      <button class="modal-close" onclick="closeReportModal()">Ã¢ÂÂ</button>
+      <button class="modal-close" onclick="closeReportModal()">✕</button>
     </div>
     <div class="modal-body">
       <input type="hidden" id="reportId">
@@ -2701,13 +2701,13 @@ function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsDat
       </div>
       <div class="form-group">
         <label>Report Name</label>
-        <input class="form-input" type="text" id="reportName" placeholder="e.g. Amazon Sales Report Ã¢ÂÂ April 2026">
+        <input class="form-input" type="text" id="reportName" placeholder="e.g. Amazon Sales Report – April 2026">
       </div>
       <div class="form-group">
         <label>Attachment</label>
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <button type="button" id="rptModeFileBtn" onclick="setReportUploadMode('file')" style="padding:4px 14px;border-radius:6px;border:1px solid #6c63ff;background:#6c63ff;color:#fff;cursor:pointer;font-size:13px;">Ã°ÂÂÂ Upload File</button>
-          <button type="button" id="rptModeLinkBtn" onclick="setReportUploadMode('link')" style="padding:4px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:13px;">Ã¢ÂÂ Drive Link</button>
+          <button type="button" id="rptModeFileBtn" onclick="setReportUploadMode('file')" style="padding:4px 14px;border-radius:6px;border:1px solid #6c63ff;background:#6c63ff;color:#fff;cursor:pointer;font-size:13px;">📁 Upload File</button>
+          <button type="button" id="rptModeLinkBtn" onclick="setReportUploadMode('link')" style="padding:4px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:13px;">☁ Drive Link</button>
         </div>
         <input class="form-input" type="file" id="reportFile" accept=".pdf,.xlsx,.xls,.csv" style="display:block;padding:6px;">
         <input class="form-input" type="url" id="reportUrl" placeholder="https://drive.google.com/..." style="display:none;">
