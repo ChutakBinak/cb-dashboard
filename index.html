@@ -739,16 +739,78 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option value="2026-12">December 2026</option><option value="2027-01">January 2027</option>
             <option value="2027-02">February 2027</option><option value="2027-03">March 2027</option>
           </select>
-          <button class="filter-clear" onclick="document.getElementById('rf_platform').value='';document.getElementById('rf_month').value='';renderReports();">✕ Clear</button>
+          <button class="filter-clear" onclick="document.getElementById('rf_platform').value='';document.getElementById('rf_month').value='';renderReports();
+  renderBankStatements();">✕ Clear</button>
         </div>
         <div class="table-wrap"><table>
           <thead><tr><th>Month</th><th>Platform</th><th>Report Name</th><th>Drive Link</th><th class="owner-only"></th></tr></thead>
           <tbody id="reportsTableBody"></tbody>
         </table></div>
+
+        <div class="table-toolbar" style="margin-top:2rem">
+          <span class="section-title">🏦 Bank Statements</span>
+          <button class="btn btn-primary owner-only" onclick="openBankStmtModal()">+ Add Statement</button>
+        </div>
+        <div class="filter-bar">
+          <select class="filter-sel" id="bs_month" onchange="renderBankStatements()">
+            <option value="">All Months</option>
+            <option value="2026-04">April 2026</option><option value="2026-05">May 2026</option>
+            <option value="2026-06">June 2026</option><option value="2026-07">July 2026</option>
+            <option value="2026-08">August 2026</option><option value="2026-09">September 2026</option>
+            <option value="2026-10">October 2026</option><option value="2026-11">November 2026</option>
+            <option value="2026-12">December 2026</option><option value="2027-01">January 2027</option>
+            <option value="2027-02">February 2027</option><option value="2027-03">March 2027</option>
+          </select>
+          <button class="filter-clear" onclick="document.getElementById('bs_month').value='';renderBankStatements();">✕ Clear</button>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Month</th><th>Bank</th><th>Description</th><th>Statement</th><th class="owner-only"></th></tr></thead>
+          <tbody id="bankStmtTableBody"></tbody>
+        </table></div>
       </div>
 
     </div>
   </main>
+</div>
+
+<!-- ═══ BANK STATEMENT MODAL ═══ -->
+<div class="modal-overlay" id="bsModal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="bsModalTitle">Add Bank Statement</h2>
+      <button class="btn btn-ghost" onclick="closeBankStmtModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="bs_id">
+      <div class="form-group"><label>Month *</label>
+        <select id="bs_m">
+          <option value="">— Select Month —</option>
+          <option value="2026-04">April 2026</option><option value="2026-05">May 2026</option>
+          <option value="2026-06">June 2026</option><option value="2026-07">July 2026</option>
+          <option value="2026-08">August 2026</option><option value="2026-09">September 2026</option>
+          <option value="2026-10">October 2026</option><option value="2026-11">November 2026</option>
+          <option value="2026-12">December 2026</option><option value="2027-01">January 2027</option>
+          <option value="2027-02">February 2027</option><option value="2027-03">March 2027</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Bank Name *</label>
+        <input type="text" id="bs_bank" placeholder="e.g. HDFC, SBI, Axis">
+      </div>
+      <div class="form-group"><label>Description</label>
+        <input type="text" id="bs_desc" placeholder="e.g. Current Account Statement">
+      </div>
+      <div class="form-group"><label>Drive / Web URL</label>
+        <input type="url" id="bs_url" placeholder="https://drive.google.com/...">
+      </div>
+      <div class="form-group"><label>Upload File</label>
+        <input type="file" id="bs_file" accept=".pdf,.xlsx,.csv,.xls">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeBankStmtModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="saveBankStmt()">Save</button>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ ADD / EDIT MODAL ═══ -->
@@ -2366,6 +2428,7 @@ function mnsSaveVoucherAsEntry(){
 }
 
 let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
+let bankStatements = JSON.parse(localStorage.getItem('cb_bank_statements') || '[]');
 function saveReportsData() { localStorage.setItem('cb_reports', JSON.stringify(reports)); }
 const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
 const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy'};
@@ -2629,6 +2692,65 @@ function renderReports() {
     <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">✏</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">✕</button>':''}</td>
   </tr>`).join('');
 }
+function renderBankStatements() {
+  const tb = document.getElementById('bankStmtTableBody'); if (!tb) return;
+  const mf = document.getElementById('bs_month')?.value||'';
+  let data = [...bankStatements].sort((a,b)=>a.month.localeCompare(b.month));
+  if (mf) data = data.filter(r=>r.month===mf);
+  if (!data.length) { tb.innerHTML='<tr><td colspan="5" class="no-data">No bank statements yet. Click + Add Statement to get started.</td></tr>'; return; }
+  const isOwner = selectedRole==='owner';
+  tb.innerHTML = data.map(r=>`<tr>
+    <td>${RPT_MONTHS[r.month]||r.month}</td>
+    <td><span class="pill pill-bank">${r.bank}</span></td>
+    <td>${r.description||'—'}</td>
+    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.description||'statement')+'.pdf">⬇ '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">☁ Drive</a>':'—'}</td>
+    <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openBankStmtModal(\''+r.id+'\')">✏</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteBankStmt(\''+r.id+'\')">✕</button>':''}</td>
+  </tr>`).join('');
+}
+function openBankStmtModal(id) {
+  const r = id ? bankStatements.find(x=>x.id===id) : null;
+  document.getElementById('bsModalTitle').textContent = r ? 'Edit Statement' : 'Add Bank Statement';
+  document.getElementById('bs_id').value = r?.id||'';
+  document.getElementById('bs_m').value = r?.month||'';
+  document.getElementById('bs_bank').value = r?.bank||'';
+  document.getElementById('bs_desc').value = r?.description||'';
+  document.getElementById('bs_url').value = r?.url||'';
+  document.getElementById('bs_file').value = '';
+  document.getElementById('bsModal').style.display = 'flex';
+}
+function closeBankStmtModal() { document.getElementById('bsModal').style.display = 'none'; }
+function saveBankStmt() {
+  const id = document.getElementById('bs_id').value;
+  const month = document.getElementById('bs_m').value;
+  const bank = document.getElementById('bs_bank').value.trim();
+  const description = document.getElementById('bs_desc').value.trim();
+  const url = document.getElementById('bs_url').value.trim();
+  if (!month||!bank) { alert('Month and Bank name are required.'); return; }
+  const fileInput = document.getElementById('bs_file');
+  function finish(fileData, fileName) {
+    if (id) {
+      const i = bankStatements.findIndex(x=>x.id===id);
+      if (i>=0) bankStatements[i] = {...bankStatements[i], month, bank, description, url, ...(fileData?{fileData,fileName}:{})};
+    } else {
+      bankStatements.push({id: Date.now().toString(36)+Math.random().toString(36).slice(2,6), month, bank, description, url, fileData:fileData||'', fileName:fileName||''});
+    }
+    localStorage.setItem('cb_bank_statements', JSON.stringify(bankStatements));
+    closeBankStmtModal();
+    renderBankStatements();
+  }
+  if (fileInput.files[0]) {
+    const fr = new FileReader();
+    fr.onload = e => finish(e.target.result, fileInput.files[0].name);
+    fr.readAsDataURL(fileInput.files[0]);
+  } else { finish('',''); }
+}
+function deleteBankStmt(id) {
+  if (!confirm('Delete this statement?')) return;
+  bankStatements = bankStatements.filter(x=>x.id!==id);
+  localStorage.setItem('cb_bank_statements', JSON.stringify(bankStatements));
+  renderBankStatements();
+}
+
 function openReportModal(id) {
   const r = id ? reports.find(x=>x.id===id) : null;
   document.getElementById('reportModalTitle').textContent = r ? 'Edit Report' : 'Add Report';
