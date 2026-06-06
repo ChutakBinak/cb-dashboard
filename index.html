@@ -2625,7 +2625,7 @@ function renderReports() {
     <td>${RPT_MONTHS[r.month]||r.month}</td>
     <td><span class="pill ${RPT_PILL[r.platform]||'pill-offline'}">${r.platform}</span></td>
     <td>${r.name}</td>
-    <td>${r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">☁ Drive</a>':'—'}</td>
+    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">⬇ '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">☁ Drive</a>':'—'}</td>
     <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">✏</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">✕</button>':''}</td>
   </tr>`).join('');
 }
@@ -2642,11 +2642,31 @@ function openReportModal(id) {
 function closeReportModal() { document.getElementById('reportModal').classList.remove('open'); }
 function saveReport() {
   const id = document.getElementById('reportId').value;
-  const entry = { id: id||'rpt'+Date.now(), month: document.getElementById('reportMonth').value, platform: document.getElementById('reportPlatform').value, name: document.getElementById('reportName').value.trim(), url: document.getElementById('reportUrl').value.trim() };
-  if (!entry.name) { showToast('Enter a report name.','warning'); return; }
-  if (id) { const i=reports.findIndex(r=>r.id===id); if(i>-1) reports[i]=entry; } else reports.push(entry);
-  saveReportsData(); renderReports(); closeReportModal(); showToast('Report saved.','success');
+  const name = document.getElementById('reportName').value.trim();
+  if(!name) { alert('Please enter a report name'); return; }
+  const month = document.getElementById('reportMonth').value;
+  const platform = document.getElementById('reportPlatform').value;
+  const fileInput = document.getElementById('reportFile');
+  const url = (document.getElementById('reportUrl').value||''). trim();
+  if(fileInput && fileInput.style.display !== 'none' && fileInput.files && fileInput.files[0]) {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) { _commitReport({ id: id||'rpt'+Date.now(), month, platform, name, url:'', fileData: e.target.result, fileName: file.name }); };
+    reader.readAsDataURL(file);
+  } else {
+    _commitReport({ id: id||'rpt'+Date.now(), month, platform, name, url, fileData:'', fileName:'' });
+  }
 }
+function _commitReport(entry) {
+  const i = reports.findIndex(r=>r.id===entry.id); if(i>-1) reports[i]=entry; else reports.push(entry);
+  saveReportsData(); renderReports(); closeReportModal(); showToast('Report saved');
+}
+function setReportUploadMode(mode) {
+  var f=document.getElementById('reportFile'),u=document.getElementById('reportUrl'),h=document.getElementById('rptHint'),fb=document.getElementById('rptModeFileBtn'),lb=document.getElementById('rptModeLinkBtn');
+  if(mode==='file'){f.style.display='block';u.style.display='none';if(h)h.textContent='Upload a PDF, Excel or CSV from your computer';if(fb){fb.style.background='#6c63ff';fb.style.color='#fff';fb.style.borderColor='#6c63ff';}if(lb){lb.style.background='#fff';lb.style.color='#555';lb.style.borderColor='#ddd';}}
+  else{f.style.display='none';u.style.display='block';if(h)h.textContent='Paste the shareable Drive link for this report';if(fb){fb.style.background='#fff';fb.style.color='#555';fb.style.borderColor='#ddd';}if(lb){lb.style.background='#6c63ff';lb.style.color='#fff';lb.style.borderColor='#6c63ff';}}
+}
+
 function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsData(); renderReports(); showToast('Deleted.','success'); }
 </script>
 
@@ -2684,9 +2704,14 @@ function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsDat
         <input class="form-input" type="text" id="reportName" placeholder="e.g. Amazon Sales Report – April 2026">
       </div>
       <div class="form-group">
-        <label>Google Drive URL</label>
-        <input class="form-input" type="url" id="reportUrl" placeholder="https://drive.google.com/...">
-        <div class="link-hint">Paste the shareable Drive link for this report</div>
+        <label>Attachment</label>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <button type="button" id="rptModeFileBtn" onclick="setReportUploadMode('file')" style="padding:4px 14px;border-radius:6px;border:1px solid #6c63ff;background:#6c63ff;color:#fff;cursor:pointer;font-size:13px;">📁 Upload File</button>
+          <button type="button" id="rptModeLinkBtn" onclick="setReportUploadMode('link')" style="padding:4px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:13px;">☁ Drive Link</button>
+        </div>
+        <input class="form-input" type="file" id="reportFile" accept=".pdf,.xlsx,.xls,.csv" style="display:block;padding:6px;">
+        <input class="form-input" type="url" id="reportUrl" placeholder="https://drive.google.com/..." style="display:none;">
+        <div class="link-hint" id="rptHint">Upload a PDF, Excel or CSV from your computer</div></div>
       </div>
     </div>
     <div class="modal-footer">
