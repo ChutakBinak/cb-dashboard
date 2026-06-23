@@ -1496,7 +1496,7 @@ function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toF
 // ═══════════════════════════════════════════════════════
 function render() {
   const fS=filtered(sales),fP=filtered(purchases);
-  const tS=fS.reduce((s,r)=>s+(+r.amount||0),0);
+  const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);if(showInrConversion){const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);}return s;},0);
   const tE=fP.reduce((s,r)=>s+(+r.amount||0),0);
   const tG=fS.reduce((s,r)=>s+(+r.gst||0),0);
   const net=tS-tE;
@@ -1611,7 +1611,7 @@ async function toggleInrConversion(){
     const uniqueKeys=[...new Set(needed.map(s=>s.date+':'+s.currency))];
     await Promise.all(uniqueKeys.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);}));
   }
-  renderSalesTable(sales);
+  render();
 }
 function renderSalesTable(data){
   const tb=document.getElementById('salesTableBody');
