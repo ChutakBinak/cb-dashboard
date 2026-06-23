@@ -1323,8 +1323,9 @@ async function syncFromSheets(){
   try{
     const result=await callScript({action:'getData'});
     if(result.ok){
+      const _prevS=JSON.parse(localStorage.getItem('cb_sales')||'[]');
       purchases  = result.purchases  || [];
-      sales      = result.sales      || [];
+      sales      = (result.sales||[]).map(s=>{const _p=_prevS.find(x=>String(x.invoiceNo)===String(s.invoiceNo));return(_p&&_p.currency&&_p.currency!=='INR')?{...s,currency:_p.currency}:s;});
       fixedCosts = result.fixedCosts || [];
       saveAll();render();
       showToast('✓ Data refreshed from Google Sheets','success');
