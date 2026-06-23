@@ -386,6 +386,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <div style="display:flex;gap:8px;align-items:center">
             <span id="sFilterCount" style="font-size:.72rem;color:var(--muted)"></span>
             <button class="btn btn-primary owner-only" onclick="openModal('sale')">+ Add Sale</button>
+            <button id="inrToggleBtn" onclick="toggleInrConversion()" title="Show INR equivalent of foreign currency sales" style="font-size:.74rem;padding:3px 10px;border:1px solid var(--border);background:var(--card);border-radius:6px;cursor:pointer;color:var(--muted);transition:all .2s">&#x1F4B1; INR view</button>
           </div>
         </div>
         <div class="filter-bar" id="sFilterBar">
@@ -1127,6 +1128,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
+let showInrConversion=false,_fxCache={};
 let filterMonth='all',currentModal=null,dataLoaded=false;
 let editingId=null,editingType=null;
 let barChart=null,pieChart=null;
@@ -1578,6 +1580,39 @@ function billCell(bill, attachments) {
   return`<div class="att-chips">${chips.join('')}</div>`;
 }
 
+function fxInr(r){
+  if(!showInrConversion||!r.currency||r.currency==='INR') return '';
+  const rate=_fxCache[r.date+':'+r.currency];
+  if(rate===undefined) return '<br><span style="font-size:.7rem;color:var(--muted)">&#x20B9;&#x2026;</span>';
+  if(!rate) return '';
+  return '<br><span style="font-size:.7rem;color:var(--green)">&#x2248; &#x20B9;'+Math.round(r.amount*rate).toLocaleString('en-IN')+'<span style="opacity:.55;font-size:.65rem"> @'+rate.toFixed(2)+'</span></span>';
+}
+async function fetchFxRate(date,currency){
+  const key=date+':'+currency;
+  if(_fxCache[key]!==undefined) return _fxCache[key];
+  try{
+    const resp=await fetch('https://api.frankfurter.app/'+date+'?from='+currency+'&to=INR');
+    const j=await resp.json();
+    const rate=j.rates&&j.rates.INR;
+    _fxCache[key]=rate||0;
+    return rate;
+  }catch(e){_fxCache[key]=0;return 0;}
+}
+async function toggleInrConversion(){
+  showInrConversion=!showInrConversion;
+  const btn=document.getElementById('inrToggleBtn');
+  if(btn){
+    btn.style.background=showInrConversion?'var(--green)':'var(--card)';
+    btn.style.color=showInrConversion?'#fff':'var(--muted)';
+    btn.style.borderColor=showInrConversion?'var(--green)':'var(--border)';
+  }
+  if(showInrConversion){
+    const needed=sales.filter(s=>s.currency&&s.currency!=='INR');
+    const uniqueKeys=[...new Set(needed.map(s=>s.date+':'+s.currency))];
+    await Promise.all(uniqueKeys.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);}));
+  }
+  renderSalesTable(sales);
+}
 function renderSalesTable(data){
   const tb=document.getElementById('salesTableBody');
   if(!data.length){tb.innerHTML='<tr><td colspan="8" class="no-data">No sales entries for this period.</td></tr>';return;}
@@ -1586,7 +1621,7 @@ function renderSalesTable(data){
     return`<tr>
       <td>${fmtDate(r.date)}</td>
       <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'—'}</td>
-      <td class="amount-income">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#EEF2FF;color:var(--indigo);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}</td>
+      <td class="amount-income">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#EEF2FF;color:var(--indigo);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}${fxInr(r)}</td>
       <td>${r.gst?fmtCur(r.gst,r.currency):'—'}</td>
       <td><span class="pill ${platCls(r.platform)}">${r.platform}</span></td>
       <td><span class="pill ${pmCls(r.paidVia)}">${r.paidVia||'—'}</span></td>
@@ -2481,7 +2516,7 @@ function srParseAndStore(csvText, label){
   const dateColIdx = headers.findIndex(h=>/date/i.test(h));
   if(dateColIdx>=0 && rows.length){
     const d = rows[0][dateColIdx];
-    if(d){ try{ month = d.slice(0,7); }catch(e){} }
+    if(d){ try{ const _dt=new Date(d);month=(!isNaN(_dt))?_dt.toISOString().slice(0,7):d.slice(0,7); }catch(e){} }
   }
   if(!month) month = new Date().toISOString().slice(0,7);
 
