@@ -1495,8 +1495,9 @@ function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toF
 //  RENDER
 // ═══════════════════════════════════════════════════════
 function render() {
+  const _fS0=filtered(sales),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
-  const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);if(showInrConversion){const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);}return s;},0);
+  const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);},0);
   const tE=fP.reduce((s,r)=>s+(+r.amount||0),0);
   const tG=fS.reduce((s,r)=>s+(+r.gst||0),0);
   const net=tS-tE;
