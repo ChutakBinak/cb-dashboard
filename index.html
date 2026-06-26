@@ -1590,16 +1590,21 @@ function fxInr(r){
   if(!rate) return '';
   return '<br><span style="font-size:.7rem;color:var(--green)">&#x2248; &#x20B9;'+Math.round(r.amount*rate).toLocaleString('en-IN')+'<span style="opacity:.55;font-size:.65rem"> @'+rate.toFixed(2)+'</span></span>';
 }
-async function fetchFxRate(date,currency){
-  const key=date+':'+currency;
-  if(_fxCache[key]!==undefined) return _fxCache[key];
-  try{
-    const resp=await fetch('https://api.frankfurter.app/'+date+'?from='+currency+'&to=INR');
-    const j=await resp.json();
-    const rate=j.rates&&j.rates.INR;
-    _fxCache[key]=rate||0;
+async function fetchFxRate(date, currency) {
+  const key = date + ':' + currency;
+  if (_fxCache[key] !== undefined) return _fxCache[key];
+  try {
+    const cur = currency.toLowerCase();
+    const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@${date}/v1/currencies/${cur}.min.json`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const rate = data[cur]?.inr || 0;
+    _fxCache[key] = rate;
     return rate;
-  }catch(e){_fxCache[key]=0;return 0;}
+  } catch(e) {
+    _fxCache[key] = 0;
+    return 0;
+  }
 }
 async function toggleInrConversion(){
   showInrConversion=!showInrConversion;
