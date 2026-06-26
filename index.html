@@ -1163,6 +1163,8 @@ async function initData() {
         }
         purchases  = p;
         sales      = s;
+        // Merge currency overrides stored separately (persist across Sheet syncs)
+        try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');sales.forEach(r=>{const k=String(r.invoiceNo);if(_co[k])r.currency=_co[k];});}catch(e){}
         fixedCosts = f;
         saveAll();
         dataLoaded = true;
@@ -1726,6 +1728,8 @@ async function saveEdit(type,id){
     r.platform=document.getElementById('e_platform').value;
     r.paidVia=document.getElementById('e_paidvia').value;
     r.currency=document.getElementById('e_currency').value||'INR';
+        // Persist currency override so it survives Sheet syncs
+        try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');_co[String(r.invoiceNo)]=r.currency;localStorage.setItem('cb_cur_ov',JSON.stringify(_co));}catch(e){}
     r.bill=document.getElementById('e_bill').value.trim();
     if(!r.attachments)r.attachments=[];
   } else {
