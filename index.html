@@ -79,6 +79,20 @@
     /* CHARTS */
     .charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:18px}
     @media(max-width:780px){.charts-grid{grid-template-columns:1fr}}
+    /* ── MOBILE / CROSS-DEVICE ── */
+    @media(max-width:640px){
+      header{height:auto;min-height:52px;padding:8px 12px;flex-wrap:wrap;gap:6px}
+      .brand h1{font-size:.8rem;line-height:1.15}
+      .brand p{display:none}
+      .header-right{gap:5px}
+      main{padding:14px 10px 40px}
+      .tab-header{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}
+      .tab-btn{flex:0 0 auto;white-space:nowrap;padding:11px 13px}
+      .form-row{grid-template-columns:1fr}
+      .modal{max-height:94vh}
+      .table-toolbar{align-items:flex-start}
+      .v-sigs{grid-template-columns:1fr}
+    }
     .chart-card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid var(--border)}
     .chart-card h3{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:13px}
 
@@ -1184,9 +1198,23 @@ async function initData() {
   dataLoaded=true;
 }
 function saveAll() {
-  localStorage.setItem('cb_purchases',JSON.stringify(purchases));
-  localStorage.setItem('cb_sales',    JSON.stringify(sales));
-  localStorage.setItem('cb_fixed',    JSON.stringify(fixedCosts));
+  try {
+    localStorage.setItem('cb_purchases',JSON.stringify(purchases));
+    localStorage.setItem('cb_sales',    JSON.stringify(sales));
+    localStorage.setItem('cb_fixed',    JSON.stringify(fixedCosts));
+  } catch(err) {
+    // Browser storage full (usually large embedded file previews). Store a light
+    // copy without base64 file data — the actual files stay safe in Google Drive.
+    try {
+      const strip=arr=>arr.map(r=>r&&r.attachments?{...r,attachments:r.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}))}:r);
+      localStorage.setItem('cb_purchases',JSON.stringify(strip(purchases)));
+      localStorage.setItem('cb_sales',    JSON.stringify(strip(sales)));
+      localStorage.setItem('cb_fixed',    JSON.stringify(strip(fixedCosts)));
+      if(typeof showToast==='function') showToast('Local storage was full — file previews cleared on this device, but your files are safe in Google Drive.','warning');
+    } catch(e2) {
+      if(typeof showToast==='function') showToast('Could not save locally: browser storage is full.','error');
+    }
+  }
 }
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
@@ -1767,24 +1795,51 @@ function addEditFile(e,type,id){
   const arr=type==='sale'?sales:purchases;
   const r=arr.find(x=>x.id===id);if(!r)return;
   if(!r.attachments)r.attachments=[];
-  Array.from(e.target.files).forEach(file=>{
+  const files=Array.from(e.target.files);
+  e.target.value='';
+  const rerender=()=>{type==='sale'?renderSalesTable(filtered(sales)):renderPurchasesTable(filtered(purchases));};
+  files.forEach(file=>{
     if(file.size>8*1024*1024){showToast(file.name+' too large (max 8 MB)','error');return;}
     let mimeType=file.type||'application/octet-stream';
     if(!file.type){const ext=file.name.split('.').pop().toLowerCase();const map={pdf:'application/pdf',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',heic:'image/heic'};mimeType=map[ext]||mimeType;}
     const reader=new FileReader();
-    reader.onload=function(ev){
-      r.attachments.push({name:file.name,mimeType,data:ev.target.result.split(',')[1],size:file.size});
-      saveAll();
-      type==='sale'?renderSalesTable(filtered(sales)):renderPurchasesTable(filtered(purchases));
+    reader.onload=async function(ev){
+      const att={name:file.name,mimeType,data:ev.target.result.split(',')[1],size:file.size};
+      r.attachments.push(att);
+      saveAll();rerender();
+      // Upload to Google Drive so the file is available on every device (not just this one).
+      const url=getScriptUrl();
+      if(url){
+        try{
+          showToast('Uploading '+file.name+'…','info');
+          const action=type==='sale'?'addSale':'addPurchase';
+          const result=await callScript({action,entry:r,file:att});
+          if(result&&result.ok&&result.driveUrl){
+            att.driveUrl=result.driveUrl;
+            delete att.data; // now safely in Drive — free local storage
+            if(!r.bill)r.bill=result.driveUrl;
+            saveAll();rerender();
+            showToast('✓ '+file.name+' saved to Google Drive','success');
+          } else {
+            showToast('⚠ '+file.name+' kept on this device — Drive upload did not confirm.','warning');
+          }
+        }catch(err){
+          showToast('⚠ '+file.name+' kept on this device. Drive upload failed: '+err.message,'warning');
+        }
+      } else {
+        showToast('Saved on this device only. Connect Google (⚙) to sync files across devices.','info');
+      }
     };
+    reader.onerror=function(){showToast('Could not read '+file.name,'error');};
     reader.readAsDataURL(file);
   });
-  e.target.value='';
 }
 
 function removeEditAttachment(type,id,idx){
   const arr=type==='sale'?sales:purchases;
   const r=arr.find(x=>x.id===id);if(!r||!r.attachments)return;
+  const a=r.attachments[idx];
+  if(!confirm('Remove file "'+((a&&a.name)||'attachment')+'" from this entry?'))return;
   r.attachments.splice(idx,1);
   saveAll();
   type==='sale'?renderSalesTable(filtered(sales)):renderPurchasesTable(filtered(purchases));
@@ -1924,6 +1979,8 @@ async function saveEntry(){
         entry.bill=driveUrls[0]; // keep legacy field for backward compat
         // update attachment records with drive URLs
         driveUrls.forEach((url,i)=>{if(entry.attachments[i])entry.attachments[i].driveUrl=url;});
+        // Free local storage: files are now safe in Drive, drop the heavy base64 copy.
+        entry.attachments.forEach(a=>{if(a.driveUrl)delete a.data;});
         showToast('✓ Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
       } else {
         showToast('✓ Entry saved. Files may not have uploaded — check Drive.','warning');
@@ -1956,8 +2013,15 @@ async function saveEntry(){
 
 async function delEntry(type,id){
   if(!isOwner())return;
-  if(!confirm('Delete this entry?'))return;
-  const entry=(type==='sale'?sales:purchases).find(r=>r.id===id);
+  const src=type==='sale'?sales:(type==='purchase'?purchases:fixedCosts);
+  const entry=src.find(r=>r.id===id);
+  let label='this entry';
+  if(entry){
+    if(type==='sale')      label='sale '+(entry.invoiceNo||'')+'  ·  '+fmtCur(entry.amount,entry.currency);
+    else if(type==='purchase')label=(entry.particulars||'expense')+'  ·  '+fmtCur(entry.amount,entry.currency);
+    else                   label=(entry.name||'fixed cost')+'  ·  '+fmtCur(entry.amount,entry.currency);
+  }
+  if(!confirm('Delete '+label+'?\n\nThis cannot be undone.'))return;
   if(type==='sale')    sales     =sales.filter(r=>r.id!==id);
   if(type==='purchase')purchases =purchases.filter(r=>r.id!==id);
   if(type==='fixed')   fixedCosts=fixedCosts.filter(r=>r.id!==id);
