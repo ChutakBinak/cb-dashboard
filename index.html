@@ -951,6 +951,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
       </div>
       <!-- uploadSection follows here for all three types -->
+      <div class="form-group" id="noteFieldWrap"><label>📝 P.S. / Note (optional)</label><input class="form-input" type="text" id="m_note" placeholder="Any context you'll want to remember for this entry…"></div>
 
       <!-- SHARED FILE UPLOAD (shown for sale + purchase + fixed) -->
       <div id="uploadSection" class="upload-section" style="display:none">
@@ -1263,6 +1264,10 @@ function saveAll() {
     }
   }
 }
+function getEntryNotes(){try{return JSON.parse(localStorage.getItem('cb_entry_notes')||'{}');}catch(e){return{};}}
+function setEntryNote(id,note){try{const m=getEntryNotes();if(note)m[id]=note;else delete m[id];localStorage.setItem('cb_entry_notes',JSON.stringify(m));}catch(e){}}
+function applyEntryNotes(){try{const m=getEntryNotes();[...sales,...purchases].forEach(r=>{if(r&&(r.id in m))r.note=m[r.id];});}catch(e){}}
+function noteBadge(r){return (r&&r.note)?'<div style="font-family:inherit;font-size:.66rem;color:var(--muted);font-style:italic;margin-top:2px;max-width:230px;white-space:normal;word-break:break-word" title="'+escNote(r.note)+'">📝 '+escNote(r.note)+'</div>':'';}
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
 
@@ -1572,6 +1577,7 @@ function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toF
 //  RENDER
 // ═══════════════════════════════════════════════════════
 function render() {
+  applyEntryNotes();
   const _fS0=filtered(sales),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
   const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);},0);
@@ -1703,7 +1709,7 @@ function renderSalesTable(data){
     if(editingType==='sale'&&editingId===r.id)return salesEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
-      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'—'}</td>
+      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'—'}${noteBadge(r)}</td>
       <td class="amount-income">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#EEF2FF;color:var(--indigo);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}${fxInr(r)}</td>
       <td>${r.gst?fmtCur(r.gst,r.currency):'—'}</td>
       <td><span class="pill ${platCls(r.platform)}">${r.platform}</span></td>
@@ -1737,6 +1743,7 @@ function salesEditRow(r){
       <label style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;border:1px dashed #86efac;border-radius:5px;padding:2px 7px;font-size:.7rem;color:#15803d;cursor:pointer;font-weight:600;">
         + Add File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple style="display:none" onchange="addEditFile(event,'sale','${r.id}')">
       </label>
+      <input class="edit-input" type="text" id="e_note" value="${escNote(r.note||'')}" placeholder="📝 P.S. note (optional)…" style="width:100%;margin-top:4px;font-size:.72rem">
     </td>
     <td><div class="actions-cell">
       <button class="btn btn-success btn-sm" onclick="saveEdit('sale','${r.id}')">✓</button>
@@ -1752,7 +1759,7 @@ function renderPurchasesTable(data){
     if(editingType==='purchase'&&editingId===r.id)return purchaseEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
-      <td>${r.particulars}</td>
+      <td>${r.particulars}${noteBadge(r)}</td>
       <td><span class="pill" style="background:#F1F5F9;color:var(--muted)">${r.category||'—'}</span></td>
       <td class="amount-expense">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#FEF2F2;color:var(--red);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}</td>
       <td><span class="pill ${pmCls(r.paymentMethod)}">${r.paymentMethod||'—'}</span></td>
@@ -1786,6 +1793,7 @@ function purchaseEditRow(r){
       <label style="display:inline-flex;align-items:center;gap:3px;background:#f0fdf4;border:1px dashed #86efac;border-radius:5px;padding:2px 7px;font-size:.7rem;color:#15803d;cursor:pointer;font-weight:600;">
         + Add File<input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic" multiple style="display:none" onchange="addEditFile(event,'purchase','${r.id}')">
       </label>
+      <input class="edit-input" type="text" id="e_note" value="${escNote(r.note||'')}" placeholder="📝 P.S. note (optional)…" style="width:100%;margin-top:4px;font-size:.72rem">
     </td>
     <td><div class="actions-cell">
       <button class="btn btn-success btn-sm" onclick="saveEdit('purchase','${r.id}')">✓</button>
@@ -1823,6 +1831,7 @@ async function saveEdit(type,id){
     r.bill=document.getElementById('e_bill').value.trim();
     if(!r.attachments)r.attachments=[];
   }
+  if(r){r.note=(document.getElementById('e_note')?document.getElementById('e_note').value.trim():(r.note||''));setEntryNote(r.id,r.note);}
   editingType=null;editingId=null;saveAll();render();
 
   // Sync edit to Google Sheets
@@ -1955,6 +1964,7 @@ function openModal(type){
   if(type==='fixed')   {['f_name','f_amount'].forEach(id=>document.getElementById(id).value='');}
   document.getElementById('m_currency').value='INR';
   document.getElementById('currencyBadge').textContent='₹';
+  {const mn=document.getElementById('m_note');if(mn)mn.value='';}
   document.getElementById('modal').classList.add('open');
   // Show correct sync hint
   const hasGoogle=!!getScriptUrl();
@@ -2001,6 +2011,7 @@ async function saveEntry(){
     saveAll();render();closeModal();showToast('Fixed cost saved!','success');return;
   }
 
+  if(entry&&(currentModal==='sale'||currentModal==='purchase')){const _n=(document.getElementById('m_note')&&document.getElementById('m_note').value.trim())||'';if(_n){entry.note=_n;setEntryNote(entry.id,_n);}}
   // Store local file attachments immediately (always, even without Google)
   if(entry) entry.attachments=attachedFiles.map(f=>({name:f.name,mimeType:f.mimeType,data:f.data,size:f.size}));
 
@@ -2141,11 +2152,11 @@ function exportSummary(){
   const period=filterMonth==='all'?'FY_2026-27':new Date(filterMonth+'-01').toLocaleString('default',{month:'long',year:'numeric'}).replace(/ /g,'_');
   const lines=['MUKTAKASH NATYA SANSTHAN (CHUTAK BINAK)','Income & Expense Summary — '+period.replace(/_/g,' '),
     'Generated: '+new Date().toLocaleString('en-IN'),'='.repeat(60),'',
-    '── SALES / INCOME ──','Date\tInvoice No.\tAmount (INR)\tGST (INR)\tPlatform\tPaid Via\tBill / Link',
-    ...fS.map(r=>[r.date,r.invoiceNo,r.amount,r.gst||0,r.platform,r.paidVia,r.bill].join('\t')),
+    '── SALES / INCOME ──','Date\tInvoice No.\tAmount (INR)\tGST (INR)\tPlatform\tPaid Via\tBill / Link\tNote',
+    ...fS.map(r=>[r.date,r.invoiceNo,r.amount,r.gst||0,r.platform,r.paidVia,r.bill,r.note||''].join('\t')),
     '','TOTAL SALES: INR '+tS.toFixed(2),'GST COLLECTED: INR '+tG.toFixed(2),'NET SALES (excl GST): INR '+(tS-tG).toFixed(2),
-    '','── PURCHASES / EXPENSES ──','Date\tParticulars\tCategory\tAmount (INR)\tPayment\tBill / Link',
-    ...fP.map(r=>[r.date,r.particulars,r.category,r.amount,r.paymentMethod,r.bill].join('\t')),
+    '','── PURCHASES / EXPENSES ──','Date\tParticulars\tCategory\tAmount (INR)\tPayment\tBill / Link\tNote',
+    ...fP.map(r=>[r.date,r.particulars,r.category,r.amount,r.paymentMethod,r.bill,r.note||''].join('\t')),
     '','TOTAL EXPENSES: INR '+tE.toFixed(2),'','='.repeat(60),
     'NET PROFIT / LOSS: INR '+(tS-tE).toFixed(2),'='.repeat(60),'',
     '── NOTES / REMINDERS FOR ITR ──',
