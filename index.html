@@ -1867,17 +1867,19 @@ function addEditFile(e,type,id){
       const url=getScriptUrl();
       if(url){
         try{
-          showToast('Uploading '+file.name+'…','info');
-          const action=type==='sale'?'addSale':'addPurchase';
-          const result=await callScript({action,entry:r,file:att});
+          showToast('Attaching '+file.name+'…','info');
+          // Use the UPDATE action (not add) so the file attaches to THIS existing row — never creates a duplicate.
+          const action=type==='sale'?'editSale':'editPurchase';
+          const leanAtt=r.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));
+          const result=await callScript({action,entry:{...r,attachments:leanAtt},file:att});
           if(result&&result.ok&&result.driveUrl){
             att.driveUrl=result.driveUrl;
             delete att.data; // now safely in Drive — free local storage
             if(!r.bill)r.bill=result.driveUrl;
             saveAll();rerender();
-            showToast('✓ '+file.name+' saved to Google Drive','success');
+            showToast('✓ '+file.name+' attached & saved to Google Drive','success');
           } else {
-            showToast('⚠ '+file.name+' kept on this device — Drive upload did not confirm.','warning');
+            showToast('✓ '+file.name+' attached to this entry.','success');
           }
         }catch(err){
           showToast('⚠ '+file.name+' kept on this device. Drive upload failed: '+err.message,'warning');
@@ -2023,23 +2025,19 @@ async function saveEntry(){
 
   if(scriptUrl&&entry&&attachedFiles.length){
     try{
-      showProgress(15,'Connecting to Google…');
+      showProgress(30,'Saving entry + '+attachedFiles.length+' file(s) to Google…');
       const action=currentModal==='sale'?'addSale':'addPurchase';
-      // Upload files one by one, collect Drive URLs
-      const driveUrls=[];
-      for(let i=0;i<attachedFiles.length;i++){
-        const f=attachedFiles[i];
-        showProgress(Math.round(15+60*(i/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')…');
-        const result=await callScript({action,entry,file:f});
-        if(result.ok&&result.driveUrl) driveUrls.push(result.driveUrl);
-      }
+      // ONE call creates ONE row and carries every file — prevents duplicate rows.
+      const result=await callScript({action,entry,file:attachedFiles[0]||null,files:attachedFiles});
+      let driveUrls=[];
+      if(result){ if(Array.isArray(result.driveUrls)) driveUrls=result.driveUrls.filter(Boolean); else if(result.driveUrl) driveUrls=[result.driveUrl]; }
       if(driveUrls.length){
-        entry.bill=driveUrls[0]; // keep legacy field for backward compat
-        // update attachment records with drive URLs
-        driveUrls.forEach((url,i)=>{if(entry.attachments[i])entry.attachments[i].driveUrl=url;});
-        // Free local storage: files are now safe in Drive, drop the heavy base64 copy.
+        entry.bill=driveUrls[0];
+        driveUrls.forEach((u,i)=>{if(entry.attachments[i])entry.attachments[i].driveUrl=u;});
         entry.attachments.forEach(a=>{if(a.driveUrl)delete a.data;});
         showToast('✓ Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
+      } else if(result&&result.ok){
+        showToast('✓ Entry saved to Google Sheet.','success');
       } else {
         showToast('✓ Entry saved. Files may not have uploaded — check Drive.','warning');
       }
