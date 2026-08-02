@@ -1268,6 +1268,11 @@ function getEntryNotes(){try{return JSON.parse(localStorage.getItem('cb_entry_no
 function setEntryNote(id,note){try{const m=getEntryNotes();if(note)m[id]=note;else delete m[id];localStorage.setItem('cb_entry_notes',JSON.stringify(m));}catch(e){}}
 function applyEntryNotes(){try{const m=getEntryNotes();[...sales,...purchases].forEach(r=>{if(r&&(r.id in m))r.note=m[r.id];});}catch(e){}}
 function noteBadge(r){return (r&&r.note)?'<div style="font-family:inherit;font-size:.66rem;color:var(--muted);font-style:italic;margin-top:2px;max-width:230px;white-space:normal;word-break:break-word" title="'+escNote(r.note)+'">📝 '+escNote(r.note)+'</div>':'';}
+// ═══ DURABLE PER-ENTRY ATTACHMENTS (survive Google Sheet reload) ═══
+function getEntryFiles(){try{return JSON.parse(localStorage.getItem('cb_entry_files')||'{}');}catch(e){return{};}}
+function entrySig(r,type){return type==='sale'?('S|'+(r.invoiceNo||'')):('P|'+(r.date||'')+'|'+(r.amount||'')+'|'+(r.particulars||''));}
+function storeEntryFiles(r,type){try{if(!r)return;const lean=(r.attachments||[]).map(a=>a.driveUrl?{name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl}:{name:a.name,mimeType:a.mimeType,size:a.size,data:a.data});const m=getEntryFiles();const payload={t:Date.now(),atts:lean};if(r.id)m['id:'+r.id]=payload;m['sig:'+entrySig(r,type)]=payload;localStorage.setItem('cb_entry_files',JSON.stringify(m));}catch(e){}}
+function applyEntryFiles(){try{const m=getEntryFiles();const pick=(r,type)=>{const e=(r.id&&m['id:'+r.id])||m['sig:'+entrySig(r,type)];return e&&e.atts;};(sales||[]).forEach(r=>{const a=pick(r,'sale');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});(purchases||[]).forEach(r=>{const a=pick(r,'purchase');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});}catch(e){}}
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
 
@@ -1578,6 +1583,7 @@ function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toF
 // ═══════════════════════════════════════════════════════
 function render() {
   applyEntryNotes();
+  applyEntryFiles();
   const _fS0=filtered(sales),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
   const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);},0);
@@ -1832,6 +1838,7 @@ async function saveEdit(type,id){
     if(!r.attachments)r.attachments=[];
   }
   if(r){r.note=(document.getElementById('e_note')?document.getElementById('e_note').value.trim():(r.note||''));setEntryNote(r.id,r.note);}
+  if(r)storeEntryFiles(r,type);
   editingType=null;editingId=null;saveAll();render();
 
   // Sync edit to Google Sheets
@@ -1862,7 +1869,7 @@ function addEditFile(e,type,id){
     reader.onload=async function(ev){
       const att={name:file.name,mimeType,data:ev.target.result.split(',')[1],size:file.size};
       r.attachments.push(att);
-      saveAll();rerender();
+      saveAll();storeEntryFiles(r,type);rerender();
       // Upload to Google Drive so the file is available on every device (not just this one).
       const url=getScriptUrl();
       if(url){
@@ -1876,7 +1883,7 @@ function addEditFile(e,type,id){
             att.driveUrl=result.driveUrl;
             delete att.data; // now safely in Drive — free local storage
             if(!r.bill)r.bill=result.driveUrl;
-            saveAll();rerender();
+            saveAll();storeEntryFiles(r,type);rerender();
             showToast('✓ '+file.name+' attached & saved to Google Drive','success');
           } else {
             showToast('✓ '+file.name+' attached to this entry.','success');
@@ -1899,7 +1906,7 @@ function removeEditAttachment(type,id,idx){
   const a=r.attachments[idx];
   if(!confirm('Remove file "'+((a&&a.name)||'attachment')+'" from this entry?'))return;
   r.attachments.splice(idx,1);
-  saveAll();
+  saveAll();storeEntryFiles(r,type);
   type==='sale'?renderSalesTable(filtered(sales)):renderPurchasesTable(filtered(purchases));
 }
 
@@ -2062,6 +2069,7 @@ async function saveEntry(){
     showToast('Saved locally. Open Settings (⚙) to connect Google.','info');
   }
 
+  if(entry)storeEntryFiles(entry,currentModal==='sale'?'sale':'purchase');
   saveAll();render();
   btn.disabled=false;btn.textContent='Save Entry';
   closeModal();
