@@ -1656,18 +1656,20 @@ function billCell(bill, attachments) {
     });
   }
 
-  // Legacy bill field (URL or filename)
+  // Bill field — may hold ONE url, or MULTIPLE Drive links joined by ' | ' (multi-file). Render each.
   if(bill&&bill.trim()){
-    const b=bill.trim();
-    if(b.startsWith('http://')||b.startsWith('https://')||b.startsWith('www.')||b.includes('drive.google.com')||b.includes('docs.google.com')){
-      const url=(b.startsWith('http://')||b.startsWith('https://'))?b:'https://'+b;
-      const name=url.includes('drive.google.com')||url.includes('docs.google.com')?'☁ Drive':'🔗 Open';
-      chips.push(`<a class="bill-link" href="${url}" target="_blank" rel="noopener">${name}</a>`);
-    } else {
-      // Plain filename — no Drive link yet; show as a muted label (click ✏ to add Drive link)
-      const short=b.length>22?b.slice(0,20)+'…':b;
-      chips.push(`<span title="${b} — click ✏ to add Google Drive link" style="font-size:.71rem;color:var(--muted);background:#F1F5F9;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px;cursor:default;">📄 ${short}</span>`);
-    }
+    const seen=new Set((chips.join('').match(/https?:\/\/[^"']+/g)||[]));
+    bill.split(/\s*\|\s*|\n+/).map(x=>x.trim()).filter(Boolean).forEach(function(b){
+      if(b.startsWith('http://')||b.startsWith('https://')||b.startsWith('www.')||b.includes('drive.google.com')||b.includes('docs.google.com')){
+        const url=(b.startsWith('http://')||b.startsWith('https://'))?b:'https://'+b;
+        if(seen.has(url))return; seen.add(url);
+        const name=url.includes('drive.google.com')||url.includes('docs.google.com')?'☁ Drive':'🔗 Open';
+        chips.push(`<a class="bill-link" href="${url}" target="_blank" rel="noopener">${name}</a>`);
+      } else {
+        const short=b.length>22?b.slice(0,20)+'…':b;
+        chips.push(`<span title="${b} — click ✏ to add Google Drive link" style="font-size:.71rem;color:var(--muted);background:#F1F5F9;padding:2px 7px;border-radius:5px;display:inline-flex;align-items:center;gap:3px;cursor:default;">📄 ${short}</span>`);
+      }
+    });
   }
 
   if(!chips.length)return'<span style="color:var(--muted);font-size:.72rem">—</span>';
@@ -1886,7 +1888,9 @@ function addEditFile(e,type,id){
           if(result&&result.ok&&result.driveUrl){
             att.driveUrl=result.driveUrl;
             delete att.data; // now safely in Drive — free local storage
-            if(!r.bill)r.bill=result.driveUrl;
+            // Pack ALL of this entry's Drive links into bill so every file survives reload/login/other devices.
+            r.bill=r.attachments.filter(a=>a.driveUrl).map(a=>a.driveUrl).join(' | ');
+            try{const lean2=r.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));await callScript({action,entry:{...r,attachments:lean2},file:null});}catch(_e){}
             saveAll();storeEntryFiles(r,type);rerender();
             showToast('✓ '+file.name+' attached & saved to Google Drive','success');
           } else {
@@ -2037,19 +2041,29 @@ async function saveEntry(){
 
   if(scriptUrl&&entry&&attachedFiles.length){
     try{
-      showProgress(30,'Saving entry + '+attachedFiles.length+' file(s) to Google…');
-      const action=currentModal==='sale'?'addSale':'addPurchase';
-      // ONE call creates ONE row and carries every file — prevents duplicate rows.
-      const result=await callScript({action,entry,file:attachedFiles[0]||null,files:attachedFiles});
-      let driveUrls=[];
-      if(result){ if(Array.isArray(result.driveUrls)) driveUrls=result.driveUrls.filter(Boolean); else if(result.driveUrl) driveUrls=[result.driveUrl]; }
+      const isSale=currentModal==='sale';
+      const addAction=isSale?'addSale':'addPurchase';
+      const editAction=isSale?'editSale':'editPurchase';
+      showProgress(15,'Creating entry in Google Sheet…');
+      // 1) Create the row ONCE (no file) — prevents duplicate rows.
+      await callScript({action:addAction,entry,file:null});
+      // 2) Upload each file via the UPDATE action so every file attaches to the SAME row (never appends).
+      const driveUrls=[];
+      for(let i=0;i<attachedFiles.length;i++){
+        const f=attachedFiles[i];
+        showProgress(Math.round(20+55*((i+1)/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')…');
+        const lean=entry.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));
+        const r=await callScript({action:editAction,entry:{...entry,attachments:lean},file:f});
+        if(r&&r.driveUrl){ driveUrls.push(r.driveUrl); if(entry.attachments[i])entry.attachments[i].driveUrl=r.driveUrl; }
+      }
+      // 3) Pack ALL Drive links into the bill field (the one column the Sheet stores) so every file survives reload / login / other devices.
       if(driveUrls.length){
-        entry.bill=driveUrls[0];
-        driveUrls.forEach((u,i)=>{if(entry.attachments[i])entry.attachments[i].driveUrl=u;});
+        entry.bill=driveUrls.join(' | ');
         entry.attachments.forEach(a=>{if(a.driveUrl)delete a.data;});
+        showProgress(90,'Saving file links…');
+        const lean2=entry.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));
+        try{await callScript({action:editAction,entry:{...entry,attachments:lean2},file:null});}catch(e){}
         showToast('✓ Entry + '+driveUrls.length+' file(s) saved to Google Drive!','success');
-      } else if(result&&result.ok){
-        showToast('✓ Entry saved to Google Sheet.','success');
       } else {
         showToast('✓ Entry saved. Files may not have uploaded — check Drive.','warning');
       }
