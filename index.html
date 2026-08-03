@@ -1273,6 +1273,9 @@ function getEntryFiles(){try{return JSON.parse(localStorage.getItem('cb_entry_fi
 function entrySig(r,type){return type==='sale'?('S|'+(r.invoiceNo||'')):('P|'+(r.date||'')+'|'+(r.amount||'')+'|'+(r.particulars||''));}
 function storeEntryFiles(r,type){try{if(!r)return;const lean=(r.attachments||[]).map(a=>a.driveUrl?{name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl}:{name:a.name,mimeType:a.mimeType,size:a.size,data:a.data});const m=getEntryFiles();const payload={t:Date.now(),atts:lean};if(r.id)m['id:'+r.id]=payload;m['sig:'+entrySig(r,type)]=payload;localStorage.setItem('cb_entry_files',JSON.stringify(m));}catch(e){}}
 function applyEntryFiles(){try{const m=getEntryFiles();const pick=(r,type)=>{const e=(r.id&&m['id:'+r.id])||m['sig:'+entrySig(r,type)];return e&&e.atts;};(sales||[]).forEach(r=>{const a=pick(r,'sale');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});(purchases||[]).forEach(r=>{const a=pick(r,'purchase');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});}catch(e){}}
+// ═══ CURRENCY: baked-in defaults for known foreign entries + user overrides — survives everywhere (no browser storage needed) ═══
+const SEED_CUR={'Retail00002':'EUR','Retail00003':'EUR','Retail00004':'CAD','Retail00006':'AUD','Retail00007':'USD'};
+function applyCurrencies(){try{const ov=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');(sales||[]).forEach(r=>{const k=String(r.invoiceNo);const c=ov[k]||SEED_CUR[k];if(c)r.currency=c;});}catch(e){}}
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
 
@@ -1584,6 +1587,7 @@ function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toF
 function render() {
   applyEntryNotes();
   applyEntryFiles();
+  applyCurrencies();
   const _fS0=filtered(sales),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
   const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);},0);
@@ -2021,6 +2025,7 @@ async function saveEntry(){
   }
 
   if(entry&&(currentModal==='sale'||currentModal==='purchase')){const _n=(document.getElementById('m_note')&&document.getElementById('m_note').value.trim())||'';if(_n){entry.note=_n;setEntryNote(entry.id,_n);}}
+  if(entry&&entry.invoiceNo&&entry.currency&&entry.currency!=='INR'){try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');_co[String(entry.invoiceNo)]=entry.currency;localStorage.setItem('cb_cur_ov',JSON.stringify(_co));}catch(e){}}
   // Store local file attachments immediately (always, even without Google)
   if(entry) entry.attachments=attachedFiles.map(f=>({name:f.name,mimeType:f.mimeType,data:f.data,size:f.size}));
 
