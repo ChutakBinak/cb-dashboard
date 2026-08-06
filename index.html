@@ -1285,9 +1285,38 @@ function saveAll() {
     }
   }
 }
+const NOTE_TAG='PS::';
 function getEntryNotes(){try{return JSON.parse(localStorage.getItem('cb_entry_notes')||'{}');}catch(e){return{};}}
 function setEntryNote(id,note){try{const m=getEntryNotes();if(note)m[id]=note;else delete m[id];localStorage.setItem('cb_entry_notes',JSON.stringify(m));}catch(e){}}
-function applyEntryNotes(){try{const m=getEntryNotes();[...sales,...purchases].forEach(r=>{if(r&&(r.id in m))r.note=m[r.id];});}catch(e){}}
+function billParts(bill){const out={links:[],note:''};String(bill||'').split(/\s*\|\s*|\n+/).map(x=>x.trim()).filter(Boolean).forEach(function(seg){if(seg.indexOf(NOTE_TAG)===0)out.note=seg.slice(NOTE_TAG.length).trim();else out.links.push(seg);});return out;}
+function buildBill(r){const links=(r.attachments||[]).filter(a=>a.driveUrl).map(a=>a.driveUrl);if(!links.length){const ex=billParts(r._rawBill!==undefined?r._rawBill:r.bill).links;if(ex.length)links.push.apply(links,ex);}const parts=links.slice();if(r.note)parts.push(NOTE_TAG+r.note);return parts.join(' | ');}
+// Note lives in the Sheet's bill column so it survives login/refresh and the CA can see it.
+// Any older note still in this browser is migrated up to the Sheet on load.
+function applyEntryNotes(){
+  try{
+    const m=getEntryNotes(); const migrate=[];
+    const walk=(arr,type)=>{(arr||[]).forEach(r=>{
+      if(!r)return;
+      const parsed=billParts(r.bill);
+      if(parsed.note){ r.note=parsed.note; if(r.id)setEntryNote(r.id,parsed.note); }
+      else if(r.id&&(r.id in m)&&m[r.id]){ r.note=m[r.id]; migrate.push([r,type]); }
+    });};
+    walk(sales,'sale'); walk(purchases,'purchase');
+    if(migrate.length&&getScriptUrl()){
+      migrate.slice(0,25).forEach(function(pair){ pushNoteToSheet(pair[0],pair[1]); });
+    }
+  }catch(e){}
+}
+async function pushNoteToSheet(r,type){
+  try{
+    if(!r||!getScriptUrl())return;
+    const bill=buildBill(r);
+    if(bill===r.bill)return;
+    r.bill=bill;
+    const action=type==='sale'?'editSale':'editPurchase';
+    await callScript({action,entry:{...r,attachments:(r.attachments||[]).map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}))},file:null});
+  }catch(e){}
+}
 function noteBadge(r){return (r&&r.note)?'<div style="font-family:inherit;font-size:.66rem;color:var(--muted);font-style:italic;margin-top:2px;max-width:230px;white-space:normal;word-break:break-word" title="'+escNote(r.note)+'">📝 '+escNote(r.note)+'</div>':'';}
 // ═══ DURABLE PER-ENTRY ATTACHMENTS (survive Google Sheet reload) ═══
 function getEntryFiles(){try{return JSON.parse(localStorage.getItem('cb_entry_files')||'{}');}catch(e){return{};}}
@@ -1680,7 +1709,7 @@ function billCell(bill, attachments) {
   // Bill field — may hold ONE url, or MULTIPLE Drive links joined by ' | ' (multi-file). Render each.
   if(bill&&bill.trim()){
     const seen=new Set((chips.join('').match(/https?:\/\/[^"']+/g)||[]));
-    bill.split(/\s*\|\s*|\n+/).map(x=>x.trim()).filter(Boolean).forEach(function(b){
+    billParts(bill).links.forEach(function(b){
       if(b.startsWith('http://')||b.startsWith('https://')||b.startsWith('www.')||b.includes('drive.google.com')||b.includes('docs.google.com')){
         const url=(b.startsWith('http://')||b.startsWith('https://'))?b:'https://'+b;
         if(seen.has(url))return; seen.add(url);
@@ -1864,7 +1893,7 @@ async function saveEdit(type,id){
     r.bill=document.getElementById('e_bill').value.trim();
     if(!r.attachments)r.attachments=[];
   }
-  if(r){r.note=(document.getElementById('e_note')?document.getElementById('e_note').value.trim():(r.note||''));setEntryNote(r.id,r.note);}
+  if(r){r.note=(document.getElementById('e_note')?document.getElementById('e_note').value.trim():(r.note||''));setEntryNote(r.id,r.note);r.bill=buildBill(r);}
   if(r)storeEntryFiles(r,type);
   editingType=null;editingId=null;saveAll();render();
 
@@ -1910,7 +1939,7 @@ function addEditFile(e,type,id){
             att.driveUrl=result.driveUrl;
             delete att.data; // now safely in Drive — free local storage
             // Pack ALL of this entry's Drive links into bill so every file survives reload/login/other devices.
-            r.bill=r.attachments.filter(a=>a.driveUrl).map(a=>a.driveUrl).join(' | ');
+            r.bill=buildBill(r);
             try{const lean2=r.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));await callScript({action,entry:{...r,attachments:lean2},file:null});}catch(_e){}
             saveAll();storeEntryFiles(r,type);rerender();
             showToast('✓ '+file.name+' attached & saved to Google Drive','success');
@@ -2049,7 +2078,7 @@ async function saveEntry(){
     saveAll();render();closeModal();showToast('Fixed cost saved!','success');return;
   }
 
-  if(entry&&(currentModal==='sale'||currentModal==='purchase')){const _n=(document.getElementById('m_note')&&document.getElementById('m_note').value.trim())||'';if(_n){entry.note=_n;setEntryNote(entry.id,_n);}}
+  if(entry&&(currentModal==='sale'||currentModal==='purchase')){const _n=(document.getElementById('m_note')&&document.getElementById('m_note').value.trim())||'';if(_n){entry.note=_n;setEntryNote(entry.id,_n);entry.bill=buildBill(entry);}}
   if(entry&&entry.invoiceNo&&entry.currency&&entry.currency!=='INR'){try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');_co[String(entry.invoiceNo)]=entry.currency;localStorage.setItem('cb_cur_ov',JSON.stringify(_co));}catch(e){}}
   // Store local file attachments immediately (always, even without Google)
   if(entry) entry.attachments=attachedFiles.map(f=>({name:f.name,mimeType:f.mimeType,data:f.data,size:f.size}));
@@ -2079,7 +2108,8 @@ async function saveEntry(){
       }
       // 3) Pack ALL Drive links into the bill field (the one column the Sheet stores) so every file survives reload / login / other devices.
       if(driveUrls.length){
-        entry.bill=driveUrls.join(' | ');
+        entry.attachments.forEach((a,i)=>{if(!a.driveUrl&&driveUrls[i])a.driveUrl=driveUrls[i];});
+        entry.bill=buildBill(entry);
         entry.attachments.forEach(a=>{if(a.driveUrl)delete a.data;});
         showProgress(90,'Saving file links…');
         const lean2=entry.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));
