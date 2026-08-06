@@ -1224,6 +1224,7 @@ async function initData() {
         purchases=p;sales=s;fixedCosts=f;
         try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');sales.forEach(r=>{const k=String(r.invoiceNo);if(_co[k])r.currency=_co[k];});}catch(e){}
         saveAll();dataLoaded=true;clearDataError();
+        loadServerMeta();
         showToast('\u2713 Data loaded from Google Sheets','success');
         render();return;
       }
@@ -2674,9 +2675,56 @@ function mnsSaveVoucherAsEntry(){
   showToast('✓ MNS Voucher saved as Purchase entry','success');
 }
 
+// ═══ SERVER-SIDE META STORE ═══
+// Notes / reports / statements live on the server so they survive logout, a new
+// browser, or another device. localStorage is only a fast cache of that truth.
+const META_URL='https://script.google.com/macros/s/AKfycbzn2tztpsrQrd91FpmkBshljdFg7yI7xIrUckxEKMSxKU4EUPdEkEr4rSq-UvOwz2xLOA/exec';
+async function metaSet(key,value){
+  const body=JSON.stringify({action:'metaSet',key,value:(typeof value==='string')?value:JSON.stringify(value)});
+  const r=await fetch(META_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}
+async function metaGet(key){
+  const body=JSON.stringify({action:'metaGet',key});
+  const r=await fetch(META_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const j=await r.json();
+  return (j&&j.ok)?(j.value||''):'';
+}
+// Save to server first (source of truth), cache locally second.
+function metaPersist(key,arr,label){
+  try{localStorage.setItem(key,JSON.stringify(arr));}catch(e){}
+  metaSet(key,arr).catch(function(err){
+    if(typeof showToast==='function')showToast('\u26a0 '+(label||'Data')+' saved on this device but NOT to the server: '+err.message,'warning');
+  });
+}
+// Pull the server copy on load and refresh the screen.
+async function loadServerMeta(){
+  const jobs=[
+    ['cb_notes',            function(v){notes=v;},           typeof renderNotes==='function'?renderNotes:null],
+    ['cb_reports',          function(v){reports=v;},         typeof renderReports==='function'?renderReports:null],
+    ['cb_bank_statements',  function(v){bankStatements=v;},  typeof renderBankStatements==='function'?renderBankStatements:null],
+    ['cb_sr_reports',       function(v){srReports=v;},       null]
+  ];
+  for(const job of jobs){
+    try{
+      const raw=await metaGet(job[0]);
+      if(raw){
+        const parsed=JSON.parse(raw);
+        if(Array.isArray(parsed)){
+          job[1](parsed);
+          try{localStorage.setItem(job[0],raw);}catch(e){}
+          if(job[2])try{job[2]();}catch(e){}
+        }
+      }
+    }catch(err){ console.warn('meta load failed for',job[0],err); }
+  }
+}
+
 let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
 let bankStatements = JSON.parse(localStorage.getItem('cb_bank_statements') || '[]');
-function saveReportsData() { localStorage.setItem('cb_reports', JSON.stringify(reports)); }
+function saveReportsData() { metaPersist('cb_reports', reports, 'Reports'); }
 const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
 const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy'};
 let notes = JSON.parse(localStorage.getItem('cb_notes') || '[]');
@@ -2695,7 +2743,7 @@ var srReports = JSON.parse(localStorage.getItem('cb_sr_reports')||'[]');
 
 var srActiveReport = null; // currently displayed report id
 
-function srSaveReports(){ localStorage.setItem('cb_sr_reports', JSON.stringify(srReports)); }
+function srSaveReports(){ metaPersist('cb_sr_reports', srReports, 'Shiprocket reports'); }
 
 // ── Load CSV file ──────────────────────────────────────
 function srLoadFile(e){
@@ -2982,7 +3030,7 @@ function saveBankStmt() {
     } else {
       bankStatements.push({id: Date.now().toString(36)+Math.random().toString(36).slice(2,6), month, bank, description, url, fileData:fileData||'', fileName:fileName||''});
     }
-    localStorage.setItem('cb_bank_statements', JSON.stringify(bankStatements));
+    metaPersist('cb_bank_statements', bankStatements, 'Bank statements');
     closeBankStmtModal();
     renderBankStatements();
   }
@@ -2995,7 +3043,7 @@ function saveBankStmt() {
 function deleteBankStmt(id) {
   if (!confirm('Delete this statement?')) return;
   bankStatements = bankStatements.filter(x=>x.id!==id);
-  localStorage.setItem('cb_bank_statements', JSON.stringify(bankStatements));
+  metaPersist('cb_bank_statements', bankStatements, 'Bank statements');
   renderBankStatements();
 }
 
@@ -3041,7 +3089,7 @@ function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsDat
 
 // ═══ MONTHLY NOTES / ITR REMINDERS ═══
 function escNote(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function saveNotesData(){ try{localStorage.setItem('cb_notes',JSON.stringify(notes));}catch(e){showToast('Storage full — could not save note','error');} }
+function saveNotesData(){ metaPersist('cb_notes', notes, 'Notes'); }
 function renderNotes(){
   const wrap=document.getElementById('notesList'); if(!wrap)return;
   const banner=document.getElementById('notesBanner');
