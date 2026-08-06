@@ -1197,54 +1197,75 @@ let barChart=null,pieChart=null;
 let attachedFile=null; // legacy — kept for compat; use attachedFiles[] below
 
 async function initData() {
-  // Try Google Sheets first; fall back to localStorage cache, then seed data
+  // Load ONLY real records from Google Sheets. Never substitute demo/seed data —
+  // showing invented figures to the owner or the CA would be worse than showing nothing.
   const url = getScriptUrl();
-  if (url) {
-    try {
-      showToast('Loading data from Google Sheets…','info');
-      const result = await callScript({action:'getData'});
-      if (result.ok) {
-        const p = result.purchases  || [];
-        const s = result.sales      || [];
-        const f = result.fixedCosts || [];
-        // If Sheet is empty (first time), seed it with local/seed data then sync
-        if (p.length === 0 && s.length === 0) {
-          purchases  = JSON.parse(localStorage.getItem('cb_purchases')||'null') || JSON.parse(JSON.stringify(SEED_P));
-          sales      = JSON.parse(localStorage.getItem('cb_sales')||'null')     || JSON.parse(JSON.stringify(SEED_S));
-          fixedCosts = JSON.parse(localStorage.getItem('cb_fixed')||'null')     || JSON.parse(JSON.stringify(SEED_F));
-          saveAll(); dataLoaded = true; render();
-          showToast('Sheet is empty — syncing all entries to Google Sheets…','info');
-          // Auto-sync seed data up to Sheets
-          try {
-            const cleanS = sales.map(r=>({...r}));
-            const cleanP = purchases.map(r=>({...r,attachments:[]}));
-            await callScript({action:'syncAll', sales:cleanS, purchases:cleanP});
-            showToast('✓ All entries synced to Google Sheets','success');
-          } catch(e) { showToast('Could not auto-sync to Sheets: '+e.message,'warning'); }
-          return;
-        }
-        purchases  = p;
-        sales      = s;
-        // Merge currency overrides stored separately (persist across Sheet syncs)
-        try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');sales.forEach(r=>{const k=String(r.invoiceNo);if(_co[k])r.currency=_co[k];});}catch(e){}
-        fixedCosts = f;
-        saveAll();
-        dataLoaded = true;
-        showToast('✓ Data loaded from Google Sheets','success');
-        render();
-        return;
-      }
-    } catch(err) {
-      console.warn('Sheet load failed, using local cache:', err);
-      showToast('Could not reach Google Sheets — using local cache','warning');
-    }
+  if (!url) {
+    purchases=[];sales=[];fixedCosts=[];dataLoaded=true;
+    showDataError('No Google connection is configured on this device. Open Settings (\u2699) to connect.',false);
+    return;
   }
-  purchases  = JSON.parse(localStorage.getItem('cb_purchases')||'null') || JSON.parse(JSON.stringify(SEED_P));
-  sales      = JSON.parse(localStorage.getItem('cb_sales')||'null')     || JSON.parse(JSON.stringify(SEED_S));
-  fixedCosts = JSON.parse(localStorage.getItem('cb_fixed')||'null')     || JSON.parse(JSON.stringify(SEED_F));
-  if(!localStorage.getItem('cb_purchases')) saveAll();
-  dataLoaded=true;
+  showToast('Loading data from Google Sheets\u2026','info');
+  let lastErr=null;
+  for(let attempt=1;attempt<=3;attempt++){
+    try{
+      const result=await Promise.race([
+        callScript({action:'getData'}),
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error('request timed out')),20000))
+      ]);
+      if(result&&result.ok){
+        const p=result.purchases||[], s=result.sales||[], f=result.fixedCosts||[];
+        if(p.length===0&&s.length===0){
+          // Sheet genuinely returned nothing. Do NOT push seed data up (that would overwrite real records).
+          purchases=[];sales=[];fixedCosts=f;dataLoaded=true;
+          showDataError('Google Sheets returned no records. Nothing has been changed \u2014 press Retry, or check the Sheet.',true);
+          render();return;
+        }
+        purchases=p;sales=s;fixedCosts=f;
+        try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');sales.forEach(r=>{const k=String(r.invoiceNo);if(_co[k])r.currency=_co[k];});}catch(e){}
+        saveAll();dataLoaded=true;clearDataError();
+        showToast('\u2713 Data loaded from Google Sheets','success');
+        render();return;
+      }
+      lastErr=new Error((result&&result.error)||'Unexpected response from Google Sheets');
+    }catch(err){lastErr=err;}
+    if(attempt<3){await new Promise(r=>setTimeout(r,800*attempt));}
+  }
+  // Every attempt failed.
+  console.warn('Sheet load failed:',lastErr);
+  const cached=localStorage.getItem('cb_sales');
+  if(cached){
+    try{
+      purchases=JSON.parse(localStorage.getItem('cb_purchases')||'[]');
+      sales=JSON.parse(cached);
+      fixedCosts=JSON.parse(localStorage.getItem('cb_fixed')||'[]');
+      dataLoaded=true;
+      showDataError('\u26a0 Could not reach Google Sheets \u2014 showing the last copy saved on THIS device, which may be out of date. Do not file from these figures until it reloads.',true);
+      render();return;
+    }catch(e){}
+  }
+  purchases=[];sales=[];fixedCosts=[];dataLoaded=true;
+  showDataError('\u26a0 Could not load your records from Google Sheets'+(lastErr&&lastErr.message?' ('+lastErr.message+')':'')+'. No figures are shown, rather than risk showing incorrect ones. Press Retry.',true);
+  render();
 }
+
+// ── Persistent data-load error banner (never silently show wrong numbers) ──
+function showDataError(msg,retry){
+  let el=document.getElementById('dataErrBanner');
+  if(!el){
+    el=document.createElement('div');
+    el.id='dataErrBanner';
+    el.style.cssText='background:#FCEEF0;border:1px solid #F5C2C7;border-left:4px solid #B91C2F;color:#8B1520;padding:12px 16px;border-radius:6px;margin-bottom:14px;font-size:.82rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap;line-height:1.45';
+    const m=document.querySelector('main');
+    if(m)m.insertBefore(el,m.firstChild);
+  }
+  el.innerHTML='<span style="flex:1;min-width:220px">'+msg+'</span>'+(retry?'<button class="btn btn-primary" onclick="retryLoad()">\u21bb Retry</button>':'');
+  el.style.display='flex';
+}
+function clearDataError(){const el=document.getElementById('dataErrBanner');if(el)el.style.display='none';}
+async function retryLoad(){clearDataError();dataLoaded=false;showToast('Retrying\u2026','info');await initData();}
+
+
 function saveAll() {
   try {
     localStorage.setItem('cb_purchases',JSON.stringify(purchases));
