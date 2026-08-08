@@ -1934,10 +1934,9 @@ function addEditFile(e,type,id){
           showToast('Attaching '+file.name+'…','info');
           // Use the UPDATE action (not add) so the file attaches to THIS existing row — never creates a duplicate.
           const action=type==='sale'?'editSale':'editPurchase';
-          const leanAtt=r.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));
-          const result=await callScript({action,entry:{...r,attachments:leanAtt},file:att});
-          if(result&&result.ok&&result.driveUrl){
-            att.driveUrl=result.driveUrl;
+          const uploadedUrl=await metaUpload(att);
+          if(uploadedUrl){
+            att.driveUrl=uploadedUrl;
             delete att.data; // now safely in Drive — free local storage
             // Pack ALL of this entry's Drive links into bill so every file survives reload/login/other devices.
             r.bill=buildBill(r);
@@ -2103,9 +2102,13 @@ async function saveEntry(){
       for(let i=0;i<attachedFiles.length;i++){
         const f=attachedFiles[i];
         showProgress(Math.round(20+55*((i+1)/attachedFiles.length)),'Uploading '+f.name+' ('+(i+1)+'/'+attachedFiles.length+')…');
-        const lean=entry.attachments.map(a=>({name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl||''}));
-        const r=await callScript({action:editAction,entry:{...entry,attachments:lean},file:f});
-        if(r&&r.driveUrl){ driveUrls.push(r.driveUrl); if(entry.attachments[i])entry.attachments[i].driveUrl=r.driveUrl; }
+        try{
+          const url=await metaUpload(f);
+          driveUrls.push(url);
+          if(entry.attachments[i])entry.attachments[i].driveUrl=url;
+        }catch(upErr){
+          showToast('\u26a0 '+f.name+' did not upload: '+upErr.message,'warning');
+        }
       }
       // 3) Pack ALL Drive links into the bill field (the one column the Sheet stores) so every file survives reload / login / other devices.
       if(driveUrls.length){
@@ -2684,6 +2687,17 @@ async function metaSet(key,value){
   const r=await fetch(META_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
   if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
+}
+// Upload a file to Drive via the meta-store script and return its shareable link.
+// (The main Sheet backend only uploads on addSale/addPurchase, which append a new
+// row — using it for extra files created duplicate entries.)
+async function metaUpload(file){
+  const body=JSON.stringify({action:'uploadFile',file:{name:file.name,mimeType:file.mimeType,data:file.data,size:file.size}});
+  const r=await fetch(META_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const j=await r.json();
+  if(!j||!j.ok||!j.driveUrl)throw new Error((j&&j.error)||'upload did not return a link');
+  return j.driveUrl;
 }
 async function metaGet(key){
   const body=JSON.stringify({action:'metaGet',key});
