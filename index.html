@@ -425,7 +425,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <select class="filter-sel" id="sf_platform" onchange="applyTableFilters('s')">
             <option value="">All Platforms</option>
             <option>Website (Shopify)</option><option>Offline Store</option>
-            <option>Amazon</option><option>Etsy</option><option>B2B</option><option>Other</option>
+            <option>Amazon</option><option>Etsy</option><option>Ballwool</option><option>B2B</option><option>Other</option>
           </select>
           <select class="filter-sel" id="sf_paidvia" onchange="applyTableFilters('s')">
             <option value="">All Payment</option>
@@ -917,7 +917,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
         <div class="form-row">
           <div class="form-group"><label>Platform *</label>
-            <select class="form-input" id="s_platform"><option>Website (Shopify)</option><option>Offline Store</option><option>Amazon</option><option>Etsy</option><option>B2B</option><option>Other</option></select>
+            <select class="form-input" id="s_platform"><option>Website (Shopify)</option><option>Offline Store</option><option>Amazon</option><option>Etsy</option><option>Ballwool</option><option>B2B</option><option>Other</option></select>
           </div>
           <div class="form-group"><label>Paid Via</label>
             <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Debit Card</option><option value="">—</option></select>
@@ -1019,8 +1019,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         <h3>🔑 Change Passwords</h3>
         <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px">Open <code style="background:#F1F5F9;padding:2px 5px;border-radius:4px">CB_Dashboard.html</code> in a text editor, find the <code style="background:#F1F5F9;padding:2px 5px;border-radius:4px">USERS</code> object, and update the <code>password</code> fields.</p>
         <div style="background:#F8FAFC;border-radius:8px;padding:10px 12px;font-family:monospace;font-size:.74rem;color:var(--text)">
-          owner: { password: '<strong>admin123</strong>' }<br>
-          ca: &nbsp;&nbsp;&nbsp;{ password: '<strong>mj</strong>' }
+          Passwords are <strong>not shown here</strong> for security. To change them, edit the <code>USERS</code> object in the page source.
         </div>
       </div>
       <div class="settings-section">
@@ -1119,16 +1118,9 @@ function toggleAmounts(){
   tagAmounts();
 }
 function tagAmounts(){
-  // KPI values
-  document.querySelectorAll('.kpi-value,.kpi-sub').forEach(function(el){el.classList.add('amt-mask');});
-  // table cells containing ₹ symbol
-  document.querySelectorAll('td,th').forEach(function(el){
-    if(el.textContent.trim().startsWith('₹')) el.classList.add('amt-mask');
-  });
-  // summary cards / stat numbers that contain rupee
-  document.querySelectorAll('.stat-val,.summary-val,[class*="amount"],[class*="total"],[class*="value"]').forEach(function(el){
-    if(/₹|Rs\./.test(el.textContent)) el.classList.add('amt-mask');
-  });
+  document.querySelectorAll('.kpi-value').forEach(function(el){el.classList.add('amt-mask');});
+  document.querySelectorAll('.kpi-sub').forEach(function(el){if(/[₹$€£]/.test(el.textContent))el.classList.add('amt-mask');});
+  document.querySelectorAll('td').forEach(function(el){if(/^[₹$€£]/.test(el.textContent.trim()))el.classList.add('amt-mask');});
 }
 function showApp() {
   document.getElementById('loginScreen').style.display='none';
@@ -1190,7 +1182,16 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
+const APP_VERSION='v3.0-2026-08-18';window.APP_VERSION=APP_VERSION;
 let showInrConversion=false,_fxCache={};
+// ---- FX helpers: single source of truth for INR value of any row ----
+function isINR(r){return !r||!r.currency||r.currency==='INR';}
+function fxRateOf(r){if(isINR(r))return 1;const v=_fxCache[r.date+':'+r.currency];return (typeof v==='number'&&v>0)?v:0;}
+// native INR keeps its paise; only CONVERTED values are rounded to the rupee
+function inrOf(r){const a=+((r||{}).amount)||0;if(isINR(r))return a;const rt=fxRateOf(r);return rt?Math.round(a*rt):0;}
+function inrGstOf(r){const g=+((r||{}).gst)||0;if(isINR(r))return g;const rt=fxRateOf(r);return rt?Math.round(g*rt):0;}
+function fxMissing(list){return (list||[]).filter(function(r){return r&&r.currency&&r.currency!=='INR'&&!fxRateOf(r);});}
+
 let filterMonth='all',currentModal=null,dataLoaded=false;
 let editingId=null,editingType=null;
 let barChart=null,pieChart=null;
@@ -1379,9 +1380,9 @@ function applyTableFilters(tab){
     const dr=getDateRange(sPeriod,'sf_from','sf_to');
     const base=filtered(sales);
     const result=base.filter(r=>{
-      if(dr){const d=new Date(r.date);if(d<dr.from||d>dr.to)return false;}
+      if(dr){const _p=String(r.date||'').split('-');const d=_p.length===3?new Date(+_p[0],+_p[1]-1,+_p[2]):new Date(r.date);if(d<dr.from||d>dr.to)return false;}
       if(q&&![r.invoiceNo,r.platform,r.paidVia,r.bill].join(' ').toLowerCase().includes(q))return false;
-      if(pl&&r.platform!==pl)return false;
+      if(pl&&!(r.platform===pl||(r.platform||'').indexOf(pl)>-1||pl.indexOf(r.platform||'\u0000')>-1))return false;
       if(pv&&r.paidVia!==pv)return false;
       if(r.amount<mn||r.amount>mx)return false;
       return true;
@@ -1398,7 +1399,7 @@ function applyTableFilters(tab){
     const dr=getDateRange(pPeriod,'pf_from','pf_to');
     const base=filtered(purchases);
     const result=base.filter(r=>{
-      if(dr){const d=new Date(r.date);if(d<dr.from||d>dr.to)return false;}
+      if(dr){const _p=String(r.date||'').split('-');const d=_p.length===3?new Date(+_p[0],+_p[1]-1,+_p[2]):new Date(r.date);if(d<dr.from||d>dr.to)return false;}
       if(q&&![r.particulars,r.category,r.paymentMethod,r.bill].join(' ').toLowerCase().includes(q))return false;
       if(cat&&r.category!==cat)return false;
       if(pm&&r.paymentMethod!==pm)return false;
@@ -1639,14 +1640,17 @@ function render() {
   applyEntryNotes();
   applyEntryFiles();
   applyCurrencies();
-  const _fS0=filtered(sales),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
+  const _fS0=filtered(sales).concat(filtered(purchases)),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
-  const tS=fS.reduce((s,r)=>{if(!r.currency||r.currency==='INR')return s+(+r.amount||0);const rate=_fxCache[r.date+':'+r.currency];return s+(rate?Math.round(r.amount*rate):0);},0);
-  const tE=fP.reduce((s,r)=>s+(+r.amount||0),0);
-  const tG=fS.reduce((s,r)=>s+(+r.gst||0),0);
+  const tS=fS.reduce((s,r)=>s+inrOf(r),0);
+  const tE=fP.reduce((s,r)=>s+inrOf(r),0);
+  const tG=fS.reduce((s,r)=>s+inrGstOf(r),0);
   const net=tS-tE;
   document.getElementById('kpiSales').textContent=fmt(tS);
-  document.getElementById('kpiSalesCount').textContent=fS.length+' invoice'+(fS.length!==1?'s':'');
+  const _missS=fxMissing(fS),_missP=fxMissing(fP);
+  document.getElementById('kpiSalesCount').textContent=fS.length+' invoice'+(fS.length!==1?'s':'')+(_missS.length?'  \u26A0 '+_missS.length+' not converted':'');
+  document.getElementById('kpiSalesCount').style.color=_missS.length?'var(--red)':'';
+  if(_missS.length||_missP.length){console.warn('FX rate unavailable for:',_missS.concat(_missP).map(function(r){return r.date+' '+r.currency;}));}
   document.getElementById('kpiExpenses').textContent=fmt(tE);
   document.getElementById('kpiExpensesCount').textContent=fP.length+' entr'+(fP.length!==1?'ies':'y');
   document.getElementById('kpiProfit').textContent=fmt(net);
@@ -1662,8 +1666,8 @@ function render() {
 function renderBarChart() {
   const keys=['2026-04','2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12','2027-01','2027-02','2027-03'];
   const lbls=['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'];
-  const sD=keys.map(k=>sales.filter(r=>r.date?.startsWith(k)).reduce((s,r)=>s+(+r.amount||0),0));
-  const pD=keys.map(k=>purchases.filter(r=>r.date?.startsWith(k)).reduce((s,r)=>s+(+r.amount||0),0));
+  const sD=keys.map(k=>sales.filter(r=>r.date?.startsWith(k)).reduce((s,r)=>s+inrOf(r),0));
+  const pD=keys.map(k=>purchases.filter(r=>r.date?.startsWith(k)).reduce((s,r)=>s+inrOf(r),0));
   const ctx=document.getElementById('barChart').getContext('2d');
   if(barChart)barChart.destroy();
   barChart=new Chart(ctx,{type:'bar',data:{labels:lbls,datasets:[
@@ -1676,7 +1680,7 @@ function renderBarChart() {
 }
 
 function renderPieChart(fS) {
-  const m={};fS.forEach(r=>{m[r.platform]=(m[r.platform]||0)+(+r.amount||0);});
+  const m={};fS.forEach(r=>{m[r.platform]=(m[r.platform]||0)+inrOf(r);});
   const labels=Object.keys(m),data=Object.values(m);
   const colors=['#1A4A8A','#1A7F4B','#A06000','#B91C2F','#2D6496','#0E7490','#6B3A8C'];
   const ctx=document.getElementById('pieChart').getContext('2d');
@@ -1689,7 +1693,7 @@ function renderPieChart(fS) {
 }
 
 // Base folder for local file links — update if files are stored elsewhere
-const BILLS_FOLDER = '/Users/bhavyakaushik/Documents/Claude/Projects/Chutak Binak : MNS Firm Bills/';
+
 
 function billCell(bill, attachments) {
   const chips=[];
@@ -1795,7 +1799,7 @@ function salesEditRow(r){
     <td><div style="display:flex;gap:3px;align-items:center"><select class="edit-input" id="e_currency" style="width:54px;padding:3px 2px;font-size:.72rem">${CURRENCIES.map(c=>`<option value="${c.code}"${(r.currency||'INR')===c.code?' selected':''}>${c.sym} ${c.code}</option>`).join('')}</select><input class="edit-input" type="number" id="e_amount" value="${r.amount}" step="0.01" style="min-width:70px"></div></td>
     <td><input class="edit-input" type="number" id="e_gst" value="${r.gst||0}" step="0.01" style="min-width:70px"></td>
     <td><select class="edit-select" id="e_platform" style="min-width:130px">
-      ${['Website (Shopify)','Offline Store','Amazon','Etsy','B2B','Other'].map(p=>`<option${r.platform===p?' selected':''}>${p}</option>`).join('')}
+      ${['Website (Shopify)','Offline Store','Amazon','Etsy','Ballwool','B2B','Other'].map(p=>`<option${r.platform===p?' selected':''}>${p}</option>`).join('')}
     </select></td>
     <td><select class="edit-select" id="e_paidvia" style="min-width:110px">
       ${['UPI','Bank','Cash','Bank (Amazon)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'—'}</option>`).join('')}
@@ -1984,14 +1988,14 @@ function renderFixedGrid(){
 }
 
 function renderOverview(fS,fP,tS,tE,tG,net){
-  const cM={};fP.forEach(r=>{cM[r.category]=(cM[r.category]||0)+(+r.amount||0);});
+  const cM={};fP.forEach(r=>{cM[r.category]=(cM[r.category]||0)+inrOf(r);});
   const cats=Object.entries(cM).sort((a,b)=>b[1]-a[1]);
   document.getElementById('catBreakdown').innerHTML=cats.length
     ?cats.map(([c,a])=>`<div class="summary-row"><span>${c}</span><span class="amount-expense">${fmt(a)}</span></div>`).join('')
       +`<div class="summary-row"><strong>Total</strong><strong class="amount-expense">${fmt(tE)}</strong></div>`
     :'<p class="no-data" style="padding:8px 0">No expenses this period.</p>';
 
-  const pM={};fS.forEach(r=>{pM[r.platform]=(pM[r.platform]||0)+(+r.amount||0);});
+  const pM={};fS.forEach(r=>{pM[r.platform]=(pM[r.platform]||0)+inrOf(r);});
   const plats=Object.entries(pM).sort((a,b)=>b[1]-a[1]);
   document.getElementById('platformBreakdown').innerHTML=plats.length
     ?plats.map(([p,a])=>`<div class="summary-row"><span>${p}</span><span class="amount-income">${fmt(a)}</span></div>`).join('')
@@ -2226,9 +2230,9 @@ function switchTab(name,btn){
 
 function exportSummary(){
   const fS=filtered(sales),fP=filtered(purchases);
-  const tS=fS.reduce((s,r)=>s+(+r.amount||0),0);
-  const tE=fP.reduce((s,r)=>s+(+r.amount||0),0);
-  const tG=fS.reduce((s,r)=>s+(+r.gst||0),0);
+  const tS=fS.reduce((s,r)=>s+inrOf(r),0);
+  const tE=fP.reduce((s,r)=>s+inrOf(r),0);
+  const tG=fS.reduce((s,r)=>s+inrGstOf(r),0);
   const period=filterMonth==='all'?'FY_2026-27':new Date(filterMonth+'-01').toLocaleString('default',{month:'long',year:'numeric'}).replace(/ /g,'_');
   const lines=['MUKTAKASH NATYA SANSTHAN (CHUTAK BINAK)','Income & Expense Summary — '+period.replace(/_/g,' '),
     'Generated: '+new Date().toLocaleString('en-IN'),'='.repeat(60),'',
@@ -2286,7 +2290,7 @@ function onCurrencyChange(){
   document.getElementById('currencyBadge').textContent=sym;
 }
 function fmt(n){return'₹'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
-function fmtDate(s){if(!s)return'—';return new Date(s).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
+function fmtDate(s){if(!s)return'—';const p=String(s).split('-');if(p.length!==3)return'—';return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
 function pmCls(m){m=(m||'').toLowerCase();if(m.includes('upi'))return'pill-upi';if(m.includes('bank'))return'pill-bank';if(m.includes('cash'))return'pill-cash';if(m.includes('card'))return'pill-card';return'';}
 function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-amazon';if(p.includes('etsy'))return'pill-etsy';if(p.includes('b2b'))return'pill-b2b';if(p.includes('offline'))return'pill-offline';return'pill-shopify';}
 
