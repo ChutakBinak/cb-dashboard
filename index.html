@@ -1182,7 +1182,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.0-2026-08-18';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.1-2026-08-27';window.APP_VERSION=APP_VERSION;
 let showInrConversion=false,_fxCache={};
 // ---- FX helpers: single source of truth for INR value of any row ----
 function isINR(r){return !r||!r.currency||r.currency==='INR';}
@@ -1322,9 +1322,13 @@ async function pushNoteToSheet(r,type){
 function noteBadge(r){return (r&&r.note)?'<div style="font-family:inherit;font-size:.66rem;color:var(--muted);font-style:italic;margin-top:2px;max-width:230px;white-space:normal;word-break:break-word" title="'+escNote(r.note)+'">📝 '+escNote(r.note)+'</div>':'';}
 // ═══ DURABLE PER-ENTRY ATTACHMENTS (survive Google Sheet reload) ═══
 function getEntryFiles(){try{return JSON.parse(localStorage.getItem('cb_entry_files')||'{}');}catch(e){return{};}}
-function entrySig(r,type){return type==='sale'?('S|'+(r.invoiceNo||'')):('P|'+(r.date||'')+'|'+(r.amount||'')+'|'+(r.particulars||''));}
-function storeEntryFiles(r,type){try{if(!r)return;const lean=(r.attachments||[]).map(a=>a.driveUrl?{name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl}:{name:a.name,mimeType:a.mimeType,size:a.size,data:a.data});const m=getEntryFiles();const payload={t:Date.now(),atts:lean};if(r.id)m['id:'+r.id]=payload;m['sig:'+entrySig(r,type)]=payload;localStorage.setItem('cb_entry_files',JSON.stringify(m));}catch(e){}}
-function applyEntryFiles(){try{const m=getEntryFiles();const pick=(r,type)=>{const e=(r.id&&m['id:'+r.id])||m['sig:'+entrySig(r,type)];return e&&e.atts;};(sales||[]).forEach(r=>{const a=pick(r,'sale');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});(purchases||[]).forEach(r=>{const a=pick(r,'purchase');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});}catch(e){}}
+function entrySig(r,type){return type==='sale'?('S|'+(r.invoiceNo||'')+'|'+(r.date||'')+'|'+(r.amount||'')):('P|'+(r.date||'')+'|'+(r.amount||'')+'|'+(r.particulars||''));}
+function entrySigLegacy(r,type){return type==='sale'?('S|'+(r.invoiceNo||'')):('P|'+(r.date||'')+'|'+(r.amount||'')+'|'+(r.particulars||''));}
+function sigCounts(){const n={},l={};const bump=(r,t)=>{const a=entrySig(r,t),b=entrySigLegacy(r,t);n[a]=(n[a]||0)+1;l[b]=(l[b]||0)+1;};(sales||[]).forEach(r=>bump(r,'sale'));(purchases||[]).forEach(r=>bump(r,'purchase'));return{n:n,l:l};}
+function dupInvoiceMap(){const c={},d={};(sales||[]).forEach(r=>{const k=String(r.invoiceNo||'').trim();if(!k)return;c[k]=(c[k]||0)+1;});Object.keys(c).forEach(k=>{if(c[k]>1)d[k]=c[k];});return d;}
+function dupBadge(r){try{const d=window._dupInv||{};const k=String(r.invoiceNo||'').trim();if(!d[k])return '';return '<span title="'+d[k]+' sales share this invoice number. Bills are matched by entry ID, never by invoice no." style="margin-left:4px;cursor:help;color:#b45309">&#9888;</span>';}catch(e){return '';}}
+function storeEntryFiles(r,type){try{if(!r)return;const lean=(r.attachments||[]).map(a=>a.driveUrl?{name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl}:{name:a.name,mimeType:a.mimeType,size:a.size,data:a.data});const m=getEntryFiles();const payload={t:Date.now(),atts:lean};if(r.id)m['id:'+r.id]=payload;const nk='sig:'+entrySig(r,type);m[nk]=payload;const lk='sig:'+entrySigLegacy(r,type);if(lk!==nk)delete m[lk];localStorage.setItem('cb_entry_files',JSON.stringify(m));}catch(e){}}
+function applyEntryFiles(){try{const m=getEntryFiles();const c=sigCounts();const pick=(r,type)=>{if(r.id&&m['id:'+r.id])return m['id:'+r.id].atts;const s=entrySig(r,type);if(c.n[s]!==1)return null;if(m['sig:'+s])return m['sig:'+s].atts;const g=entrySigLegacy(r,type);if(m['sig:'+g]&&c.l[g]===1)return m['sig:'+g].atts;return null;};(sales||[]).forEach(r=>{const a=pick(r,'sale');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});(purchases||[]).forEach(r=>{const a=pick(r,'purchase');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});}catch(e){}}
 // ═══ CURRENCY: baked-in defaults for known foreign entries + user overrides — survives everywhere (no browser storage needed) ═══
 const SEED_CUR={'Retail00002':'EUR','Retail00003':'EUR','Retail00004':'CAD','Retail00006':'AUD','Retail00007':'USD'};
 function applyCurrencies(){try{const ov=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');(sales||[]).forEach(r=>{const k=String(r.invoiceNo);const c=ov[k]||SEED_CUR[k];if(c)r.currency=c;});}catch(e){}}
@@ -1469,7 +1473,7 @@ async function syncFromSheets(){
     if(result.ok){
       const _prevS=JSON.parse(localStorage.getItem('cb_sales')||'[]');
       purchases  = result.purchases  || [];
-      sales      = (result.sales||[]).map(s=>{const _p=_prevS.find(x=>String(x.invoiceNo)===String(s.invoiceNo));return(_p&&_p.currency&&_p.currency!=='INR')?{...s,currency:_p.currency}:s;});
+      sales      = (result.sales||[]).map(s=>{const _byId=s.id?_prevS.find(x=>String(x.id)===String(s.id)):null;const _mm=_prevS.filter(x=>String(x.invoiceNo)===String(s.invoiceNo));const _p=_byId||(_mm.length===1?_mm[0]:null);return(_p&&_p.currency&&_p.currency!=='INR')?{...s,currency:_p.currency}:s;});
       fixedCosts = result.fixedCosts || [];
       saveAll();render();
       showToast('✓ Data refreshed from Google Sheets','success');
@@ -1639,6 +1643,7 @@ function formatBytes(b){if(b<1024)return b+'B';if(b<1024*1024)return(b/1024).toF
 function render() {
   applyEntryNotes();
   applyEntryFiles();
+  try{window._dupInv=dupInvoiceMap();}catch(e){window._dupInv={};}
   applyCurrencies();
   const _fS0=filtered(sales).concat(filtered(purchases)),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
@@ -1776,7 +1781,7 @@ function renderSalesTable(data){
     if(editingType==='sale'&&editingId===r.id)return salesEditRow(r);
     return`<tr>
       <td>${fmtDate(r.date)}</td>
-      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'—'}${noteBadge(r)}</td>
+      <td style="font-family:monospace;font-size:.76rem">${r.invoiceNo||'—'}${dupBadge(r)}${noteBadge(r)}</td>
       <td class="amount-income">${fmtCur(r.amount,r.currency)}${r.currency&&r.currency!=='INR'?` <span style="font-size:.65rem;background:#EEF2FF;color:var(--indigo);padding:1px 4px;border-radius:3px">${r.currency}</span>`:''}${fxInr(r)}</td>
       <td>${r.gst?fmtCur(r.gst,r.currency):'—'}</td>
       <td><span class="pill ${platCls(r.platform)}">${r.platform}</span></td>
