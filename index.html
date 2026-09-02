@@ -272,6 +272,95 @@
     .v-sig-lbl{font-size:.7rem;font-weight:700;margin-top:5px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px}
     .v-del-btn{background:none;border:none;cursor:pointer;color:var(--muted);font-size:.85rem;padding:2px 5px;line-height:1;border-radius:4px}
     .v-del-btn:hover{background:var(--red-bg);color:var(--red)}
+
+    /* ═══════════ MOBILE UI/UX v3.2 — phones ≤640px ═══════════ */
+    @media(max-width:640px){
+      /* ---- data tables become stacked cards ---- */
+      .table-wrap{overflow-x:visible;border:none;border-radius:0;background:transparent}
+      .table-wrap>table{display:block;width:100%}
+      .table-wrap>table>thead{display:none}
+      .table-wrap>table>tbody{display:block}
+      .table-wrap>table>tbody>tr{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:11px 14px;margin:0 0 10px;box-shadow:0 1px 3px rgba(16,24,40,.07)}
+      .table-wrap>table>tbody>tr>td{display:flex;align-items:center;justify-content:space-between;gap:14px;width:auto;border:none;padding:6px 0;text-align:right;font-size:.85rem;white-space:normal;word-break:break-word}
+      .table-wrap>table>tbody>tr>td::before{content:attr(data-label);flex:0 0 auto;text-align:left;font-size:.62rem;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted)}
+      .table-wrap>table>tbody>tr>td:not([data-label])::before{content:none}
+      /* amount is the thing you scan for */
+      .table-wrap>table>tbody>tr>td[data-label="Amount"]{font-size:1.12rem;font-weight:700;padding:2px 0 8px}
+      /* action buttons sit on their own footer row */
+      .table-wrap>table>tbody>tr>td.owner-only{justify-content:flex-end;border-top:1px solid var(--border);margin-top:5px;padding-top:9px}
+      .table-wrap>table>tbody>tr>td.owner-only::before{content:none}
+      .table-wrap .actions-cell{gap:10px}
+      .table-wrap .btn-icon{min-width:46px;min-height:42px;font-size:1rem;flex:0 0 auto}
+      /* bill / drive pills need real tap area */
+      .table-wrap>table>tbody>tr>td a{min-height:36px;padding:7px 12px;display:inline-flex;align-items:center}
+      /* full-width rows: empty states, inline edit */
+      .table-wrap>table>tbody>tr>td[colspan]{display:block;text-align:left;padding:12px}
+      .table-wrap>table>tbody>tr>td[colspan]::before{content:none}
+      .table-wrap .edit-input{flex:1 1 auto;min-width:0;font-size:16px;min-height:40px}
+
+      /* ---- search + filters (looking up a bill) ---- */
+      .filter-bar{padding:10px 12px;gap:7px}
+      .filter-input,.filter-sel,.filter-clear{font-size:16px;padding:9px 11px;min-height:42px}
+      .filter-bar .filter-input{flex:1 1 100%;width:100%}
+      .filter-sel{flex:1 1 46%}
+      .period-pills{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start;padding:4px}
+      .period-pill{padding:8px 14px;font-size:.8rem;min-height:38px}
+      .filter-bar-sep{display:none}
+
+      /* ---- toolbar + buttons ---- */
+      .table-toolbar{flex-direction:column;align-items:stretch;gap:9px}
+      .btn{padding:11px 15px;font-size:.83rem;min-height:44px;justify-content:center}
+      .btn-icon{min-height:42px}
+
+      /* ---- modals become full-screen sheets (adding on the go) ---- */
+      .modal-overlay{align-items:flex-end}
+      .modal{width:100%;max-width:none;height:100dvh;max-height:100dvh;border-radius:0;border-top:none;display:flex;flex-direction:column;overflow:hidden}
+      .modal-header{flex:0 0 auto;padding:14px 16px 11px}
+      .modal-header h2{font-size:1rem}
+      .modal-close{font-size:1.5rem;min-width:44px;min-height:44px}
+      .modal-body{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px 20px}
+      .modal-footer{flex:0 0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom));gap:10px}
+      .modal-footer .btn{flex:1 1 0}
+      /* 16px inputs stop iOS zooming on focus */
+      .form-input,.modal input,.modal select,.modal textarea{font-size:16px;min-height:44px}
+      .form-group{margin-bottom:14px}
+      label{font-size:.68rem}
+      .upload-zone{padding:22px 14px}
+      .upload-placeholder .up-icon{font-size:2rem}
+      .upload-placeholder .up-text{font-size:.85rem}
+
+      /* ---- chrome ---- */
+      .tab-btn{padding:13px 15px;font-size:.82rem;min-height:46px}
+      .chart-card{padding:13px}
+      .kpi-value{font-size:1.6rem}
+    }
+
+
+    /* ═══════════ MOBILE UI/UX v3.2b — tap targets & inline-grid overrides ═══════════ */
+    @media(max-width:640px){
+      /* Overview uses an inline 2-column grid; only !important can beat inline style */
+      #tab-overview>div[style*="grid"]{grid-template-columns:1fr !important;gap:14px !important}
+      /* header controls */
+      .header-right{flex-wrap:wrap;gap:8px}
+      select#monthFilter{padding:8px 10px;font-size:.8rem;min-height:40px}
+      .btn-settings,.btn-logout{min-height:40px;min-width:42px;padding:8px 12px;font-size:.78rem}
+      #hideAmtBtn{min-height:40px !important;min-width:44px !important;padding:8px 12px !important;font-size:16px !important}
+      /* toolbar toggles that carry inline styles */
+      #inrToggleBtn{min-height:42px !important;padding:9px 14px !important;font-size:.82rem !important}
+      /* links & small controls */
+      .bill-link{min-height:40px;padding:8px 12px}
+      .table-wrap>table>tbody>tr>td a{min-height:40px}
+      .filter-clear{min-height:42px;padding:9px 13px}
+      .file-item-rm{min-width:40px;min-height:38px}
+      /* catch-all: nothing tappable in the body should be under 36px */
+      main button{min-height:36px}
+      .toast button{min-width:40px;min-height:36px;font-size:1rem}
+      /* un-shadow rules that later stylesheet lines were overriding */
+      .form-row{grid-template-columns:1fr}
+      .tab-header{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;scrollbar-width:none}
+      .tab-header::-webkit-scrollbar{display:none}
+    }
+
   </style>
 </head>
 <body>
@@ -1182,7 +1271,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.1-2026-08-27';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.2-2026-08-27';window.APP_VERSION=APP_VERSION;
 let showInrConversion=false,_fxCache={};
 // ---- FX helpers: single source of truth for INR value of any row ----
 function isINR(r){return !r||!r.currency||r.currency==='INR';}
@@ -3169,6 +3258,37 @@ function exportNotes(){
   const blob=new Blob([lines.join('\n')],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='CB_ITR_Notes_FY2026-27.txt';a.click();
 }
 </script>
+
+<script>
+/* ═══ MOBILE UI/UX v3.2 — label table cells so CSS can render them as cards ═══
+   Copies each table's <thead> text onto every <td> as data-label. Runs on any
+   DOM change so it covers every tab without touching the render functions. */
+(function(){
+  function labelCells(){
+    document.querySelectorAll('.table-wrap>table').forEach(function(t){
+      var heads=[].map.call(t.querySelectorAll('thead th'),function(h){return h.textContent.trim();});
+      if(!heads.length)return;
+      [].forEach.call(t.querySelectorAll('tbody>tr'),function(tr){
+        [].forEach.call(tr.children,function(td,i){
+          if(td.hasAttribute('colspan')&&+td.getAttribute('colspan')>1){td.removeAttribute('data-label');return;}
+          var h=heads[i];
+          if(h)td.setAttribute('data-label',h);else td.removeAttribute('data-label');
+        });
+      });
+    });
+  }
+  var t=null;
+  function schedule(){clearTimeout(t);t=setTimeout(function(){try{labelCells();}catch(e){}},30);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',schedule);
+  else schedule();
+  try{
+    // attribute writes above don't fire childList, so this can't loop
+    new MutationObserver(schedule).observe(document.documentElement,{childList:true,subtree:true});
+  }catch(e){}
+  window.labelCells=labelCells;
+})();
+</script>
+
 
 <!-- ═══ REPORT MODAL ═══ -->
 <div class="modal-overlay" id="reportModal">
