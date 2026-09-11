@@ -916,6 +916,20 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
       <div class="form-group"><label>Note *</label>
         <textarea class="form-input" id="noteText" rows="5" placeholder="Write the detail you'll want to remember at ITR time…" style="resize:vertical;min-height:90px"></textarea>
       </div>
+      <div class="form-group">
+        <label>📎 Attachments (optional) — photos, screenshots, PDFs, audio, video</label>
+        <div class="upload-zone" id="noteDropZone"
+             ondragover="onNoteDragOver(event)" ondragleave="onNoteDragLeave(event)" ondrop="onNoteDrop(event)">
+          <div class="upload-placeholder">
+            <span class="up-icon">🗂</span>
+            <span class="up-text">Drag &amp; drop here — multiple files allowed, max 20 MB each</span>
+          </div>
+          <label class="btn btn-primary" style="margin-top:8px;cursor:pointer">+ Add Files
+            <input type="file" id="noteFileInput" multiple style="display:none" onchange="onNoteFileSelect(event)">
+          </label>
+        </div>
+        <div id="noteFileList" style="margin-top:8px"></div>
+      </div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeNoteModal()">Cancel</button>
@@ -1271,7 +1285,64 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.2-2026-08-27';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.3-2026-09-11';window.APP_VERSION=APP_VERSION;
+
+// ═══════════ DATE SAFETY v3.3 ═══════════
+// toISOString() is UTC. In IST that makes "today" roll back a day before 05:30.
+// Always build dates from the LOCAL clock instead.
+function todayLocal(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+
+// ── DATE GUARD ──────────────────────────────────────────────────────────────
+// The Google Sheet turns a "2026-08-20" string into a real Date cell. If the
+// Apps Script project's timezone differs from the spreadsheet's, reading it
+// back shifts the day - and because the UI then saves what it read, every
+// subsequent save bakes the shift in again. That is how a date walks several
+// days over time. We record what the user actually typed and shout if the
+// value that comes back disagrees. Stored server-side (meta store), never
+// localStorage-only.
+var dateGuard = {};
+function rememberDate(entry){
+  try{
+    if(!entry||!entry.id||!entry.date)return;
+    if(dateGuard[entry.id]===entry.date)return;
+    dateGuard[entry.id]=entry.date;
+    metaPersist('cb_date_guard', dateGuard, 'Date guard');
+  }catch(e){}
+}
+function dateDriftList(){
+  var out=[];
+  function scan(arr,type){(arr||[]).forEach(function(r){
+    var want=dateGuard[r.id];
+    if(want&&r.date&&String(want)!==String(r.date))out.push({type:type,row:r,want:want,got:String(r.date)});
+  });}
+  scan(typeof sales!=='undefined'?sales:[], 'sale');
+  scan(typeof purchases!=='undefined'?purchases:[], 'purchase');
+  return out;
+}
+function dayGap(a,b){try{return Math.round((new Date(b)-new Date(a))/86400000);}catch(e){return '?';}}
+function renderDateGuardBanner(){
+  try{
+    var host=document.querySelector('main'); if(!host)return;
+    var el=document.getElementById('dateGuardBanner');
+    var drift=dateDriftList();
+    if(!drift.length){ if(el)el.remove(); return; }
+    if(!el){
+      el=document.createElement('div');
+      el.id='dateGuardBanner';
+      el.style.cssText='background:#FEF2F2;border:1px solid #FCA5A5;border-left:4px solid #DC2626;color:#7F1D1D;padding:12px 14px;border-radius:8px;margin-bottom:14px;font-size:.8rem;line-height:1.5';
+      host.insertBefore(el, host.firstChild);
+    }
+    el.innerHTML='<strong>⚠ '+drift.length+' entr'+(drift.length>1?'ies have':'y has')+
+      ' a date different from what you entered.</strong><br>'+
+      drift.slice(0,8).map(function(d){
+        var lbl=d.row.invoiceNo||d.row.particulars||d.row.id;
+        return '&bull; '+String(lbl).slice(0,38)+' — you entered <strong>'+d.want+
+               '</strong>, the sheet now says <strong>'+d.got+'</strong> ('+dayGap(d.want,d.got)+' day shift)';
+      }).join('<br>')+
+      (drift.length>8?'<br>&bull; …and '+(drift.length-8)+' more':'')+
+      '<div style="margin-top:9px;font-size:.74rem;opacity:.85">Do not re-save these entries until the cause is fixed — each save shifts them further.</div>';
+  }catch(e){}
+}
 let showInrConversion=false,_fxCache={};
 // ---- FX helpers: single source of truth for INR value of any row ----
 function isINR(r){return !r||!r.currency||r.currency==='INR';}
@@ -1733,6 +1804,7 @@ function render() {
   applyEntryNotes();
   applyEntryFiles();
   try{window._dupInv=dupInvoiceMap();}catch(e){window._dupInv={};}
+  try{renderDateGuardBanner();}catch(e){}
   applyCurrencies();
   const _fS0=filtered(sales).concat(filtered(purchases)),_fgn=_fS0.filter(r=>r.currency&&r.currency!=='INR'&&_fxCache[r.date+':'+r.currency]===undefined);if(_fgn.length>0){const _uk=[...new Set(_fgn.map(s=>s.date+':'+s.currency))];Promise.all(_uk.map(k=>{const[d,c]=k.split(':');return fetchFxRate(d,c);})).then(()=>render());}
   const fS=filtered(sales),fP=filtered(purchases);
@@ -1993,6 +2065,7 @@ async function saveEdit(type,id){
     if(!r.attachments)r.attachments=[];
   }
   if(r){r.note=(document.getElementById('e_note')?document.getElementById('e_note').value.trim():(r.note||''));setEntryNote(r.id,r.note);r.bill=buildBill(r);}
+  if(r)rememberDate(r);
   if(r)storeEntryFiles(r,type);
   editingType=null;editingId=null;saveAll();render();
 
@@ -2123,7 +2196,7 @@ function openModal(type){
   document.getElementById('uploadSection').style.display='block';
   document.getElementById('modalTitle').textContent={sale:'💰 Add Sale / Income',purchase:'🧾 Add Purchase / Expense',fixed:'📌 Add Fixed Cost'}[type];
   clearFile();
-  const today=new Date().toISOString().split('T')[0];
+  const today=todayLocal();
   if(type==='sale')    {document.getElementById('s_date').value=today;['s_invoice','s_amount','s_gst','s_bill'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';})}
   if(type==='purchase'){document.getElementById('p_date').value=today;['p_particulars','p_amount','p_bill'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';})}
   if(type==='fixed')   {['f_name','f_amount'].forEach(id=>document.getElementById(id).value='');}
@@ -2178,6 +2251,7 @@ async function saveEntry(){
 
   if(entry&&(currentModal==='sale'||currentModal==='purchase')){const _n=(document.getElementById('m_note')&&document.getElementById('m_note').value.trim())||'';if(_n){entry.note=_n;setEntryNote(entry.id,_n);entry.bill=buildBill(entry);}}
   if(entry&&entry.invoiceNo&&entry.currency&&entry.currency!=='INR'){try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');_co[String(entry.invoiceNo)]=entry.currency;localStorage.setItem('cb_cur_ov',JSON.stringify(_co));}catch(e){}}
+  if(entry)rememberDate(entry);
   // Store local file attachments immediately (always, even without Google)
   if(entry) entry.attachments=attachedFiles.map(f=>({name:f.name,mimeType:f.mimeType,data:f.data,size:f.size}));
 
@@ -2395,7 +2469,7 @@ function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-
 let _vRowCount = 0;
 
 function initVoucher() {
-  document.getElementById('v_date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('v_date').value = todayLocal();
   document.getElementById('voucherRows').innerHTML = '';
   _vRowCount = 0;
   addVoucherRow(); addVoucherRow(); addVoucherRow();
@@ -2451,7 +2525,7 @@ function amountToWords(amount) {
 }
 
 function clearVoucher() {
-  document.getElementById('v_date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('v_date').value=todayLocal();
   document.getElementById('v_paidTo').value='';
   document.getElementById('v_amtWords').value='';
   document.getElementById('v_receivedBy').value='';
@@ -2684,7 +2758,7 @@ function prefillFromGmail(inv){
   // Open purchase modal pre-filled with invoice data
   openModal('purchase');
   setTimeout(()=>{
-    const today=new Date().toISOString().split('T')[0];
+    const today=todayLocal();
     const dateEl=document.getElementById('p_date');
     if(dateEl) dateEl.value=inv.date||today;
     const partEl=document.getElementById('p_particulars');
@@ -2814,6 +2888,7 @@ function metaPersist(key,arr,label){
 // Pull the server copy on load and refresh the screen.
 async function loadServerMeta(){
   const jobs=[
+    ['cb_date_guard',       function(v){dateGuard=v||{};},   typeof renderDateGuardBanner==='function'?renderDateGuardBanner:null],
     ['cb_notes',            function(v){notes=v;},           typeof renderNotes==='function'?renderNotes:null],
     ['cb_reports',          function(v){reports=v;},         typeof renderReports==='function'?renderReports:null],
     ['cb_bank_statements',  function(v){bankStatements=v;},  typeof renderBankStatements==='function'?renderBankStatements:null],
@@ -2888,9 +2963,9 @@ function srParseAndStore(csvText, label){
   const dateColIdx = headers.findIndex(h=>/date/i.test(h));
   if(dateColIdx>=0 && rows.length){
     const d = rows[0][dateColIdx];
-    if(d){ try{ const _dt=new Date(d);month=(!isNaN(_dt))?_dt.toISOString().slice(0,7):d.slice(0,7); }catch(e){} }
+    if(d){ try{ const _dt=new Date(d);month=(!isNaN(_dt))?(_dt.getFullYear()+'-'+String(_dt.getMonth()+1).padStart(2,'0')):d.slice(0,7); }catch(e){} }
   }
-  if(!month) month = new Date().toISOString().slice(0,7);
+  if(!month) month = todayLocal().slice(0,7);
 
   const id = 'sr_'+Date.now();
   const report = { id, label: label||month, month, fetchedOn: new Date().toLocaleDateString('en-IN'), headers, rows };
@@ -3201,6 +3276,105 @@ function deleteReport(id) { reports=reports.filter(r=>r.id!==id); saveReportsDat
 
 // ═══ MONTHLY NOTES / ITR REMINDERS ═══
 function escNote(x){return String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+// ═══════════ NOTE ATTACHMENTS v3.3 ═══════════
+// Files live on Drive (uploaded via the meta-store uploadFile action); the note
+// keeps only {name,mimeType,size,driveUrl}. Saved with the note in the meta
+// store, so they are server-side and visible from any device.
+var noteFiles = [];
+var NOTE_FILE_MAX = 20 * 1024 * 1024;
+
+function noteFileIcon(m){
+  m = m || '';
+  if(m.indexOf('image/')===0) return '🖼';
+  if(m.indexOf('video/')===0) return '🎬';
+  if(m.indexOf('audio/')===0) return '🎵';
+  if(m === 'application/pdf') return '📑';
+  return '📄';
+}
+function onNoteDragOver(e){e.preventDefault();var z=document.getElementById('noteDropZone');if(z)z.classList.add('dragging');}
+function onNoteDragLeave(){var z=document.getElementById('noteDropZone');if(z)z.classList.remove('dragging');}
+function onNoteDrop(e){e.preventDefault();onNoteDragLeave();Array.prototype.forEach.call(e.dataTransfer.files,processNoteFile);}
+function onNoteFileSelect(e){Array.prototype.forEach.call(e.target.files,processNoteFile);e.target.value='';}
+
+function processNoteFile(file){
+  if(file.size > NOTE_FILE_MAX){
+    showToast(file.name+' is too large ('+formatBytes(file.size)+', max 20 MB). Put big media straight in Drive and paste the link in the note.','error');
+    return;
+  }
+  var mimeType = file.type || 'application/octet-stream';
+  if(!file.type){
+    var ext = (file.name.split('.').pop()||'').toLowerCase();
+    var map = {heic:'image/heic',heif:'image/heif',pdf:'application/pdf',jpg:'image/jpeg',jpeg:'image/jpeg',
+               png:'image/png',webp:'image/webp',gif:'image/gif',mp4:'video/mp4',mov:'video/quicktime',
+               m4a:'audio/mp4',mp3:'audio/mpeg',wav:'audio/wav',doc:'application/msword',
+               docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+               xls:'application/vnd.ms-excel',
+               xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'};
+    mimeType = map[ext] || 'application/octet-stream';
+  }
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    noteFiles.push({name:file.name, mimeType:mimeType, size:file.size,
+                    data:(ev.target.result.split(',')[1]), driveUrl:''});
+    renderNoteFileList();
+  };
+  reader.onerror = function(){showToast('Could not read '+file.name,'error');};
+  reader.readAsDataURL(file);
+}
+
+function removeNoteFile(i){
+  var f = noteFiles[i];
+  if(f && f.driveUrl && !confirm('Remove "'+f.name+'" from this note?\n\nThe file stays in Google Drive; only the link on this note is removed.'))return;
+  noteFiles.splice(i,1);
+  renderNoteFileList();
+}
+
+function renderNoteFileList(){
+  var list = document.getElementById('noteFileList');
+  if(!list) return;
+  if(!noteFiles.length){ list.innerHTML=''; return; }
+  list.innerHTML = noteFiles.map(function(f,i){
+    return '<div class="file-item">'+
+      '<span class="file-item-icon">'+noteFileIcon(f.mimeType)+'</span>'+
+      '<div class="file-item-meta"><div class="file-item-name" title="'+escNote(f.name)+'">'+escNote(f.name)+'</div>'+
+      '<div class="file-item-size">'+formatBytes(f.size||0)+(f.driveUrl?' · on Drive':' · will upload on save')+'</div></div>'+
+      '<button class="file-item-rm" onclick="removeNoteFile('+i+')" title="Remove">✕</button></div>';
+  }).join('');
+}
+
+function stripNoteFile(f){ return {name:f.name, mimeType:f.mimeType, size:f.size, driveUrl:f.driveUrl||''}; }
+
+// upload anything that hasn't reached Drive yet; returns false if any failed
+async function uploadNoteFiles(){
+  var allOk = true;
+  for(var i=0;i<noteFiles.length;i++){
+    var f = noteFiles[i];
+    if(f.driveUrl || !f.data) continue;
+    try{
+      if(typeof showProgress==='function')showProgress(Math.round(10+80*((i+1)/noteFiles.length)),'Uploading '+f.name+'…');
+      f.driveUrl = await metaUpload(f);
+      delete f.data;
+    }catch(err){
+      allOk = false;
+      showToast('⚠ '+f.name+' did not upload: '+err.message,'warning');
+    }
+  }
+  if(typeof hideProgress==='function')hideProgress();
+  return allOk;
+}
+
+function noteFilesCell(n){
+  if(!n || !n.files || !n.files.length) return '';
+  return '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:7px">'+
+    n.files.map(function(f){
+      var label = noteFileIcon(f.mimeType)+' '+(f.name.length>22?f.name.slice(0,20)+'…':f.name);
+      return f.driveUrl
+        ? '<a class="bill-link" href="'+f.driveUrl+'" target="_blank" rel="noopener" title="'+escNote(f.name)+'">'+escNote(label)+'</a>'
+        : '<span class="bill-link" style="opacity:.55" title="not uploaded">'+escNote(label)+'</span>';
+    }).join('')+'</div>';
+}
+
 function saveNotesData(){ metaPersist('cb_notes', notes, 'Notes'); }
 function renderNotes(){
   const wrap=document.getElementById('notesList'); if(!wrap)return;
@@ -3217,7 +3391,7 @@ function renderNotes(){
       items.map(n=>'<div class="pl-box" style="margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start">'+
         '<div style="flex:1;min-width:0">'+(n.title?'<div style="font-weight:700;margin-bottom:3px">'+escNote(n.title)+'</div>':'')+
         '<div style="white-space:pre-wrap;word-break:break-word">'+escNote(n.text)+'</div>'+
-        (n.ts?'<div style="font-size:.66rem;color:var(--muted);margin-top:5px">Added '+new Date(n.ts).toLocaleDateString('en-IN')+'</div>':'')+'</div>'+
+        noteFilesCell(n)+(n.ts?'<div style="font-size:.66rem;color:var(--muted);margin-top:5px">Added '+new Date(n.ts).toLocaleDateString('en-IN')+'</div>':'')+'</div>'+
         (isOwner?'<div style="display:flex;gap:3px;flex-shrink:0"><button class="btn btn-ghost btn-sm btn-icon" onclick="openNoteModal(\''+n.id+'\')">✏</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteNote(\''+n.id+'\')">✕</button></div>':'')+
       '</div>').join('')+'</div>';
   }).join('');
@@ -3230,19 +3404,25 @@ function openNoteModal(id){
   document.getElementById('noteMonth').value=(n&&n.month)||(filterMonth&&filterMonth!=='all'?filterMonth:'2026-04');
   document.getElementById('noteTitle').value=(n&&n.title)||'';
   document.getElementById('noteText').value=(n&&n.text)||'';
+  noteFiles=(n&&n.files?n.files.map(function(f){return stripNoteFile(f);}):[]);
+  renderNoteFileList();
   document.getElementById('noteModal').classList.add('open');
 }
 function closeNoteModal(){document.getElementById('noteModal').classList.remove('open');}
-function saveNote(){
+async function saveNote(){
   if(selectedRole!=='owner')return;
   const id=document.getElementById('noteId').value;
   const month=document.getElementById('noteMonth').value;
   const title=document.getElementById('noteTitle').value.trim();
   const text=document.getElementById('noteText').value.trim();
   if(!text){showToast('Please write the note text.','error');return;}
-  if(id){const i=notes.findIndex(x=>x.id===id);if(i>-1)notes[i]={...notes[i],month,title,text};}
-  else{notes.push({id:'note'+Date.now()+Math.random().toString(36).slice(2,5),month,title,text,ts:Date.now()});}
-  saveNotesData();renderNotes();closeNoteModal();showToast('Note saved','success');
+  const btnOk=await uploadNoteFiles();
+  const files=noteFiles.map(stripNoteFile);
+  if(id){const i=notes.findIndex(x=>x.id===id);if(i>-1)notes[i]={...notes[i],month,title,text,files};}
+  else{notes.push({id:'note'+Date.now()+Math.random().toString(36).slice(2,5),month,title,text,files,ts:Date.now()});}
+  saveNotesData();renderNotes();closeNoteModal();
+  showToast(btnOk?('Note saved'+(files.length?' with '+files.length+' attachment'+(files.length>1?'s':''):'')):'Note saved, but some files did not upload', btnOk?'success':'warning');
+  noteFiles=[];
 }
 function deleteNote(id){
   if(selectedRole!=='owner')return;
