@@ -834,6 +834,7 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
             <option value="">All Platforms</option>
             <option>Amazon</option><option>Shiprocket</option>
             <option>Google Ads</option><option>Meta Ads</option><option>Etsy</option>
+            <option>Myntra</option><option>Website</option>
           </select>
           <select class="filter-sel" id="rf_month" onchange="renderReports()">
             <option value="">All Months</option>
@@ -1290,7 +1291,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.4.2-2026-10-05';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.5-2026-10-05';window.APP_VERSION=APP_VERSION;
 
 // ═══════════ DATE SAFETY v3.3 ═══════════
 // toISOString() is UTC. In IST that makes "today" roll back a day before 05:30.
@@ -2930,7 +2931,7 @@ let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
 let bankStatements = JSON.parse(localStorage.getItem('cb_bank_statements') || '[]');
 function saveReportsData() { metaPersist('cb_reports', reports, 'Reports'); }
 const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
-const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy'};
+const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy','Myntra':'pill-card','Website':'pill-b2b'};
 let notes = JSON.parse(localStorage.getItem('cb_notes') || '[]');
 (function boot(){
   const s=sessionStorage.getItem('cb_session');
@@ -3188,7 +3189,7 @@ function renderReports() {
     <td>${RPT_MONTHS[r.month]||r.month}</td>
     <td><span class="pill ${RPT_PILL[r.platform]||'pill-offline'}">${r.platform}</span></td>
     <td>${r.name}</td>
-    <td>${r.fileData?'<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">⬇ '+(r.fileName||'Download')+'</a>':r.url?'<a class="bill-link" href="'+r.url+'" target="_blank">☁ Drive</a>':'—'}</td>
+    <td>${rptFileLinks(r)}</td>
     <td class="actions-cell">${isOwner?'<button class="btn btn-ghost btn-sm btn-icon" onclick="openReportModal(\''+r.id+'\')">✏</button><button class="btn btn-danger btn-sm btn-icon" onclick="deleteReport(\''+r.id+'\')">✕</button>':''}</td>
   </tr>`).join('');
 }
@@ -3259,25 +3260,65 @@ function openReportModal(id) {
   document.getElementById('reportPlatform').value = r?.platform||'Amazon';
   document.getElementById('reportName').value = r?.name||'';
   document.getElementById('reportUrl').value = r?.url||'';
+  try{document.getElementById('reportFile').value='';}catch(e){}
   document.getElementById('reportModal').classList.add('open');
 }
 function closeReportModal() { document.getElementById('reportModal').classList.remove('open'); }
-function saveReport() {
+// v3.5: report files (incl. images) are uploaded to Google Drive via the meta-store
+// uploadFile action; the report keeps only {name,mimeType,size,driveUrl}. Editing a
+// report without choosing a new file now KEEPS its existing attachments.
+var RPT_FILE_MAX = 20 * 1024 * 1024;
+function rptMime(file){
+  if(file.type) return file.type;
+  var ext=(file.name.split('.').pop()||'').toLowerCase();
+  return ({heic:'image/heic',heif:'image/heif',jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',
+    pdf:'application/pdf',csv:'text/csv',xls:'application/vnd.ms-excel',
+    xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})[ext]||'application/octet-stream';
+}
+function rptReadB64(file){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(e){res(String(e.target.result).split(',')[1]);};r.onerror=rej;r.readAsDataURL(file);});}
+async function saveReport() {
   const id = document.getElementById('reportId').value;
   const name = document.getElementById('reportName').value.trim();
   if(!name) { alert('Please enter a report name'); return; }
   const month = document.getElementById('reportMonth').value;
   const platform = document.getElementById('reportPlatform').value;
   const fileInput = document.getElementById('reportFile');
-  const url = (document.getElementById('reportUrl').value||''). trim();
-  if(fileInput && fileInput.style.display !== 'none' && fileInput.files && fileInput.files[0]) {
-    const file = fileInput.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) { _commitReport({ id: id||'rpt'+Date.now(), month, platform, name, url:'', fileData: e.target.result, fileName: file.name }); };
-    reader.readAsDataURL(file);
-  } else {
-    _commitReport({ id: id||'rpt'+Date.now(), month, platform, name, url, fileData:'', fileName:'' });
+  const url = (document.getElementById('reportUrl').value||'').trim();
+  const prev = id ? (reports.find(r=>r.id===id)||{}) : {};
+  const picked = (fileInput && fileInput.style.display !== 'none' && fileInput.files) ? Array.from(fileInput.files) : [];
+  const big = picked.filter(f=>f.size>RPT_FILE_MAX);
+  if(big.length){ showToast(big[0].name+' is larger than 20 MB - put it in Drive and use the Drive link option.','error'); return; }
+  const entry = { id: id||'rpt'+Date.now(), month, platform, name,
+    url: url || prev.url || '', fileData: prev.fileData||'', fileName: prev.fileName||'',
+    files: (prev.files||[]).slice() };
+  if(picked.length){
+    const btn=document.querySelector('#reportModal .modal-footer .btn-primary');
+    if(btn){btn.disabled=true;btn.textContent='Uploading '+picked.length+' file'+(picked.length>1?'s':'')+'…';}
+    try{
+      for(const f of picked){
+        const att={name:f.name,mimeType:rptMime(f),size:f.size,data:await rptReadB64(f)};
+        const driveUrl=await metaUpload(att);
+        entry.files.push({name:f.name,mimeType:att.mimeType,size:f.size,driveUrl});
+      }
+    }catch(err){
+      showToast('Upload failed - nothing saved: '+err.message,'error');
+      if(btn){btn.disabled=false;btn.textContent='Save Report';}
+      return;
+    }
+    if(btn){btn.disabled=false;btn.textContent='Save Report';}
+    fileInput.value='';
   }
+  _commitReport(entry);
+}
+function rptFileLinks(r){
+  var out=[];
+  if(r.fileData) out.push('<a class="bill-link" href="'+r.fileData+'" download="'+(r.fileName||r.name+'.pdf')+'">⬇ '+(r.fileName||'Download')+'</a>');
+  (r.files||[]).forEach(function(f){
+    var ic=(f.mimeType||'').indexOf('image/')===0?'🖼':((f.mimeType||'')==='application/pdf'?'📑':'📄');
+    out.push('<a class="bill-link" href="'+f.driveUrl+'" target="_blank" title="'+escNote(f.name)+'">'+ic+' '+escNote(f.name.length>28?f.name.slice(0,25)+'…':f.name)+'</a>');
+  });
+  if(r.url) out.push('<a class="bill-link" href="'+r.url+'" target="_blank">☁ Drive</a>');
+  return out.length?out.join('<br>'):'—';
 }
 function _commitReport(entry) {
   const i = reports.findIndex(r=>r.id===entry.id); if(i>-1) reports[i]=entry; else reports.push(entry);
@@ -3285,7 +3326,7 @@ function _commitReport(entry) {
 }
 function setReportUploadMode(mode) {
   var f=document.getElementById('reportFile'),u=document.getElementById('reportUrl'),h=document.getElementById('rptHint'),fb=document.getElementById('rptModeFileBtn'),lb=document.getElementById('rptModeLinkBtn');
-  if(mode==='file'){f.style.display='block';u.style.display='none';if(h)h.textContent='Upload a PDF, Excel or CSV from your computer';if(fb){fb.style.background='#6c63ff';fb.style.color='#fff';fb.style.borderColor='#6c63ff';}if(lb){lb.style.background='#fff';lb.style.color='#555';lb.style.borderColor='#ddd';}}
+  if(mode==='file'){f.style.display='block';u.style.display='none';if(h)h.textContent='Upload PDFs, Excel/CSV or images (screenshots, photos) - you can pick several';if(fb){fb.style.background='#6c63ff';fb.style.color='#fff';fb.style.borderColor='#6c63ff';}if(lb){lb.style.background='#fff';lb.style.color='#555';lb.style.borderColor='#ddd';}}
   else{f.style.display='none';u.style.display='block';if(h)h.textContent='Paste the shareable Drive link for this report';if(fb){fb.style.background='#fff';fb.style.color='#555';fb.style.borderColor='#ddd';}if(lb){lb.style.background='#6c63ff';lb.style.color='#fff';lb.style.borderColor='#6c63ff';}}
 }
 
@@ -3513,6 +3554,7 @@ function exportNotes(){
           <select class="form-input" id="reportPlatform">
             <option>Amazon</option><option>Shiprocket</option>
             <option>Google Ads</option><option>Meta Ads</option><option>Etsy</option>
+            <option>Myntra</option><option>Website</option>
           </select>
         </div>
       </div>
@@ -3526,9 +3568,9 @@ function exportNotes(){
           <button type="button" id="rptModeFileBtn" onclick="setReportUploadMode('file')" style="padding:4px 14px;border-radius:6px;border:1px solid #6c63ff;background:#6c63ff;color:#fff;cursor:pointer;font-size:13px;">📁 Upload File</button>
           <button type="button" id="rptModeLinkBtn" onclick="setReportUploadMode('link')" style="padding:4px 14px;border-radius:6px;border:1px solid #ddd;background:#fff;color:#555;cursor:pointer;font-size:13px;">☁ Drive Link</button>
         </div>
-        <input class="form-input" type="file" id="reportFile" accept=".pdf,.xlsx,.xls,.csv" style="display:block;padding:6px;">
+        <input class="form-input" type="file" id="reportFile" accept=".pdf,.xlsx,.xls,.csv,.jpg,.jpeg,.png,.webp,.heic,.heif,image/*" multiple style="display:block;padding:6px;">
         <input class="form-input" type="url" id="reportUrl" placeholder="https://drive.google.com/..." style="display:none;">
-        <div class="link-hint" id="rptHint">Upload a PDF, Excel or CSV from your computer</div></div>
+        <div class="link-hint" id="rptHint">Upload PDFs, Excel/CSV or images (screenshots, photos) - you can pick several</div></div>
       </div>
     </div>
     <div class="modal-footer">
