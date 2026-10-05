@@ -1285,7 +1285,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.3-2026-09-11';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.4-2026-10-05';window.APP_VERSION=APP_VERSION;
 
 // ═══════════ DATE SAFETY v3.3 ═══════════
 // toISOString() is UTC. In IST that makes "today" roll back a day before 05:30.
@@ -1491,7 +1491,15 @@ function storeEntryFiles(r,type){try{if(!r)return;const lean=(r.attachments||[])
 function applyEntryFiles(){try{const m=getEntryFiles();const c=sigCounts();const pick=(r,type)=>{if(r.id&&m['id:'+r.id])return m['id:'+r.id].atts;const s=entrySig(r,type);if(c.n[s]!==1)return null;if(m['sig:'+s])return m['sig:'+s].atts;const g=entrySigLegacy(r,type);if(m['sig:'+g]&&c.l[g]===1)return m['sig:'+g].atts;return null;};(sales||[]).forEach(r=>{const a=pick(r,'sale');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});(purchases||[]).forEach(r=>{const a=pick(r,'purchase');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});}catch(e){}}
 // ═══ CURRENCY: baked-in defaults for known foreign entries + user overrides — survives everywhere (no browser storage needed) ═══
 const SEED_CUR={'Retail00002':'EUR','Retail00003':'EUR','Retail00004':'CAD','Retail00006':'AUD','Retail00007':'USD'};
-function applyCurrencies(){try{const ov=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');(sales||[]).forEach(r=>{const k=String(r.invoiceNo);const c=ov[k]||SEED_CUR[k];if(c)r.currency=c;});}catch(e){}}
+// v3.4: purchase currency was NEVER saved anywhere (the Sheet has no currency column),
+// so a $20 expense came back as ₹20 on every load. Currency now lives in the
+// server-side meta store under 'cb_currency' ({"P:<id>":"USD","S:<invoiceNo>":"EUR"}),
+// cached locally, and is re-applied on every render. SEED_CUR_P is a baked-in fallback.
+const SEED_CUR_P={'id1790174084764klev':'USD'};
+var curMap={};try{curMap=JSON.parse(localStorage.getItem('cb_currency')||'{}')||{};}catch(e){curMap={};}
+function curKey(type,r){if(!r)return null;if(type==='purchase')return r.id?'P:'+r.id:null;if(type==='sale')return (r.invoiceNo!=null&&r.invoiceNo!=='')?'S:'+String(r.invoiceNo):null;return null;}
+function rememberCurrency(type,r){try{const k=curKey(type,r);if(!k)return;const c=(r.currency||'INR');if(curMap[k]===c)return;curMap[k]=c;metaPersist('cb_currency',curMap,'Currency');}catch(e){}}
+function applyCurrencies(){try{const ov=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');(sales||[]).forEach(r=>{const k=String(r.invoiceNo);const c=curMap['S:'+k]||ov[k]||SEED_CUR[k];if(c)r.currency=c;});(purchases||[]).forEach(r=>{if(!r||!r.id)return;const c=curMap['P:'+r.id]||SEED_CUR_P[r.id];if(c)r.currency=c;});}catch(e){}}
 function applyFilter(){filterMonth=document.getElementById('monthFilter').value;render();clearTableFilters('s');clearTableFilters('p');}
 function filtered(arr){return filterMonth==='all'?arr:arr.filter(r=>r.date?.startsWith(filterMonth));}
 
@@ -2051,6 +2059,7 @@ async function saveEdit(type,id){
     r.currency=document.getElementById('e_currency').value||'INR';
         // Persist currency override so it survives Sheet syncs
         try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');_co[String(r.invoiceNo)]=r.currency;localStorage.setItem('cb_cur_ov',JSON.stringify(_co));}catch(e){}
+        rememberCurrency('sale',r);
     r.bill=document.getElementById('e_bill').value.trim();
     if(!r.attachments)r.attachments=[];
   } else {
@@ -2061,6 +2070,7 @@ async function saveEdit(type,id){
     r.amount=+document.getElementById('e_amount').value||0;
     r.paymentMethod=document.getElementById('e_pm').value;
     r.currency=document.getElementById('e_currency').value||'INR';
+    rememberCurrency('purchase',r);
     r.bill=document.getElementById('e_bill').value.trim();
     if(!r.attachments)r.attachments=[];
   }
@@ -2252,6 +2262,7 @@ async function saveEntry(){
   if(entry&&(currentModal==='sale'||currentModal==='purchase')){const _n=(document.getElementById('m_note')&&document.getElementById('m_note').value.trim())||'';if(_n){entry.note=_n;setEntryNote(entry.id,_n);entry.bill=buildBill(entry);}}
   if(entry&&entry.invoiceNo&&entry.currency&&entry.currency!=='INR'){try{const _co=JSON.parse(localStorage.getItem('cb_cur_ov')||'{}');_co[String(entry.invoiceNo)]=entry.currency;localStorage.setItem('cb_cur_ov',JSON.stringify(_co));}catch(e){}}
   if(entry)rememberDate(entry);
+  if(entry&&entry.currency&&entry.currency!=='INR')rememberCurrency(currentModal==='sale'?'sale':'purchase',entry);
   // Store local file attachments immediately (always, even without Google)
   if(entry) entry.attachments=attachedFiles.map(f=>({name:f.name,mimeType:f.mimeType,data:f.data,size:f.size}));
 
@@ -2888,7 +2899,8 @@ function metaPersist(key,arr,label){
 // Pull the server copy on load and refresh the screen.
 async function loadServerMeta(){
   const jobs=[
-    ['cb_date_guard',       function(v){dateGuard=v||{};},   typeof renderDateGuardBanner==='function'?renderDateGuardBanner:null],
+    ['cb_date_guard',       function(v){dateGuard=Object.assign({},v||{},dateGuard);},   typeof renderDateGuardBanner==='function'?renderDateGuardBanner:null],
+    ['cb_currency',         function(v){if(v&&!Array.isArray(v))curMap=Object.assign({},curMap,v);},   typeof render==='function'?render:null],
     ['cb_notes',            function(v){notes=v;},           typeof renderNotes==='function'?renderNotes:null],
     ['cb_reports',          function(v){reports=v;},         typeof renderReports==='function'?renderReports:null],
     ['cb_bank_statements',  function(v){bankStatements=v;},  typeof renderBankStatements==='function'?renderBankStatements:null],
@@ -2899,7 +2911,7 @@ async function loadServerMeta(){
       const raw=await metaGet(job[0]);
       if(raw){
         const parsed=JSON.parse(raw);
-        if(Array.isArray(parsed)){
+        if(parsed&&typeof parsed==='object'){
           job[1](parsed);
           try{localStorage.setItem(job[0],raw);}catch(e){}
           if(job[2])try{job[2]();}catch(e){}
