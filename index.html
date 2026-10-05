@@ -1285,7 +1285,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.4-2026-10-05';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.4.1-2026-10-05';window.APP_VERSION=APP_VERSION;
 
 // ═══════════ DATE SAFETY v3.3 ═══════════
 // toISOString() is UTC. In IST that makes "today" roll back a day before 05:30.
@@ -1490,7 +1490,7 @@ function dupBadge(r){try{const d=window._dupInv||{};const k=String(r.invoiceNo||
 function storeEntryFiles(r,type){try{if(!r)return;const lean=(r.attachments||[]).map(a=>a.driveUrl?{name:a.name,mimeType:a.mimeType,size:a.size,driveUrl:a.driveUrl}:{name:a.name,mimeType:a.mimeType,size:a.size,data:a.data});const m=getEntryFiles();const payload={t:Date.now(),atts:lean};if(r.id)m['id:'+r.id]=payload;const nk='sig:'+entrySig(r,type);m[nk]=payload;const lk='sig:'+entrySigLegacy(r,type);if(lk!==nk)delete m[lk];localStorage.setItem('cb_entry_files',JSON.stringify(m));}catch(e){}}
 function applyEntryFiles(){try{const m=getEntryFiles();const c=sigCounts();const pick=(r,type)=>{if(r.id&&m['id:'+r.id])return m['id:'+r.id].atts;const s=entrySig(r,type);if(c.n[s]!==1)return null;if(m['sig:'+s])return m['sig:'+s].atts;const g=entrySigLegacy(r,type);if(m['sig:'+g]&&c.l[g]===1)return m['sig:'+g].atts;return null;};(sales||[]).forEach(r=>{const a=pick(r,'sale');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});(purchases||[]).forEach(r=>{const a=pick(r,'purchase');if(a&&a.length)r.attachments=a.map(x=>Object.assign({},x));});}catch(e){}}
 // ═══ CURRENCY: baked-in defaults for known foreign entries + user overrides — survives everywhere (no browser storage needed) ═══
-const SEED_CUR={'Retail00002':'EUR','Retail00003':'EUR','Retail00004':'CAD','Retail00006':'AUD','Retail00007':'USD'};
+const SEED_CUR={'Retail00002':'EUR','Retail00003':'EUR','Retail00004':'CAD','Retail00006':'AUD','Retail00007':'USD','CB14/2026-27':'USD','CB15/2026-27':'USD','CB16/2026-27':'USD','CB17/2026-27':'USD','CB19/2026-27':'USD','CB20/2026-27':'USD','CB21/2026-27':'USD'};
 // v3.4: purchase currency was NEVER saved anywhere (the Sheet has no currency column),
 // so a $20 expense came back as ₹20 on every load. Currency now lives in the
 // server-side meta store under 'cb_currency' ({"P:<id>":"USD","S:<invoiceNo>":"EUR"}),
