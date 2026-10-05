@@ -1177,8 +1177,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
 //  USERS
 // ═══════════════════════════════════════════════════════
 const USERS = {
-  owner: { name:'Bhavya Kaushik', role:'Owner', initial:'B', password:'admin123' },
-  ca:    { name:'Manoj Jain',     role:'CA',    initial:'M', password:'mj' }
+  // Passwords are stored ONLY as SHA-256 hashes - this file is public on GitHub.
+  // To change: run  printf '%s' 'NEWPASS' | shasum -a 256  and paste the hash below.
+  owner: { name:'Bhavya Kaushik', role:'Owner', initial:'B', passHash:'1ba1f85a09cf56440764eb1df646c0a1f9759f75aa9e842a9bd913b027099233' },
+  ca:    { name:'Manoj Jain',     role:'CA',    initial:'M', passHash:'1ba1f85a09cf56440764eb1df646c0a1f9759f75aa9e842a9bd913b027099233' }
 };
 let selectedRole='owner', currentUser=null;
 
@@ -1189,10 +1191,13 @@ function selectRole(role) {
   document.getElementById('loginPass').value='';
   document.getElementById('loginError').style.display='none';
 }
-function doLogin() {
+async function sha256Hex(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');}
+async function doLogin() {
   const pass=document.getElementById('loginPass').value;
-  if(pass===USERS[selectedRole].password){
-    currentUser={...USERS[selectedRole],key:selectedRole};
+  let ok=false;try{ok=(await sha256Hex(pass))===USERS[selectedRole].passHash;}catch(e){ok=false;}
+  if(ok){
+    const {passHash,...u}=USERS[selectedRole];
+    currentUser={...u,key:selectedRole};
     sessionStorage.setItem('cb_session',JSON.stringify(currentUser));
     document.getElementById('loginError').style.display='none';
     showApp();
@@ -1285,7 +1290,7 @@ const SEED_F=[
 //  STATE
 // ═══════════════════════════════════════════════════════
 let purchases=[],sales=[],fixedCosts=[];
-const APP_VERSION='v3.4.1-2026-10-05';window.APP_VERSION=APP_VERSION;
+const APP_VERSION='v3.4.2-2026-10-05';window.APP_VERSION=APP_VERSION;
 
 // ═══════════ DATE SAFETY v3.3 ═══════════
 // toISOString() is UTC. In IST that makes "today" roll back a day before 05:30.
