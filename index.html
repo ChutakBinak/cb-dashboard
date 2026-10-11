@@ -129,7 +129,7 @@
     .pill-cash{background:#D1FAE5;color:#065F46}.pill-card{background:#FCE7F3;color:#9D174D}
     .pill-amazon{background:#FFF3CD;color:#78350F}.pill-etsy{background:#FFE4E1;color:#991B1B}
     .pill-b2b{background:#E0E7FF;color:#1E3A8A}.pill-shopify{background:#D1FAE5;color:#065F46}
-    .pill-offline{background:#F1F5F9;color:#334155}
+    .pill-offline{background:#F1F5F9;color:#334155}.pill-myntra{background:#FFE4EC;color:#BE185D}
     .amount-income{color:var(--green);font-weight:700}.amount-expense{color:var(--red);font-weight:700}
     .no-data{text-align:center;color:var(--muted);padding:28px;font-style:italic;font-size:.8rem}
     .bill-link{color:var(--navy-mid);font-size:.72rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:3px;padding:2px 8px;background:var(--navy-light);border-radius:3px;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis;}
@@ -514,12 +514,12 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
           <select class="filter-sel" id="sf_platform" onchange="applyTableFilters('s')">
             <option value="">All Platforms</option>
             <option>Website (Shopify)</option><option>Offline Store</option>
-            <option>Amazon</option><option>Etsy</option><option>Ballwool</option><option>B2B</option><option>Other</option>
+            <option>Amazon</option><option>Etsy</option><option>Myntra</option><option>Ballwool</option><option>B2B</option><option>Other</option>
           </select>
           <select class="filter-sel" id="sf_paidvia" onchange="applyTableFilters('s')">
             <option value="">All Payment</option>
             <option>UPI</option><option>Bank</option><option>Cash</option>
-            <option>Bank (Amazon)</option><option>Debit Card</option>
+            <option>Bank (Amazon)</option><option>Bank (Myntra)</option><option>Debit Card</option>
           </select>
           <div style="display:flex;align-items:center;gap:4px;font-size:.73rem;color:var(--muted)">
             ₹<input class="filter-input" id="sf_min" placeholder="Min" type="number" min="0" style="width:72px" oninput="applyTableFilters('s')">
@@ -1021,10 +1021,10 @@ if(!localStorage.getItem('cb_script_url'))localStorage.setItem('cb_script_url','
         </div>
         <div class="form-row">
           <div class="form-group"><label>Platform *</label>
-            <select class="form-input" id="s_platform"><option>Website (Shopify)</option><option>Offline Store</option><option>Amazon</option><option>Etsy</option><option>Ballwool</option><option>B2B</option><option>Other</option></select>
+            <select class="form-input" id="s_platform"><option>Website (Shopify)</option><option>Offline Store</option><option>Amazon</option><option>Etsy</option><option>Myntra</option><option>Ballwool</option><option>B2B</option><option>Other</option></select>
           </div>
           <div class="form-group"><label>Paid Via</label>
-            <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Debit Card</option><option value="">—</option></select>
+            <select class="form-input" id="s_paidvia"><option>UPI</option><option>Bank</option><option>Cash</option><option>Bank (Amazon)</option><option>Bank (Myntra)</option><option>Debit Card</option><option value="">—</option></select>
           </div>
         </div>
       </div>
@@ -1979,10 +1979,10 @@ function salesEditRow(r){
     <td><div style="display:flex;gap:3px;align-items:center"><select class="edit-input" id="e_currency" style="width:54px;padding:3px 2px;font-size:.72rem">${CURRENCIES.map(c=>`<option value="${c.code}"${(r.currency||'INR')===c.code?' selected':''}>${c.sym} ${c.code}</option>`).join('')}</select><input class="edit-input" type="number" id="e_amount" value="${r.amount}" step="0.01" style="min-width:70px"></div></td>
     <td><input class="edit-input" type="number" id="e_gst" value="${r.gst||0}" step="0.01" style="min-width:70px"></td>
     <td><select class="edit-select" id="e_platform" style="min-width:130px">
-      ${['Website (Shopify)','Offline Store','Amazon','Etsy','Ballwool','B2B','Other'].map(p=>`<option${r.platform===p?' selected':''}>${p}</option>`).join('')}
+      ${['Website (Shopify)','Offline Store','Amazon','Etsy','Myntra','Ballwool','B2B','Other'].map(p=>`<option${r.platform===p?' selected':''}>${p}</option>`).join('')}
     </select></td>
     <td><select class="edit-select" id="e_paidvia" style="min-width:110px">
-      ${['UPI','Bank','Cash','Bank (Amazon)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'—'}</option>`).join('')}
+      ${['UPI','Bank','Cash','Bank (Amazon)','Bank (Myntra)','Debit Card',''].map(p=>`<option value="${p}"${r.paidVia===p?' selected':''}>${p||'—'}</option>`).join('')}
     </select></td>
     <td style="min-width:200px">
       <input class="edit-input" type="text" id="e_bill" value="${r.bill||''}" placeholder="Paste Google Drive link…" style="width:100%;margin-bottom:4px;font-size:.72rem">
@@ -2477,7 +2477,7 @@ function onCurrencyChange(){
 function fmt(n){return'₹'+(+(n||0)).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});}
 function fmtDate(s){if(!s)return'—';const p=String(s).split('-');if(p.length!==3)return'—';return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'2-digit'});}
 function pmCls(m){m=(m||'').toLowerCase();if(m.includes('upi'))return'pill-upi';if(m.includes('bank'))return'pill-bank';if(m.includes('cash'))return'pill-cash';if(m.includes('card'))return'pill-card';return'';}
-function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-amazon';if(p.includes('etsy'))return'pill-etsy';if(p.includes('b2b'))return'pill-b2b';if(p.includes('offline'))return'pill-offline';return'pill-shopify';}
+function platCls(p){p=(p||'').toLowerCase();if(p.includes('amazon'))return'pill-amazon';if(p.includes('etsy'))return'pill-etsy';if(p.includes('myntra'))return'pill-myntra';if(p.includes('b2b'))return'pill-b2b';if(p.includes('offline'))return'pill-offline';return'pill-shopify';}
 
 // ════════════════════════════════════════════════════════════
 //  VOUCHER
@@ -2931,7 +2931,7 @@ let reports = JSON.parse(localStorage.getItem('cb_reports') || '[]');
 let bankStatements = JSON.parse(localStorage.getItem('cb_bank_statements') || '[]');
 function saveReportsData() { metaPersist('cb_reports', reports, 'Reports'); }
 const RPT_MONTHS = {'2026-04':'Apr 2026','2026-05':'May 2026','2026-06':'Jun 2026','2026-07':'Jul 2026','2026-08':'Aug 2026','2026-09':'Sep 2026','2026-10':'Oct 2026','2026-11':'Nov 2026','2026-12':'Dec 2026','2027-01':'Jan 2027','2027-02':'Feb 2027','2027-03':'Mar 2027'};
-const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy','Myntra':'pill-card','Website':'pill-b2b'};
+const RPT_PILL = {'Amazon':'pill-amazon','Shiprocket':'pill-bank','Google Ads':'pill-b2b','Meta Ads':'pill-card','Etsy':'pill-etsy','Myntra':'pill-myntra','Website':'pill-b2b'};
 let notes = JSON.parse(localStorage.getItem('cb_notes') || '[]');
 (function boot(){
   const s=sessionStorage.getItem('cb_session');
